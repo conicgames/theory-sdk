@@ -21,7 +21,7 @@ var q1, q2, c1, c2, c3, c4;
 var c1Exp, logTerm, c3Term, c4Term;
 
 function init() {
-    currency = theory.addCurrency();
+    currency = theory.createCurrency();
 
     ///////////////////
     // Regular Upgrades
@@ -212,6 +212,8 @@ var getTertiaryEquation = () => Localization.format(stringTickspeed, getTickspee
 
 var getPublicationMultiplier = (tau) => tau.isZero ? BigNumber.ONE : tau.pow(BigNumber.from(0.164)) / BigNumber.from(3);
 var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.164}}{3}";
+
+var postPublish = () => resetInternalState();
 
 var getQ1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
 var getQ2 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
