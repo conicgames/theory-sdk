@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form
+	xmlns="http://schema.picoe.ca/eto.forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:TheorySDK;assembly=TheorySDK"
+	Title="Exponential Idle Theory SDK"
+	MinimumSize="200,200"
+	Padding="10"
+	>
+	<StackLayout>
+		<Label>Exponential Idle - Theory SDK</Label>
+    <ComboBox x:Name= "ipComboBox" SelectedIndexChanged= "ipChanged"></ComboBox>
+    <TextBox x:Name = "port">5555</TextBox>
+    <Button x:Name = "selectFile"></Button>
+    <Label x:Name = "selectedFile"></Label>
+    <Label x:Name = "serverStatus"></Label>
+    <RichTextArea x:Name= "log" Size="300,300"></RichTextArea>
+	</StackLayout>
+</Form>
