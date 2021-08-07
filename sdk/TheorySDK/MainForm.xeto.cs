@@ -5,23 +5,23 @@ using System.Collections.ObjectModel;
 
 namespace TheorySDK
 {
-    public class MainForm : Form
+    public partial class MainForm : Form
     {
-        private ExponentialIdle.App _app;
-        private ExponentialIdle.MainWindowContext _context;
+        private App _app;
+        private MainWindowContext _context;
 
-        private readonly ComboBox ipComboBox;
-        private readonly TextBox port;
-        private readonly Button selectFile;
-        private readonly Label selectedFile;
-        private readonly Label serverStatus;
-        private readonly RichTextArea log;
+        private readonly ComboBox ipComboBox = null;
+        private readonly TextBox port = null;
+        private readonly Button selectFile = null;
+        private readonly Label selectedFile = null;
+        private readonly Label serverStatus = null;
+        private readonly RichTextArea log = null;
 
         public MainForm()
         {
             XamlReader.Load(this);
-            _app = new ExponentialIdle.App();
-            _context = new ExponentialIdle.MainWindowContext(_app);
+            _app = new App();
+            _context = new MainWindowContext(_app);
 
             _app.TcpServerChanging += OnTcpServerChanging;
             _app.TcpServerChanged += OnTcpServerChanged;
@@ -32,8 +32,6 @@ namespace TheorySDK
             UpdateData();
             UpdateServerStatus();
             OnTcpServerChanged();
-
-            selectFile.Click += OnTheoryPathClicked;
 
             port.TextChanging += (sender, textChangingEventArgs) =>
             {
@@ -66,17 +64,12 @@ namespace TheorySDK
             Closed += HandleQuit;
         }
 
-        private void ipChanged(object sender, EventArgs e)
-        {
-            _context.IpAddress = _context.IpAddressList[ipComboBox.SelectedIndex].IpAddress;
-        }
-
         private void UpdateIpAddressList()
         {
-            _context.IpAddressList.Add(new ExponentialIdle.MainWindowContext.IpAddressComboItem("Any", ""));
+            _context.IpAddressList.Add(new MainWindowContext.IpAddressComboItem("Any", ""));
 
-            foreach (var ip in ExponentialIdle.TcpServer.GetIPAddressList())
-                _context.IpAddressList.Add(new ExponentialIdle.MainWindowContext.IpAddressComboItem(ip, ip));
+            foreach (var ip in TcpServer.GetIPAddressList())
+                _context.IpAddressList.Add(new MainWindowContext.IpAddressComboItem(ip, ip));
 
             ipComboBox.Items.Clear();
             foreach (var ip in _context.IpAddressList)
@@ -120,6 +113,11 @@ namespace TheorySDK
             }
         }
 
+        private void OnIpChanged(object sender, EventArgs e)
+        {
+            _context.IpAddress = _context.IpAddressList[ipComboBox.SelectedIndex].IpAddress;
+        }
+
         private void OnTheoryPathClicked(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog();
@@ -158,7 +156,7 @@ namespace TheorySDK
     }
 }
 
-namespace ExponentialIdle {
+namespace TheorySDK {
     internal class MainWindowContext : NotifyPropertyChangedBase
     {
         public class IpAddressComboItem

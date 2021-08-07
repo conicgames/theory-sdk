@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ExponentialIdle
+namespace TheorySDK
 {
     public class NotifyPropertyChangedBase : INotifyPropertyChanged
     {

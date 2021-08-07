@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 
-namespace ExponentialIdle
+namespace TheorySDK
 {
     public class App
     {

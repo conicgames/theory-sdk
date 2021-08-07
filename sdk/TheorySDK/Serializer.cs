@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text.Json;
 
-namespace ExponentialIdle
+namespace TheorySDK
 {
     public static class Serializer
     {

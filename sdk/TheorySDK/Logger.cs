@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExponentialIdle
+namespace TheorySDK
 {
     public class Logger
     {

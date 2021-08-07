@@ -1,7 +1,7 @@
 ﻿using Eto.Forms;
 using System;
 
-namespace TheorySDK.Mac
+namespace TheorySDK.TheorySDK.Mac
 {
     class Program
     {

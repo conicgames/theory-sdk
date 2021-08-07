@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace ExponentialIdle
+namespace TheorySDK
 {
     public class TcpServer : IDisposable
     {

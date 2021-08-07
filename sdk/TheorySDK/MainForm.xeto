@@ -1,19 +1,55 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Form
-	xmlns="http://schema.picoe.ca/eto.forms" 
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:local="clr-namespace:TheorySDK;assembly=TheorySDK"
-	Title="Exponential Idle Theory SDK"
-	MinimumSize="200,200"
-	Padding="10"
-	>
-	<StackLayout>
-		<Label>Exponential Idle - Theory SDK</Label>
-    <ComboBox x:Name= "ipComboBox" SelectedIndexChanged= "ipChanged"></ComboBox>
-    <TextBox x:Name = "port">5555</TextBox>
-    <Button x:Name = "selectFile"></Button>
-    <Label x:Name = "selectedFile"></Label>
-    <Label x:Name = "serverStatus"></Label>
-    <RichTextArea x:Name= "log" Size="300,300"></RichTextArea>
+<Form xmlns="http://schema.picoe.ca/eto.forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="clr-namespace:TheorySDK;assembly=TheorySDK"
+      Title="Exponential Idle - Theory SDK"
+      MinimumSize="200,200"
+      Size="800,450"
+      Padding="10"
+      BackgroundColor="#222">
+	<StackLayout HorizontalContentAlignment="Stretch">
+    <TableLayout Spacing="5,5">
+      <TableRow>
+        <TableCell>
+            <Label Text="IP Address: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
+        </TableCell>
+        <TableCell ScaleWidth="True">
+          <ComboBox x:Name="ipComboBox" SelectedIndexChanged="OnIpChanged" />
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>
+          <Label Text="Port: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center"/>
+        </TableCell>
+        <TableCell>
+          <TextBox x:Name="port" Text="5555" />
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>
+          <Label Text="Theory Path: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center"/>
+        </TableCell>
+        <TableCell>
+          <StackLayout Orientation="Horizontal">
+            <StackLayoutItem Expand="True">
+              <TextBox x:Name="theoryPath" />
+            </StackLayoutItem>
+            <Button x:Name="selectFile" Text="..." Width="30" />
+          </StackLayout>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>
+          <Label Text="Server Status: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center"/>
+        </TableCell>
+        <TableCell>
+          <Label x:Name="serverStatus" TextColor="White" />
+        </TableCell>
+      </TableRow>
+    </TableLayout>
+    <Label x:Name="selectedFile" TextColor="White" />
+    <StackLayoutItem Expand="True">
+      <RichTextArea x:Name="log" BackgroundColor="#333" TextColor="White" />
+    </StackLayoutItem>
 	</StackLayout>
 </Form>
