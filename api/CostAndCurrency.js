@@ -32,12 +32,13 @@ export class FreeCost {
 }
 
 /**
- * Cost model for an upgrade that always has the same cost, regardless of its level
+ * Cost model for an upgrade that always has the same cost, regardless of its level.
+ * If the cost is less or equal to zero, it will behave as FreeCost.
  */
 export class ConstantCost {
     /**
      * @constructor
-     * @param {BigNumber} cost The cost of the upgrade
+     * @param {number|BigNumber} cost The cost of the upgrade
      */
     constructor(cost) {}
 
@@ -56,8 +57,8 @@ export class LinearCost {
     /**
      * Cost formula: cost = progress * level + initialCost
      * @constructor
-     * @param {BigNumber} initialCost
-     * @param {number} progress
+     * @param {number|BigNumber} initialCost
+     * @param {number|BigNumber} progress
      */
     constructor(initialCost, progress) {}
 
@@ -94,8 +95,8 @@ export class ExponentialCost {
     /**
      * Cost formula: initialCost * 2^(progress * level)
      * @constructor
-     * @param {BigNumber|number} initialCost
-     * @param {number} progress
+     * @param {number|BigNumber} initialCost
+     * @param {number|BigNumber} progress
      */
     constructor(initialCost, progress) {}
 

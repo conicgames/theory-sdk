@@ -25,6 +25,13 @@ export class Upgrade {
          * @public
          */
         this.getDescription;
+
+        /**
+         * Holds the static description of the upgrade. For dynamic descriptions, use getDescription.
+         * @type {string}
+         * @public
+         */
+        this.description;
         
         /**
          * Holds a function to call to get the info of the upgrade ('i' button) given a buy amount.
@@ -33,6 +40,13 @@ export class Upgrade {
          * @public
          */
         this.getInfo;
+
+        /**
+         * Holds the static info of the upgrade. For dynamic info, use getInfo.
+         * @type {string}
+         * @public
+         */
+        this.info;
     
         /**
          * Holds a function that returns whether a given amount of upgrade level can be refunded.
@@ -149,7 +163,7 @@ export class Theory {
     /**
      * @param {number} id Unique ID among permanent upgrades
      * @param {Currency} currency Currency to use for this upgrade
-     * @param {BigNumber} cost Cost model to use for this upgrade
+     * @param {number|BigNumber} cost Cost model to use for this upgrade
      * @returns {Upgrade}
      */
     createPublicationUpgrade(id, currency, cost) {}
@@ -157,7 +171,7 @@ export class Theory {
     /**
      * @param {number} id Unique ID among permanent upgrades
      * @param {Currency} currency Currency to use for this upgrade
-     * @param {BigNumber} cost Cost model to use for this upgrade
+     * @param {number|BigNumber} cost Cost model to use for this upgrade
      * @returns {Upgrade}
      */
     createBuyAllUpgrade(id, currency, cost) {}
@@ -165,7 +179,7 @@ export class Theory {
     /**
      * @param {number} id Unique ID among permanent upgrades
      * @param {Currency} currency Currency to use for this upgrade
-     * @param {BigNumber} cost Cost model to use for this upgrade
+     * @param {number|BigNumber} cost Cost model to use for this upgrade
      * @returns {Upgrade}
      */
     createAutoBuyerUpgrade(id, currency, cost) {}

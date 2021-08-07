@@ -20,7 +20,7 @@ var currency;
 var q1, q2, c1, c2, c3, c4;
 var c1Exp, logTerm, c3Term, c4Term;
 
-function init() {
+var init = () => {
     currency = theory.createCurrency();
 
     ///////////////////
@@ -84,40 +84,40 @@ function init() {
 
     /////////////////////
     // Permanent Upgrades
-    theory.createPublicationUpgrade(0, currency, BigNumber.from(1e10));
-    theory.createBuyAllUpgrade(1, currency, BigNumber.from(1e13));
-    theory.createAutoBuyerUpgrade(2, currency, BigNumber.from(1e30));
+    theory.createPublicationUpgrade(0, currency, 1e10);
+    theory.createBuyAllUpgrade(1, currency, 1e13);
+    theory.createAutoBuyerUpgrade(2, currency, 1e30);
 
     ///////////////////////
     //// Milestone Upgrades
-    theory.setMilestoneProgress(BigNumber.from(1e25));
+    theory.setMilestoneProgress(1e25);
 
     {
         c1Exp = theory.createMilestoneUpgrade(0, 3);
-        c1Exp.getDescription = (_) => Localization.getUpgradeIncCustomExp("c_1", "0.05");
-        c1Exp.getInfo = (amount) => Localization.getUpgradeIncCustomExpDesc("c_1", "0.05");
+        c1Exp.description = Localization.getUpgradeIncCustomExpDesc("c_1", "0.05");
+        c1Exp.info = Localization.getUpgradeIncCustomExpInfo("c_1", "0.05");
         c1Exp.boughtOrRefunded = (_) => theory.invalidatePrimaryEquation();
     }
 
     {
         logTerm = theory.createMilestoneUpgrade(1, 1);
-        logTerm.getDescription = (_) => Localization.getUpgradeMultCustom("c_1", "1+\\frac{ln(\\rho_{n})}{100}");
-        logTerm.getInfo = (amount) => Localization.getUpgradeMultCustomDesc("c_1", "1+\\frac{\\ln(\\rho_{n})}{100}");
+        logTerm.description = Localization.getUpgradeMultCustomDesc("c_1", "1+\\frac{ln(\\rho_{n})}{100}");
+        logTerm.info = Localization.getUpgradeMultCustomInfo("c_1", "1+\\frac{\\ln(\\rho_{n})}{100}");
         logTerm.boughtOrRefunded = (_) => theory.invalidatePrimaryEquation();
     }
 
     {
         c3Term = theory.createMilestoneUpgrade(2, 1);
-        c3Term.getDescription = (_) => Localization.format(Localization.getUpgradeAddTerm("\\rho_{n-1}^{0.2}"));
-        c3Term.getInfo = (amount) => Localization.format(Localization.getUpgradeAddTerm("\\rho_{n-1}^{0.2}"));
+        c3Term.description = Localization.format(Localization.getUpgradeAddTermDesc("\\rho_{n-1}^{0.2}"));
+        c3Term.info = Localization.format(Localization.getUpgradeAddTermInfo("\\rho_{n-1}^{0.2}"));
         c3Term.boughtOrRefunded = (_) => { theory.invalidatePrimaryEquation(); updateAvailability(); };
         c3Term.canBeRefunded = (_) => c4Term.level == 0;
     }
 
     {
         c4Term = theory.createMilestoneUpgrade(3, 1);
-        c4Term.getDescription = (_) => Localization.format(Localization.getUpgradeAddTerm("\\rho_{n-2}^{0.3}"));
-        c4Term.getInfo = (amount) => Localization.format(Localization.getUpgradeAddTerm("\\rho_{n-2}^{0.3}"));
+        c4Term.description = Localization.format(Localization.getUpgradeAddTermDesc("\\rho_{n-2}^{0.3}"));
+        c4Term.info = Localization.format(Localization.getUpgradeAddTermInfo("\\rho_{n-2}^{0.3}"));
         c4Term.boughtOrRefunded = (_) => { theory.invalidatePrimaryEquation(); updateAvailability(); };
         c4Term.isAvailable = false;
     }
@@ -125,13 +125,13 @@ function init() {
     updateAvailability();
 }
 
-function updateAvailability() {
+var updateAvailability = () => {
     c3.isAvailable = c3Term.level > 0;
     c4.isAvailable = c4Term.level > 0;
     c4Term.isAvailable = c3Term.level > 0;
 }
 
-function tick(elapsedTime, multiplier) {
+var tick = (elapsedTime, multiplier) => {
     let tickspeed = getTickspeed();
 
     if (tickspeed.isZero)
@@ -162,11 +162,11 @@ function tick(elapsedTime, multiplier) {
     }
 }
 
-function getInternalState() {
+var getInternalState = () => {
     return rhoN.toString() + " " + rhoNm1.toString() + " " + rhoNm2.toString() + " " + time.toString();
 }
 
-function setInternalState(state) {
+var setInternalState = (state) => {
     let values = state.split(" ");
     if (values.length > 0) rhoN = parseBigNumber(values[0]);
     if (values.length > 1) rhoNm1 = parseBigNumber(values[1]);
@@ -174,15 +174,7 @@ function setInternalState(state) {
     if (values.length > 3) time = parseFloat(values[3]);
 }
 
-function resetInternalState() {
-    time = 0;
-    rhoN = BigNumber.ZERO;
-    rhoNm1 = BigNumber.ZERO;
-    rhoNm2 = BigNumber.ZERO;
-    theory.invalidateTertiaryEquation();
-}
-
-function getPrimaryEquation() {
+var getPrimaryEquation = () => {
     let result = "\\rho_{n+1} = \\rho_{n}+c_1";
 
     if (c1Exp.level > 0)
@@ -213,7 +205,13 @@ var getTertiaryEquation = () => Localization.format(stringTickspeed, getTickspee
 var getPublicationMultiplier = (tau) => tau.isZero ? BigNumber.ONE : tau.pow(BigNumber.from(0.164)) / BigNumber.from(3);
 var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.164}}{3}";
 
-var postPublish = () => resetInternalState();
+var postPublish = () => {
+    time = 0;
+    rhoN = BigNumber.ZERO;
+    rhoNm1 = BigNumber.ZERO;
+    rhoNm2 = BigNumber.ZERO;
+    theory.invalidateTertiaryEquation();
+}
 
 var getQ1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
 var getQ2 = (level) => BigNumber.TWO.pow(BigNumber.from(level));

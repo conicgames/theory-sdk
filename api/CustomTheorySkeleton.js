@@ -105,6 +105,7 @@ function prePublish() { }
 
 /**
  * Called right after publishing.
+ * A good place to reset your internal state.
  */
 function postPublish() { }
 
@@ -122,18 +123,3 @@ function getInternalState() { }
  * @param {string} state
  */
 function setInternalState(state) { }
-
-/**
- * Resets the internal state of the theory.
- * Automatically called when resetting a theory.
- * Consider calling this function manually in postPublish.
- */
-function resetInternalState() { }
-
-/**
- * The game resets most values (currencies & all upgrades) and calls
- * resetInternalState(). If you have more values to reset, for example,
- * values that were not reset in resetInternalState, do it here.
- * Note: Most theories don't need this function.
- */
-function reset() { }
