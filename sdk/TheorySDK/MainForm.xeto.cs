@@ -13,11 +13,13 @@ namespace TheorySDK
         private readonly Button selectFile = null;
         private readonly TextBox theoryPath = null;
         private readonly Label serverStatus = null;
+        private readonly Button resetTheory = null;
         private readonly RichTextArea log = null;
 
         public MainForm()
         {
             XamlReader.Load(this);
+            Icon = new Eto.Drawing.Icon("Resources/icon48x48.ico");
             _app = new App();
 
             _app.TcpServerChanging += OnTcpServerChanging;
@@ -51,7 +53,9 @@ namespace TheorySDK
         {
             Application.Instance.AsyncInvoke(() =>
             {
-                serverStatus.Text = (_app.TcpServer?.HasClient ?? false) ? "Connected" : "Waiting for client..."; ;
+                bool hasClient = _app.TcpServer?.HasClient ?? false;
+                serverStatus.Text = hasClient ? "Connected" : "Waiting for client..."; ;
+                resetTheory.Visible = hasClient;
             });
         }
 
@@ -102,7 +106,6 @@ namespace TheorySDK
                 _app.Data.TheoryPath = openFileDialog.FileName;
                 theoryPath.Text = openFileDialog.FileName;
             }
-                
         }
 
         private void OnResetTheoryClicked(object sender, EventArgs e)

@@ -7,7 +7,7 @@
       Size="800,450"
       Padding="10"
       BackgroundColor="#222">
-	<StackLayout HorizontalContentAlignment="Stretch">
+	<StackLayout HorizontalContentAlignment="Stretch" Spacing="5">
     <TableLayout Spacing="5,5">
       <TableRow>
         <TableCell>
@@ -34,7 +34,7 @@
             <StackLayoutItem Expand="True">
               <TextBox x:Name="theoryPath" ReadOnly="True" BackgroundColor="#333" TextColor="White" ShowBorder="False" />
             </StackLayoutItem>
-            <Button x:Name="selectFile" Click="OnTheoryPathClicked" Text="..." Width="30" BackgroundColor="#444" TextColor="Wheat" />
+            <Button x:Name="selectFile" Click="OnTheoryPathClicked" Text="..." Width="30" BackgroundColor="#444" TextColor="White" />
           </StackLayout>
         </TableCell>
       </TableRow>
@@ -47,9 +47,9 @@
         </TableCell>
       </TableRow>
     </TableLayout>
-    <Label x:Name="selectedFile" TextColor="White" />
     <StackLayoutItem Expand="True">
       <RichTextArea x:Name="log" Text="" BackgroundColor="#333" TextColor="White" />
     </StackLayoutItem>
+    <Button x:Name="resetTheory" Text="Reset Theory" Click="OnResetTheoryClicked" Visible="False" BackgroundColor="#333" TextColor="White" />
 	</StackLayout>
 </Form>

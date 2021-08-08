@@ -5,6 +5,8 @@
     <TargetFramework>net5.0</TargetFramework>
 
     <RuntimeIdentifiers>osx-x64</RuntimeIdentifiers>
+
+    <ApplicationIcon>icon256x256.ico</ApplicationIcon>
   </PropertyGroup>
 	
   <ItemGroup>

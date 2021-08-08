@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\icon48x48.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\icon48x48.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Eto.Forms" Version="2.5.11" />
     <PackageReference Include="Eto.Serialization.Xaml" Version="2.5.11" />
     <PackageReference Include="System.Text.Json" Version="5.0.2" />
