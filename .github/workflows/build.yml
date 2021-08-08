@@ -10,7 +10,6 @@ on:
     
 jobs:
   build_windows:
-    id: build_windows
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -54,7 +53,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ build_windows.steps.create_release.outputs.upload_url }} 
+          upload_url: ${{ jobs.build_windows.steps.create_release.outputs.upload_url }} 
           asset_path: ./TheorySDK.Linux.${{ github.event.inputs.version }}.zip
           asset_name: TheorySDK.Linux.${{ github.event.inputs.version }}.zip
           asset_content_type: application/zip
