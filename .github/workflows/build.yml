@@ -26,7 +26,7 @@ jobs:
         with:
           tag_name: v${{ github.event.inputs.version }}
           release_name: v${{ github.event.inputs.version }}
-          draft: true
+          draft: false
           prerelease: false
       - id: upload-release-asset 
         uses: actions/upload-release-asset@v1
@@ -49,9 +49,16 @@ jobs:
       - run: dotnet publish ./sdk/TheorySDK.Gtk/TheorySDK.Gtk.csproj -c Release -o bin
       - run: echo "./bin/TheorySDK.Gtk" >> launchSDK.sh
       - run: zip -r TheorySDK.Linux.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
+      - run:   |
+               upload_url=$(curl -sL https://api.github.com/repos/actions/checkout/releases/latest | jq -r '.upload_url')
+               echo UPLOAD_URL=$upload_url >> $GITHUB_ENV
+        shell: bash
       - id: upload-release-asset 
-        uses: AButler/upload-release-assets@v2.0
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: '*.zip'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          release-tag: v${{ github.event.inputs.version }}
+          upload_url: ${{ env.UPLOAD_URL }} 
+          asset_path: ./TheorySDK.Linux.${{ github.event.inputs.version }}.zip
+          asset_name: TheorySDK.Linux.${{ github.event.inputs.version }}.zip
+          asset_content_type: application/zip
