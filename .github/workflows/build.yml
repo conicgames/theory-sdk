@@ -9,8 +9,8 @@ on:
         default: '1.0.0'
     
 jobs:
-  - name: Build Windows
-    id: build_windows
+  build_windows:
+    name: Build Windows
     build:
       runs-on: windows-latest
       steps:
@@ -46,7 +46,8 @@ jobs:
             asset_name: TheorySDK.Win.${{ github.event.inputs.version }}.zip
             asset_content_type: application/zip
             
-  - name: Build Linux - Ubuntu
+  build_linux:
+    name: Build Linux - Ubuntu
     build:
       runs-on: ubuntu-latest
       steps:
