@@ -18,7 +18,7 @@ jobs:
           dotnet-version: '5.0.x'
       - run: dotnet publish .\sdk\TheorySDK.Wpf\TheorySDK.Wpf.csproj -c Release -o bin
       - run: New-Item -ItemType SymbolicLink -Name "Launch SDK" -Value "bin/TheorySDK.Wpf.exe"
-      - run: $shell = New-Object -ComObject WScript.Shell; $shortcut = $shell.CreateShortcut("Launch SDK.lnk"); $shortcut.TargetPath = "bin/TheorySDK.Wpf.exe"; $shortcut.Save()
+      - run: New-Item "Launch SDK.bat"; Set-Content 'Launch SDK.bat' 'start "" "bin\TheorySDK.Wpf.exe"'
       - run: 7z a TheorySDK.Win.${{ github.event.inputs.version }}.zip . -x!".git" -x!".github" -x!".gitignore" -x!sdk
       - name: Create Release
         id: create_release
