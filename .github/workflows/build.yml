@@ -9,8 +9,20 @@ on:
         default: '1.0.0'
     
 jobs:
+  create_release:
+    runs-on: ubuntu-latest:
+    - uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ github.event.inputs.version }}
+        release_name: v${{ github.event.inputs.version }}
+        draft: false
+        prerelease: false
+    
   build_windows:
     runs-on: windows-latest
+    needs: create_release
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
@@ -19,28 +31,22 @@ jobs:
       - run: dotnet publish .\sdk\TheorySDK.Wpf\TheorySDK.Wpf.csproj -c Release -o bin
       - run: New-Item "Launch SDK.bat"; Set-Content 'Launch SDK.bat' 'start "" "bin\TheorySDK.Wpf.exe"'
       - run: 7z a TheorySDK.Win.${{ github.event.inputs.version }}.zip . -x!".git" -x!".github" -x!".gitignore" -x!sdk
-      - id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ github.event.inputs.version }}
-          release_name: v${{ github.event.inputs.version }}
-          draft: false
-          prerelease: false
+      - name: Gets latest created release info
+        id: latest_release_info
+        uses: jossef/action-latest-release-info@v1.1.0
       - id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          upload_url: ${{ steps.latest_release_info.outputs.upload_url }} 
           asset_path: ./TheorySDK.Win.${{ github.event.inputs.version }}.zip
           asset_name: TheorySDK.Win.${{ github.event.inputs.version }}.zip
           asset_content_type: application/zip
           
   build_linux:
     runs-on: ubuntu-latest
-    needs: build_windows
+    needs: create_release
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
@@ -49,23 +55,22 @@ jobs:
       - run: dotnet publish ./sdk/TheorySDK.Gtk/TheorySDK.Gtk.csproj -c Release -o bin
       - run: echo "./bin/TheorySDK.Gtk" >> launchSDK.sh; chmod +x launchSDK.sh
       - run: zip -r TheorySDK.Linux.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
-      - run:   |
-               upload_url=$(curl -sL https://api.github.com/repos/conicgames/theory-sdk/releases/latest | jq -r '.upload_url')
-               echo UPLOAD_URL=$upload_url >> $GITHUB_ENV
-        shell: bash
+      - name: Gets latest created release info
+        id: latest_release_info
+        uses: jossef/action-latest-release-info@v1.1.0
       - id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ env.UPLOAD_URL }} 
+          upload_url: ${{ steps.latest_release_info.outputs.upload_url }} 
           asset_path: ./TheorySDK.Linux.${{ github.event.inputs.version }}.zip
           asset_name: TheorySDK.Linux.${{ github.event.inputs.version }}.zip
           asset_content_type: application/zip
           
   build_mac:
     runs-on: macos-latest
-    needs: build_windows
+    needs: create_release
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
@@ -74,15 +79,13 @@ jobs:
       - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -c Release -o bin
       - run: echo "./bin/TheorySDK.Mac" >> launchSDK.sh; chmod +x launchSDK.sh
       - run: zip -r TheorySDK.Mac.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
-      - run:   |
-               upload_url=$(curl -sL https://api.github.com/repos/conicgames/theory-sdk/releases/latest | jq -r '.upload_url')
-               echo $upload_url
-               echo UPLOAD_URL=$upload_url >> $GITHUB_ENV
-        shell: bash
+      - name: Gets latest created release info
+        id: latest_release_info
+        uses: jossef/action-latest-release-info@v1.1.0
       - id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.latest_release_info.outputs.upload_url }}
         with:
           upload_url: ${{ env.UPLOAD_URL }} 
           asset_path: ./TheorySDK.Mac.${{ github.event.inputs.version }}.zip
