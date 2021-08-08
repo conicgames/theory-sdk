@@ -48,7 +48,7 @@ jobs:
           dotnet-version: '5.0.x'
       - run: dotnet publish ./sdk/TheorySDK.Gtk/TheorySDK.Gtk.csproj -c Release -o bin
       - run: echo "./bin/TheorySDK.Gtk" >> launchSDK.sh
-      - run: zip TheorySDK.Linux.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
+      - run: zip -r TheorySDK.Linux.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
       - run:   |
                upload_url=$(curl -sL https://api.github.com/repos/actions/checkout/releases/latest | jq -r '.upload_url')
                echo UPLOAD_URL=$upload_url >> $GITHUB_ENV
