@@ -19,7 +19,7 @@ namespace TheorySDK
         public MainForm()
         {
             XamlReader.Load(this);
-            Icon = new Eto.Drawing.Icon("Resources/icon48x48.ico");
+            //Icon = new Eto.Drawing.Icon("Resources/icon48x48.ico");
             _app = new App();
 
             _app.TcpServerChanging += OnTcpServerChanging;
