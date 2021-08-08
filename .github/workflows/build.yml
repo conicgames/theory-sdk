@@ -17,7 +17,7 @@ jobs:
         with:
           dotnet-version: '5.0.x'
       - run: dotnet publish .\sdk\TheorySDK.Wpf\TheorySDK.Wpf.csproj -c Release -o bin
-      - run: 7z a TheorySDK.${{ github.event.inputs.version }}.zip . -x!.github -x!.git -x!.gitignore -x!sdk
+      - run: 7z a TheorySDK.Win.${{ github.event.inputs.version }}.zip . -x!.github -x!.git -x!.gitignore -x!sdk
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -35,6 +35,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./TheorySDK.${{ github.event.inputs.version }}.zip
-          asset_name: TheorySDK.${{ github.event.inputs.version }}.zip
+          asset_path: ./TheorySDK.Win.${{ github.event.inputs.version }}.zip
+          asset_name: TheorySDK.Win.${{ github.event.inputs.version }}.zip
           asset_content_type: application/zip
