@@ -113,6 +113,11 @@ namespace TheorySDK
                     ClientDisconnected?.Invoke();
                 }
             }
+            catch (SocketException e)
+            {
+                if (e.SocketErrorCode != SocketError.Interrupted)
+                    Console.WriteLine(e.ToString());
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
