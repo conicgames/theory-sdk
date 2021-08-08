@@ -10,7 +10,6 @@ namespace TheorySDK
 
         private readonly ComboBox ipComboBox = null;
         private readonly TextBox port = null;
-        private readonly Button selectFile = null;
         private readonly TextBox theoryPath = null;
         private readonly Label serverStatus = null;
         private readonly RichTextArea log = null;
@@ -32,8 +31,6 @@ namespace TheorySDK
             UpdateFields();
             UpdateServerStatus();
             OnTcpServerChanged();
-
-            selectFile.Focus();
         }
 
         private void UpdateFields()

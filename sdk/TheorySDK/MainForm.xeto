@@ -32,9 +32,8 @@
         <TableCell>
           <StackLayout Orientation="Horizontal">
             <StackLayoutItem Expand="True">
-              <TextBox x:Name="theoryPath" ReadOnly="True" BackgroundColor="#333" TextColor="White" ShowBorder="False" />
+              <TextBox x:Name="theoryPath" ReadOnly="True" BackgroundColor="#333" TextColor="White" ShowBorder="False" MouseUp="OnTheoryPathClicked" PlaceholderText="Click to select a file..." />
             </StackLayoutItem>
-            <Button x:Name="selectFile" Click="OnTheoryPathClicked" Text="..." Width="30" BackgroundColor="#444" TextColor="White" />
           </StackLayout>
         </TableCell>
       </TableRow>
