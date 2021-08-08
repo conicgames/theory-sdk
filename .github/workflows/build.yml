@@ -7,14 +7,15 @@ on:
         description: 'Version number'
         required: true
         default: '1.0.0'
-    
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+
 jobs:
   create_release:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: v${{ github.event.inputs.version }}
         release_name: v${{ github.event.inputs.version }}
@@ -37,8 +38,6 @@ jobs:
         uses: jossef/action-latest-release-info@v1.1.0
       - id: upload-release-asset 
         uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }} 
           asset_path: ./TheorySDK.Win.${{ github.event.inputs.version }}.zip
@@ -61,8 +60,6 @@ jobs:
         uses: jossef/action-latest-release-info@v1.1.0
       - id: upload-release-asset 
         uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }} 
           asset_path: ./TheorySDK.Linux.${{ github.event.inputs.version }}.zip
@@ -85,10 +82,8 @@ jobs:
         uses: jossef/action-latest-release-info@v1.1.0
       - id: upload-release-asset 
         uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ steps.latest_release_info.outputs.upload_url }}
         with:
-          upload_url: ${{ env.UPLOAD_URL }} 
+          upload_url: ${{ steps.latest_release_info.outputs.upload_url }} 
           asset_path: ./TheorySDK.Mac.${{ github.event.inputs.version }}.zip
           asset_name: TheorySDK.Mac.${{ github.event.inputs.version }}.zip
           asset_content_type: application/zip
