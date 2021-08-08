@@ -17,6 +17,7 @@ jobs:
         with:
           dotnet-version: '5.0.x'
       - run: dotnet publish .\sdk\TheorySDK.Wpf\TheorySDK.Wpf.csproj -c Release -o bin
+      - run: New-Item -ItemType SymbolicLink -Name "Launch SDK" -Value "bin/TheorySDK.Wpf.exe"
       - run: 7z a TheorySDK.Win.${{ github.event.inputs.version }}.zip . -x!".git" -x!".github" -x!".gitignore" -x!sdk
       - name: Create Release
         id: create_release
