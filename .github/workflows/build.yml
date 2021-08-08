@@ -1,9 +1,11 @@
 name: Build Theory SDK
+inputs:
+  version:
+    description: 'Version number'
+    required: true
+    default: '1.0.0'
+
 on:
-  #push:
-  #  branches: [ main ]
-  #pull_request:
-  #  branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -14,4 +16,25 @@ jobs:
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x'
-      - run: dotnet build .\sdk\TheorySDK.Wpf\TheorySDK.Wpf.csproj
+      - run: dotnet publish .\sdk\TheorySDK.Wpf\TheorySDK.Wpf.csproj -c Release -o bin
+      - run: zip TheorySDK.${{ inputs.version }}.zip .
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: v${{ inputs.version }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./TheorySDK.${{ inputs.version }}.zip
+          asset_name: TheorySDK.${{ inputs.version }}.zip
+          asset_content_type: application/zip
