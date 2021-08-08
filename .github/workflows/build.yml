@@ -47,7 +47,7 @@ jobs:
         with:
           dotnet-version: '5.0.x'
       - run: dotnet publish ./sdk/TheorySDK.Gtk/TheorySDK.Gtk.csproj -c Release -o bin
-      - run: echo "./bin/TheorySDK.Gtk" >> launchSDK.sh
+      - run: echo "./bin/TheorySDK.Gtk" >> launchSDK.sh; chmod +x launchSDK.sh
       - run: zip -r TheorySDK.Linux.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
       - run:   |
                upload_url=$(curl -sL https://api.github.com/repos/conicgames/theory-sdk/releases/latest | jq -r '.upload_url')
@@ -61,4 +61,30 @@ jobs:
           upload_url: ${{ env.UPLOAD_URL }} 
           asset_path: ./TheorySDK.Linux.${{ github.event.inputs.version }}.zip
           asset_name: TheorySDK.Linux.${{ github.event.inputs.version }}.zip
+          asset_content_type: application/zip
+          
+  build_mac:
+    runs-on: macos-latest
+    needs: build_windows
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+      - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -c Release -o bin
+      - run: echo "./bin/TheorySDK.Mac" >> launchSDK.sh; chmod +x launchSDK.sh
+      - run: zip -r TheorySDK.Mac.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
+      - run:   |
+               upload_url=$(curl -sL https://api.github.com/repos/conicgames/theory-sdk/releases/latest | jq -r '.upload_url')
+               echo $upload_url
+               echo UPLOAD_URL=$upload_url >> $GITHUB_ENV
+        shell: bash
+      - id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ env.UPLOAD_URL }} 
+          asset_path: ./TheorySDK.Mac.${{ github.event.inputs.version }}.zip
+          asset_name: TheorySDK.Mac.${{ github.event.inputs.version }}.zip
           asset_content_type: application/zip

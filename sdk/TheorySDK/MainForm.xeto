@@ -48,7 +48,7 @@
       </TableRow>
     </TableLayout>
     <StackLayoutItem Expand="True">
-      <RichTextArea x:Name="log" Text="" BackgroundColor="#333" TextColor="White" />
+      <RichTextArea x:Name="log" Text="" BackgroundColor="#333" TextColor="White" ReadOnly="True" />
     </StackLayoutItem>
     <StackLayout x:Name="actionLayout" Visible="False">
       <Button Text="Reset Theory" Click="OnResetTheoryClicked" BackgroundColor="#333" TextColor="White" />
