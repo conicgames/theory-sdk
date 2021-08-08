@@ -1,19 +1,17 @@
 using Eto.Forms;
 using Eto.Serialization.Xaml;
 using System;
-using System.Collections.ObjectModel;
 
 namespace TheorySDK
 {
     public partial class MainForm : Form
     {
         private App _app;
-        private MainWindowContext _context;
 
         private readonly ComboBox ipComboBox = null;
         private readonly TextBox port = null;
         private readonly Button selectFile = null;
-        private readonly Label selectedFile = null;
+        private readonly TextBox theoryPath = null;
         private readonly Label serverStatus = null;
         private readonly RichTextArea log = null;
 
@@ -21,78 +19,53 @@ namespace TheorySDK
         {
             XamlReader.Load(this);
             _app = new App();
-            _context = new MainWindowContext(_app);
 
             _app.TcpServerChanging += OnTcpServerChanging;
             _app.TcpServerChanged += OnTcpServerChanged;
-            _app.DataLoaded += UpdateData;
+            _app.DataLoaded += UpdateFields;
             _app.Logger.MessageLogged += OnMessageLogged;
-
-            UpdateIpAddressList();
-            UpdateData();
-            UpdateServerStatus();
-            OnTcpServerChanged();
-
-            port.TextChanging += (sender, textChangingEventArgs) =>
-            {
-                string data = textChangingEventArgs.NewText.Trim();
-                if(data != string.Empty)
-                {
-                    int p;
-                    if (int.TryParse(data, out p) && p >= 0 && p <= 0xFFFF)
-                    {
-                        _context.Port = p;
-                    } else
-                    {
-                        textChangingEventArgs.Cancel = true;
-                    }
-                }
-            };
 
             _app.OnStart();
 
-            try
-            {
-                ipComboBox.SelectedIndex = 0;
-            } catch
-            {
-
-            }
+            UpdateFields();
+            UpdateServerStatus();
+            OnTcpServerChanged();
 
             selectFile.Focus();
-
-            Closed += HandleQuit;
         }
 
-        private void UpdateIpAddressList()
+        private void UpdateFields()
         {
-            _context.IpAddressList.Add(new MainWindowContext.IpAddressComboItem("Any", ""));
+            ipComboBox.Items.Clear();
+            ipComboBox.Items.Add("Any", "");
 
             foreach (var ip in TcpServer.GetIPAddressList())
-                _context.IpAddressList.Add(new MainWindowContext.IpAddressComboItem(ip, ip));
+                ipComboBox.Items.Add(ip, ip);
 
-            ipComboBox.Items.Clear();
-            foreach (var ip in _context.IpAddressList)
-            {
-                ipComboBox.Items.Add(ip.Name);
-            }
-        }
-
-        private void UpdateData()
-        {
-            _context.IpAddress = _app.Data.IpAddress;
-            _context.Port = _app.Data.Port;
-            _context.TheoryPath = _app.Data.TheoryPath;
+            ipComboBox.SelectedKey = _app.Data.IpAddress;
+            port.Text = _app.Data.Port.ToString();
+            theoryPath.Text = _app.Data.TheoryPath;
         }
 
         private void UpdateServerStatus()
         {
-            _context.ServerStatus = (_app.TcpServer?.HasClient ?? false) ? "Connected" : "Waiting for client...";
             Application.Instance.AsyncInvoke(() =>
             {
-                serverStatus.Text = _context.ServerStatus;
+                serverStatus.Text = (_app.TcpServer?.HasClient ?? false) ? "Connected" : "Waiting for client..."; ;
             });
-            _context.HasClient = _app.TcpServer?.HasClient ?? false;
+        }
+
+        private void OnPortTextChanging(object sender, TextChangingEventArgs e)
+        {
+            string data = e.NewText.Trim();
+            
+            if (!string.IsNullOrEmpty(data))
+            {
+                if (int.TryParse(data, out int p) && p >= 0 && p <= 0xFFFF)
+                    _app.Data.Port = p;
+                else
+                    e.Cancel = true;
+            }
         }
 
         private void OnTcpServerChanging()
@@ -115,7 +88,7 @@ namespace TheorySDK
 
         private void OnIpChanged(object sender, EventArgs e)
         {
-            _context.IpAddress = _context.IpAddressList[ipComboBox.SelectedIndex].IpAddress;
+            _app.Data.IpAddress = ipComboBox.SelectedKey;
         }
 
         private void OnTheoryPathClicked(object sender, EventArgs e)
@@ -126,8 +99,8 @@ namespace TheorySDK
 
             if (openFileDialog.ShowDialog(null) == DialogResult.Ok)
             {
-                _context.TheoryPath = openFileDialog.FileName;
-                selectedFile.Text = openFileDialog.FileName;
+                _app.Data.TheoryPath = openFileDialog.FileName;
+                theoryPath.Text = openFileDialog.FileName;
             }
                 
         }
@@ -142,60 +115,14 @@ namespace TheorySDK
             Application.Instance.AsyncInvoke(new Action(() =>
             {
                 var time = DateTime.Now.ToString("hh:mm:ss");
-                string value = (_context.LogMessages.Length == 0 ? "" : "\n") + "[" + time + "] " + message;
-                _context.LogMessages += value;
+                string value = (log.Text.Length == 0 ? "" : "\n") + "[" + time + "] " + message;
                 log.Append(value, true);
             }));
         }
 
-        protected void HandleQuit(object sender, EventArgs e)
+        protected override void OnClosed(EventArgs e)
         {
             _app.OnExit();
-            Application.Instance.Quit();
         }
-    }
-}
-
-namespace TheorySDK {
-    internal class MainWindowContext : NotifyPropertyChangedBase
-    {
-        public class IpAddressComboItem
-        {
-            public string Name { get; set; } = "";
-            public string IpAddress { get; set; } = "";
-            public IpAddressComboItem(string name, string ip)
-            {
-                Name = name;
-                IpAddress = ip;
-            }
-        }
-
-        private App _app;
-
-        public MainWindowContext(App app)
-        {
-            _app = app;
-        }
-
-        private ObservableCollection<IpAddressComboItem> _ipAddressList = new ObservableCollection<IpAddressComboItem>();
-        public ObservableCollection<IpAddressComboItem> IpAddressList { get => _ipAddressList; set => SetField(ref _ipAddressList, value); }
-
-        private string _ipAddress = "";
-        public string IpAddress { get => _ipAddress; set { SetField(ref _ipAddress, value); _app.Data.IpAddress = value; } }
-
-        private int _port = 0;
-        public int Port { get => _port; set { SetField(ref _port, value); _app.Data.Port = value; } }
-
-        private string _theoryPath = "";
-        public string TheoryPath { get => _theoryPath; set { SetField(ref _theoryPath, value); _app.Data.TheoryPath = value; } }
-
-        private string _serverStatus = "";
-        public string ServerStatus { get => _serverStatus; set { SetField(ref _serverStatus, value); } }
-
-        private bool _hasClient = false;
-        public bool HasClient { get => _hasClient; set { SetField(ref _hasClient, value); } }
-
-        private string _logMessages = "";
-        public string LogMessages { get => _logMessages; set => SetField(ref _logMessages, value); }
     }
 }

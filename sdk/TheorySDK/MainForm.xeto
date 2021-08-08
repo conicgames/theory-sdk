@@ -14,27 +14,27 @@
             <Label Text="IP Address: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
         </TableCell>
         <TableCell ScaleWidth="True">
-          <ComboBox x:Name="ipComboBox" SelectedIndexChanged="OnIpChanged" />
+          <ComboBox x:Name="ipComboBox" ReadOnly="True" SelectedIndexChanged="OnIpChanged" />
         </TableCell>
       </TableRow>
       <TableRow>
         <TableCell>
-          <Label Text="Port: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center"/>
+          <Label Text="Port: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
         </TableCell>
         <TableCell>
-          <TextBox x:Name="port" Text="5555" />
+          <TextBox x:Name="port" TextChanging="OnPortTextChanging" BackgroundColor="#333" TextColor="White" ShowBorder="False" />
         </TableCell>
       </TableRow>
       <TableRow>
         <TableCell>
-          <Label Text="Theory Path: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center"/>
+          <Label Text="Theory Path: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
         </TableCell>
         <TableCell>
           <StackLayout Orientation="Horizontal">
             <StackLayoutItem Expand="True">
-              <TextBox x:Name="theoryPath" />
+              <TextBox x:Name="theoryPath" ReadOnly="True" BackgroundColor="#333" TextColor="White" ShowBorder="False" />
             </StackLayoutItem>
-            <Button x:Name="selectFile" Text="..." Width="30" />
+            <Button x:Name="selectFile" Click="OnTheoryPathClicked" Text="..." Width="30" BackgroundColor="#444" TextColor="Wheat" />
           </StackLayout>
         </TableCell>
       </TableRow>
@@ -49,7 +49,7 @@
     </TableLayout>
     <Label x:Name="selectedFile" TextColor="White" />
     <StackLayoutItem Expand="True">
-      <RichTextArea x:Name="log" BackgroundColor="#333" TextColor="White" />
+      <RichTextArea x:Name="log" Text="" BackgroundColor="#333" TextColor="White" />
     </StackLayoutItem>
 	</StackLayout>
 </Form>
