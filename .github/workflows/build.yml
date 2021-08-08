@@ -17,7 +17,7 @@ jobs:
         with:
           dotnet-version: '5.0.x'
       - run: dotnet publish .\sdk\TheorySDK.Wpf\TheorySDK.Wpf.csproj -c Release -o bin
-      - run: 7z a TheorySDK.${{ github.event.inputs.version }}.zip .
+      - run: 7z a TheorySDK.${{ github.event.inputs.version }}.zip . -x!.github -x!.git -x!.gitignore -x!sdk
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
