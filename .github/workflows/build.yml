@@ -76,6 +76,7 @@ jobs:
       - run: zip -r TheorySDK.Mac.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
       - run:   |
                upload_url=$(curl -sL https://api.github.com/repos/conicgames/theory-sdk/releases/latest | jq -r '.upload_url')
+               echo $upload_url
                echo UPLOAD_URL=$upload_url >> $GITHUB_ENV
         shell: bash
       - id: upload-release-asset 
