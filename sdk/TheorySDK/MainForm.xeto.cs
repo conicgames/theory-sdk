@@ -103,6 +103,9 @@ namespace TheorySDK
                 _app.Data.TheoryPath = openFileDialog.FileName;
                 theoryPath.Text = openFileDialog.FileName;
             }
+
+            // Deselect the text
+            theoryPath.Selection = new Range<int>(0, -1);
         }
 
         private void OnResetTheoryClicked(object sender, EventArgs e)
