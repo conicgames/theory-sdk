@@ -18,7 +18,7 @@ jobs:
           dotnet-version: '5.0.x'
       - run: dotnet publish .\sdk\TheorySDK.Wpf\TheorySDK.Wpf.csproj -c Release -o bin
       - run: New-Item "Launch SDK.bat"; Set-Content 'Launch SDK.bat' 'start "" "bin\TheorySDK.Wpf.exe"'
-        run: 7z a TheorySDK.Win.${{ github.event.inputs.version }}.zip . -x!".git" -x!".github" -x!".gitignore" -x!sdk
+      - run: 7z a TheorySDK.Win.${{ github.event.inputs.version }}.zip . -x!".git" -x!".github" -x!".gitignore" -x!sdk
       - id: create_release
         uses: actions/create-release@v1
         env:
@@ -47,7 +47,7 @@ jobs:
           dotnet-version: '5.0.x'
       - run: dotnet publish .\sdk\TheorySDK.Wpf\TheorySDK.Wpf.csproj -c Release -o bin
       - run: echo "./bin/TheorySDK.Gtk" >> launchSDK.sh
-        run: zip TheorySDK.Linux.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
+      - run: zip TheorySDK.Linux.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
       - id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
