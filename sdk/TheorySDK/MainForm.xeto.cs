@@ -13,8 +13,8 @@ namespace TheorySDK
         private readonly Button selectFile = null;
         private readonly TextBox theoryPath = null;
         private readonly Label serverStatus = null;
-        private readonly Button resetTheory = null;
         private readonly RichTextArea log = null;
+        private readonly StackLayout actionLayout = null;
 
         public MainForm()
         {
@@ -55,7 +55,7 @@ namespace TheorySDK
             {
                 bool hasClient = _app.TcpServer?.HasClient ?? false;
                 serverStatus.Text = hasClient ? "Connected" : "Waiting for client..."; ;
-                resetTheory.Visible = hasClient;
+                actionLayout.Visible = hasClient;
             });
         }
 

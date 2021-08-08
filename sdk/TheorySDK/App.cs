@@ -102,16 +102,17 @@ namespace TheorySDK
             if (!TcpServer.HasClient || !File.Exists(Data.TheoryPath))
                 return;
 
+            Logger.Log("Sending theory...");
+            Thread.Sleep(100);
+
             bool success = false;
-            string error = "";
+            string error = null;
 
             for (int i = 0; i < 3 && !success; ++i)
             {
                 try
                 {
                     string theory = File.ReadAllText(Data.TheoryPath);
-                    Logger.Log("Sending theory...");
-                    Thread.Sleep(100);
                     SendCommand("CustomTheoryScript", theory);
                     success = true;
                 }

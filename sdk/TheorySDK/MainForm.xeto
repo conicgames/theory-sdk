@@ -50,6 +50,8 @@
     <StackLayoutItem Expand="True">
       <RichTextArea x:Name="log" Text="" BackgroundColor="#333" TextColor="White" />
     </StackLayoutItem>
-    <Button x:Name="resetTheory" Text="Reset Theory" Click="OnResetTheoryClicked" Visible="False" BackgroundColor="#333" TextColor="White" />
+    <StackLayout x:Name="actionLayout" Visible="False">
+      <Button Text="Reset Theory" Click="OnResetTheoryClicked" BackgroundColor="#333" TextColor="White" />
+    </StackLayout>
 	</StackLayout>
 </Form>
