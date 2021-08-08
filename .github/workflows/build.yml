@@ -1,13 +1,13 @@
 name: Build Theory SDK
-inputs:
-  version:
-    description: 'Version number'
-    required: true
-    default: '1.0.0'
 
 on:
   workflow_dispatch:
-
+    inputs:
+      version:
+        description: 'Version number'
+        required: true
+        default: '1.0.0'
+    
 jobs:
   build:
     runs-on: windows-latest
