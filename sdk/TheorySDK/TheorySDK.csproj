@@ -4,11 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <ApplicationIcon></ApplicationIcon>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Resources\icon48x48.ico" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <EmbeddedResource Include="Resources\icon48x48.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

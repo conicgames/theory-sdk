@@ -12,17 +12,19 @@ namespace TheorySDK
         public delegate void FileChangedDelegate();
         public FileChangedDelegate FileChanged;
 
-        private Logger _logger;
-        private string _path;
-        private FileSystemWatcher _watcher;
+        private readonly Logger _logger;
+        private readonly string _path;
+        private readonly FileSystemWatcher _watcher;
 
         public FileWatcher(Logger logger, string path)
         {
             _logger = logger;
             _path = path;
 
-            _watcher = new FileSystemWatcher(Path.GetDirectoryName(path));
-            _watcher.NotifyFilter = NotifyFilters.LastWrite;
+            _watcher = new FileSystemWatcher(Path.GetDirectoryName(path))
+            {
+                NotifyFilter = NotifyFilters.LastWrite
+            };
             _watcher.Changed += OnChanged;
             _watcher.Filter = Path.GetFileName(path);
             _watcher.EnableRaisingEvents = true;

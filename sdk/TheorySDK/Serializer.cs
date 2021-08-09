@@ -5,7 +5,7 @@ namespace TheorySDK
 {
     public static class Serializer
     {
-        private static string _configFilename = "config.json";
+        private static readonly string _configFilename = "config.json";
 
         public static void Serialize(Data data)
         {

@@ -18,10 +18,10 @@ namespace TheorySDK
         public MessageReceivedDelegate MessageReceived;
         public bool HasClient { get => _client != null; }
 
-        private Logger _logger;
-        private IPAddress _ipAddress;
-        private int _port;
-        private Thread _serverThread;
+        private readonly Logger _logger;
+        private readonly IPAddress _ipAddress;
+        private readonly int _port;
+        private readonly Thread _serverThread;
         private Socket _server = null;
         private Socket _client = null;
         private BlockingCollection<string> _messageQueue = new BlockingCollection<string>();

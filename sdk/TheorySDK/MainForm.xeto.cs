@@ -1,12 +1,14 @@
 using Eto.Forms;
+using Eto.Drawing;
 using Eto.Serialization.Xaml;
 using System;
+using static System.Reflection.Assembly;
 
 namespace TheorySDK
 {
     public partial class MainForm : Form
     {
-        private App _app;
+        private readonly App _app = null;
 
         private readonly ComboBox ipComboBox = null;
         private readonly TextBox port = null;
@@ -18,7 +20,7 @@ namespace TheorySDK
         public MainForm()
         {
             XamlReader.Load(this);
-            //Icon = new Eto.Drawing.Icon("Resources/icon48x48.ico");
+            Icon = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.icon48x48.ico"));
             _app = new App();
 
             _app.TcpServerChanging += OnTcpServerChanging;

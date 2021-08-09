@@ -1,7 +1,7 @@
 ﻿using Eto.Forms;
 using System;
 
-namespace TheorySDK.TheorySDK.Wpf
+namespace TheorySDK.Wpf
 {
     class Program
     {

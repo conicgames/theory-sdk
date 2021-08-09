@@ -1,7 +1,7 @@
 ﻿using Eto.Forms;
 using System;
 
-namespace TheorySDK.TheorySDK.Gtk
+namespace TheorySDK.Gtk
 {
     class Program
     {
