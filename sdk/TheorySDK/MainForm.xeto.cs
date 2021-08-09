@@ -96,7 +96,7 @@ namespace TheorySDK
         {
             var openFileDialog = new OpenFileDialog();
             openFileDialog.Filters.Add(new FileFilter("Theory files (*.js)", new string[] { "js" }));
-            openFileDialog.Filters.Add(new FileFilter("All files (*.*)"));
+            openFileDialog.Filters.Add(new FileFilter("All files (*.*)", new string[] { "*" }));
 
             if (openFileDialog.ShowDialog(null) == DialogResult.Ok)
             {
