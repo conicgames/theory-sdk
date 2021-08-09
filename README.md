@@ -3,7 +3,7 @@ Develop your own theories with the Theory SDK for the mobile game [Exponential I
 After completing the last chapter of the game, you will be offered to play custom theories. Custom theories are developed and shared by the community. You can also develop your own theories using this SDK and some basic Javascript knowledge.
 
 ## Installation
-Unzip the [latest release package](https://github.com/conicgames/theory-sdk/releases/latest) corresponding to your OS in folder of your choice. For all platforms, you need to install the .NET Runtime to run the SDK. Please follow [this link](https://dotnet.microsoft.com/download) for the installation instructions.
+Unzip the [latest release package](https://github.com/conicgames/theory-sdk/releases/latest) corresponding to your OS in folder of your choice. All platforms requires to install the .NET Runtime. Please follow [this link](https://dotnet.microsoft.com/download) for the installation instructions.
 
 ## Usage
 The SDK is a simple tool that links your computer to the game, enabling live updates of the theory while you make changes.
