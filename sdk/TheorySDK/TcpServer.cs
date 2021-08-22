@@ -78,7 +78,7 @@ namespace TheorySDK
                         {
                             writer.WriteLine(message);
                             writer.Flush();
-                            _logger.Log("Message sent.");
+                            //_logger.Log("Message sent.");
                         }
                     }));
 
@@ -92,7 +92,7 @@ namespace TheorySDK
                                 string message = reader.ReadLine();
                                 if (string.IsNullOrEmpty(message))
                                     break;
-                                _logger.Log("Message received.");
+                                //_logger.Log("Message received.");
                                 MessageReceived?.Invoke(message);
                             }
                         }

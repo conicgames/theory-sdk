@@ -32,6 +32,24 @@ export class FreeCost {
 }
 
 /**
+ * Cost model for an upgrade for which the first level is free.
+ * The cost after the first level is provided by another cost model.
+ */
+export class FirstFreeCost {
+    /**
+     * @constructor
+     * @param {FreeCost|FirstFreeCost|ConstantCost|LinearCost|ExponentialCost} costModel Cost model to use after the first level
+     */
+    constructor(costModel) {}
+
+    /**
+     * @param {number} level Starts at 0 for the cost of the first level
+     * @returns {BigNumber} Cost of a single level, i.e., not cumulative
+     */
+    getCost(level) { }
+}
+
+/**
  * Cost model for an upgrade that always has the same cost, regardless of its level.
  * If the cost is less or equal to zero, it will behave as FreeCost.
  */
@@ -61,24 +79,6 @@ export class LinearCost {
      * @param {number|BigNumber} progress
      */
     constructor(initialCost, progress) {}
-
-    /**
-     * @param {number} level Starts at 0 for the cost of the first level
-     * @returns {BigNumber} Cost of a single level, i.e., not cumulative
-     */
-    getCost(level) { }
-}
-
-/**
- * Cost model for an upgrade for which the first level is free.
- * The cost after the first level is provided by another cost model.
- */
-export class FirstFreeCost {
-    /**
-     * @constructor
-     * @param {FreeCost|FirstFreeCost|ConstantCost|LinearCost|ExponentialCost} costModel Cost model to use after the first level
-     */
-    constructor(costModel) {}
 
     /**
      * @param {number} level Starts at 0 for the cost of the first level

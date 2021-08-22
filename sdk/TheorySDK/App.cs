@@ -113,7 +113,7 @@ namespace TheorySDK
                 try
                 {
                     string theory = File.ReadAllText(Data.TheoryPath);
-                    SendCommand("CustomTheoryScript", theory);
+                    SendCommand("SetDevelopmentTheoryScript", theory);
                     success = true;
                 }
                 catch (Exception e)
@@ -127,10 +127,10 @@ namespace TheorySDK
                 Logger.Log(error);
         }
 
-        public void SendResetTheoryCommand()
+        public void ExecuteScript(string script)
         {
-            Logger.Log("Sending command: Reset Theory...");
-            SendCommand("ResetTheory", "");
+            Logger.Log("Executing Script...");
+            SendCommand("ExecuteScript", script);
         }
 
         private void OnMessageReceived(string message)

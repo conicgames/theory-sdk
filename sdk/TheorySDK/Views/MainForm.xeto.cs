@@ -4,7 +4,7 @@ using Eto.Serialization.Xaml;
 using System;
 using static System.Reflection.Assembly;
 
-namespace TheorySDK
+namespace TheorySDK.Views
 {
     public partial class MainForm : Form
     {
@@ -15,7 +15,7 @@ namespace TheorySDK
         private readonly TextBox theoryPath = null;
         private readonly Label serverStatus = null;
         private readonly RichTextArea log = null;
-        private readonly StackLayout actionLayout = null;
+        private readonly TextBox commandLine = null;
 
         public MainForm()
         {
@@ -53,8 +53,8 @@ namespace TheorySDK
             Application.Instance.AsyncInvoke(() =>
             {
                 bool hasClient = _app.TcpServer?.HasClient ?? false;
-                serverStatus.Text = hasClient ? "Connected" : "Waiting for client..."; ;
-                actionLayout.Visible = hasClient;
+                serverStatus.Text = hasClient ? "Connected" : "Waiting for client...";
+                commandLine.Visible = hasClient;
             });
         }
 
@@ -110,11 +110,6 @@ namespace TheorySDK
             theoryPath.Selection = new Range<int>(0, -1);
         }
 
-        private void OnResetTheoryClicked(object sender, EventArgs e)
-        {
-            _app.SendResetTheoryCommand();
-        }
-
         private void OnMessageLogged(string message)
         {
             Application.Instance.AsyncInvoke(new Action(() =>
@@ -123,6 +118,14 @@ namespace TheorySDK
                 string value = (log.Text.Length == 0 ? "" : "\n") + "[" + time + "] " + message;
                 log.Append(value, true);
             }));
+        }
+
+        private void OnCommandEntered(object sender, TextChangingEventArgs e)
+        {
+            if (e.Text == "\r" || e.Text == "\n" || e.Text == "\r\n")
+            {
+                _app.ExecuteScript(e.OldText);
+            }
         }
 
         protected override void OnClosed(EventArgs e)
