@@ -1,5 +1,7 @@
-import { Currency, FreeCost, FirstFreeCost, ConstantCost, LinearCost, ExponentialCost } from "./CostAndCurrency.js";
-import { BigNumber } from "./Numerics.js";
+import { BigNumber } from "./BigNumber";
+import { Cost } from "./Costs";
+import { Currency } from "./Currency";
+import { Upgrade } from "./Upgrades";
 
 /**
  * Holds a single row of the list of values that are
@@ -7,102 +9,14 @@ import { BigNumber } from "./Numerics.js";
  */
 export class QuaternaryEntry {
     /** @constructor
-     * @param {string} name Left side of the equality sign
-     * @param {string} value Right side of the equality sign
+     * @param {String} name Left side of the equality sign
+     * @param {String} value Right side of the equality sign
      */
     constructor(name, value) {}
 }
 
 /**
- * Theory upgrade
- */
-export class Upgrade {
-    constructor() {
-        /**
-         * Holds a function to call to get the description of the upgrade given a buy amount.
-         * The amount is always positive and relative to the current level.
-         * @type {function(number):string}
-         * @public
-         */
-        this.getDescription;
-
-        /**
-         * Holds the static description of the upgrade. For dynamic descriptions, use getDescription.
-         * @type {string}
-         * @public
-         */
-        this.description;
-        
-        /**
-         * Holds a function to call to get the info of the upgrade ('i' button) given a buy amount.
-         * The amount is always positive and relative to the current level.
-         * @type {function(number):string}
-         * @public
-         */
-        this.getInfo;
-
-        /**
-         * Holds the static info of the upgrade. For dynamic info, use getInfo.
-         * @type {string}
-         * @public
-         */
-        this.info;
-    
-        /**
-         * Holds a function that returns whether a given amount of upgrade level can be refunded.
-         * The amount is always positive and relative to the current level.
-         * @type {function(number):boolean}
-         * @public
-         */
-        this.canBeRefunded;
-    
-        /**
-         * Holds a function to call when the level increases of a given amount.
-         * The amount is always positive and relative to the current level.
-         * @type {function(number):void}
-         * @public
-         */
-        this.bought;
-    
-        /**
-         * Holds a function to call when the level decreases of a given amount.
-         * The amount is always positive and relative to the current level.
-         * @type {function(number):void}
-         * @public
-         */
-        this.refunded;
-    
-        /**
-         * Holds a function to call when the level increases or decreases of a given amount.
-         * The amount is always positive and relative to the current level.
-         * @type {function(number):void}
-         * @public
-         */
-        this.boughtOrRefunded;
-
-        /**
-         * Maximum level of the upgrade. Default: Max integer.
-         * @type {number}
-         * @public
-         */
-        this.maxLevel;
-    
-        /**
-         * Is the upgrade available to buy (in the list). Default: true.
-         * @type {boolean}
-         * @public
-         */
-        this.isAvailable;
-    }
-
-    /**
-     * @returns {number} Current level of the upgrade.
-     */
-    get level() {}
-}
-
-/**
- * Class to build and control the theory.
+ * Properties of a theory.
  */
 export class Theory {
     constructor() {
@@ -132,15 +46,165 @@ export class Theory {
     }
 
     /**
+     * @returns {number} Unique ID
+     */
+    get id();
+
+    /**
+     * @returns {String} Name of the theory, as shown below the summary bar
+     */
+    get name();
+
+    /**
+     * @returns {String} The symbol of the theory in ASCII, e.g., τ₁
+     */
+    get symbol();
+
+    /**
+     * @returns {String} The symbol of the theory in LaTeX, e.g., \tau_1
+     */
+    get latexSymbol();
+
+    /**
+     * @returns {bool}
+     */
+    get isUnlocked();
+
+    /**
+     * @returns {Currency[]}
+     */
+    get currencies();
+
+    /**
+     * @returns {Upgrade[]} Upgrades from the first panel
+     */
+    get upgrades();
+
+    /**
+     * @returns {Upgrade[]} Upgrades from the second panel
+     */
+    get permanentUpgrades();
+
+    /**
+     * @returns {Upgrade[]} Upgrades from the publication panel
+     */
+    get milestoneUpgrades();
+
+    /**
+     * This upgrade is also in "permanentUpgrades"
+     * @returns {Upgrade}
+     */
+    get publicationUpgrade();
+
+    /**
+     * This upgrade is also in "permanentUpgrades"
+     * @returns {Upgrade}
+     */
+    get buyAllUpgrade();
+
+    /**
+     * This upgrade is also in "permanentUpgrades"
+     * @returns {Upgrade}
+     */
+    get autoBuyerUpgrade();
+
+    /**
+     * @returns {boolean} Was the publication upgrade purchased? Equivalent to "publicationUpgrade.level > 0"
+     */
+    get isPublicationAvailable();
+
+    /**
+     * @returns {boolean} Was the "buy all" upgrade purchased? Equivalent to "buyAllUpgrade.level > 0"
+     */
+    get isBuyAllAvailable();
+
+    /**
+     * @returns {boolean} Was the auto-buyer upgrade purchased? Equivalent to "autoBuyerUpgrade.level > 0"
+     */
+    get isAutoBuyerAvailable();
+
+    /**
+     * @returns {boolean} Is the toggle "on"?
+     */
+    get isAutoBuyerActive();
+
+    /**
+     * @returns {BigNumber} The value of tau, as shown in the currency bar
+     */
+    get tau();
+
+    /**
+     * @returns {BigNumber} The value of tau at the last publication
+     */
+    get tauPublished();
+
+    /**
+     * @returns {BigNumber} The income multiplier, as shown in the publication popup
+     */
+    get publicationMultiplier();
+
+    /**
+     * @returns {boolean} Equivalent to "tau > tauPublished"
+     */
+    get canPublish();
+
+    /**
+     * @returns {number} The amount of milestones left that can be spent on milestone upgrades
+     */
+    get milestonesUnused();
+
+    /**
+     * @returns {number} The total amount of milestones done so far
+     */
+    get milestonesTotal();
+
+    /**
+     * @returns {BigNumber} The value of tau required to get another milestone upgrade
+     */
+    get nextMilestone();
+
+    /**
+     * @returns {String} LaTeX string of the primary equation
+     */
+    get primaryEquation();
+
+    /**
+     * @returns {String} LaTeX string of the secondary equation
+     */
+    get secondaryEquation();
+
+    /**
+     * @returns {String} LaTeX string of the tertiary equation
+     */
+    get tertiaryEquation();
+
+    /**
+     * @returns {number} Amount of quaternary values
+     */
+    get quaternaryCount();
+
+    /**
+     * @param {number} index Index of the quaternary entry, starting at 0
+     * @returns {String} LaTeX string of the name of the quaternary entry 
+     */
+    quaternaryName(index) {}
+
+    /**
+     * @param {number} index Index of the quaternary entry, starting at 0
+     * @returns {String} LaTeX string of the value of the quaternary entry 
+     */
+    quaternaryValue(index) {}
+
+    /**
      * Creates a new currency
      * @returns {Currency}
      */
-    createCurrency() {}
+    createCurrency();
     
     /**
      * @param {number} id Unique ID among regular upgrades
      * @param {Currency} currency Currency to use for this upgrade
-     * @param {FreeCost|FirstFreeCost|ConstantCost|LinearCost|ExponentialCost} cost Cost model to use for this upgrade
+     * @param {Cost} cost Cost model to use for this upgrade
      * @returns {Upgrade}
      */
     createUpgrade(id, currency, cost) {}
@@ -148,7 +212,7 @@ export class Theory {
     /**
      * @param {number} id Unique ID among permanent upgrades
      * @param {Currency} currency Currency to use for this upgrade
-     * @param {FreeCost|FirstFreeCost|ConstantCost|LinearCost|ExponentialCost} cost Cost model to use for this upgrade
+     * @param {Cost} cost Cost model to use for this upgrade
      * @returns {Upgrade}
      */
     createPermanentUpgrade(id, currency, cost) {}
@@ -202,38 +266,37 @@ export class Theory {
     /**
      * Force refresh the primary equation. (Main formula)
      */
-    invalidatePrimaryEquation() {}
+    invalidatePrimaryEquation();
     
     /**
      * Force refresh the secondary equation. (Formula right below the main one)
      */
-    invalidateSecondaryEquation() {}
+    invalidateSecondaryEquation();
     
     /**
      * Force refresh the tertiary equation. (Formula at the bottom of the equation area)
      */
-    invalidateTertiaryEquation() {}
+    invalidateTertiaryEquation();
     
     /**
      * Force refresh the quaternary value list. (List of values on the right side, e.g., Differential Calculus)
      */
-    invalidateQuaternaryValues() {}
+    invalidateQuaternaryValues();
 
     /**
-     * Each theory has it's own symbol depending on it's index in the list.
-     * For example, Recurrency Relation has the symbol "\tau_1".
-     * @returns {string}
+     * Performs a "Publication".
+     * Does nothing if publications are not available or the tau value is lower than the previous publication.
      */
-    get latexSymbol() {}
+    publish();
 
     /**
-     * @returns {BigNumber} Publication multiplier has shown in the Publication window
+     * Completely resets the theory. Only available within its own custom theory.
      */
-    get publicationMultiplier() {}
+    reset();
 }
 
 /**
- * Instance of the theory.
+ * Instance of the current custom theory. Only available within a custom theory.
  * @type {Theory}
  */
 export var theory;

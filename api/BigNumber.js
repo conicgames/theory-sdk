@@ -1,4 +1,4 @@
-/**
+ /**
  * Similar to parseFloat, decode a string into a BigNumber.
  * Accepted format are one of the following forms:
  *   123.456
@@ -7,7 +7,7 @@
  *   e56
  *   ee123.456
  * Note: Number can be negative.
- * @param {string} value
+ * @param {String} value
  * @returns {BigNumber}
  */
 export function parseBigNumber(value) { }
@@ -26,13 +26,13 @@ export class Rounding {
  * Holds a representation of an arbitrarily large number.
  */
 export class BigNumber {
-    /** @returns {BigNumber} */ static get ZERO() {}
-    /** @returns {BigNumber} */ static get ONE() {}
-    /** @returns {BigNumber} */ static get TWO() {}
-    /** @returns {BigNumber} */ static get TEN() {}
-    /** @returns {BigNumber} */ static get HUNDRED() {}
-    /** @returns {BigNumber} */ static get E() {}
-    /** @returns {BigNumber} */ static get PI() {}
+    /** @returns {BigNumber} */ static get ZERO();
+    /** @returns {BigNumber} */ static get ONE();
+    /** @returns {BigNumber} */ static get TWO();
+    /** @returns {BigNumber} */ static get TEN();
+    /** @returns {BigNumber} */ static get HUNDRED();
+    /** @returns {BigNumber} */ static get E();
+    /** @returns {BigNumber} */ static get PI();
 
     /**
      * Converts a native number or a string to a BigNumber
@@ -44,7 +44,7 @@ export class BigNumber {
     /**
      * Tries to convert a string to a BigNumber.
      * Alternative: parseBigNumber(value).
-     * @param {string} value
+     * @param {String} value
      * @param {BigNumber} out_result This value will be overwritten
      * @returns {boolean} Success = true, Failure = false
      */
@@ -53,7 +53,7 @@ export class BigNumber {
     /**
      * @returns {BigNumber} A copy of the instance
      */
-    clone() {}
+    clone();
 
     /**
      * @param {BigNumber} value
@@ -64,32 +64,32 @@ export class BigNumber {
     /**
      * @returns {BigNumber} Natural logarithm of 'this'
      */
-    log() {}
+    log();
 
     /**
      * @returns {BigNumber} Base 2 logarithm of 'this'
      */
-    log2() {}
+    log2();
 
     /**
      * @returns {BigNumber} Base 10 logarithm of 'this'
      */
-    log10() {}
+    log10();
 
     /**
      * @returns {BigNumber} e^this
      */
-    exp() {}
+    exp();
 
     /**
      * @returns {BigNumber} 10^this
      */
-    exp10() {}
+    exp10();
 
     /**
      * @returns {BigNumber} Square root of 'this'
      */
-    sqrt() {}
+    sqrt();
 
     /**
      * @param {BigNumber} value
@@ -106,96 +106,39 @@ export class BigNumber {
     /**
      * @returns {BigNumber} Absolute value of 'this'
      */
-    abs() {}
+    abs();
 
     /**
      * This only applies to values less than 1e6.
      * @returns {BigNumber} Nearest integer
      */
-    round() {}
+    round();
 
     /**
      * This only applies to values less than 1e6
      * @returns {BigNumber} Greatest integer less than or equal to 'this'
      */
-    floor() {}
+    floor();
 
     /**
      * This only applies to values less than 1e6
      * @returns {BigNumber} Least integer greater than or equal to 'this'
      */
-    ceil() {}
+    ceil();
 
     /**
      * Convert a BigNumber to a native number. If 'this' cannot be contained
      * in a native number, 'infinity' is returned.
      * @returns {number}
      */
-    toNumber() {}
+    toNumber();
 
     /**
      * Converts a BigNumber to a string.
      * @param {number} [decimals] The maximum number of decimals when below 1e6.
      * @param {number} [maxDepth] The maximum of 'e' to use, e.g., 1 means that it shows 1e1000000 instead of ee6.
      * @param {Rounding} [rounding] The rounding rule for decimals at any scale.
-     * @returns {string}
+     * @returns {String}
      */
     toString(decimals, maxDepth, rounding) {}
-}
- 
-/**
- * Holds a representation of an 3D vector.
- */
-export class Vector3 {
-    /** @constructor
-      * @param {number} x X coordinate
-      * @param {number} y Y coordinate
-      * @param {number} z Z coordinate
-      */
-    constructor(x, y, z) {
-        /**
-         * @type {number} X coordinate
-         * @public
-         */
-        this.x = x;
-
-        /**
-         * @type {number} Y coordinate
-         * @public
-         */
-        this.y = y;
-
-        /**
-         * @type {number} Z coordinate
-         * @public
-         */
-        this.z = z;
-    }
-    
-    /**
-     * @param {Vector3} value
-     * @returns {Vector3} Component-wise minimum between 'this' and value
-     */
-    min(value) {}
-    
-    /**
-     * @param {Vector3} value
-     * @returns {Vector3} Component-wise maximum between 'this' and value
-     */
-    max(value) {}
-    
-    /**
-     * @returns {number} Norm of the vector
-     */
-    get length() {}
-    
-    /**
-     * @returns {number} Minimum component of the vector
-     */
-    get minComponent() {}
-    
-    /**
-     * @returns {number} Maximum component of the vector
-     */
-    get maxComponent() {}
 }

@@ -1,24 +1,24 @@
 /**
  * A unique ID for the theory.
- * @global {string}
+ * @global {String}
  */
 let id;
 
 /**
  * Name of the theory. Displayed on the top of the equation.
- * @global {string}
+ * @global {String}
  */
 let name;
 
 /**
  * The API level used by this script.
- * @global {string}
+ * @global {String}
  */
 let api;
 
 /**
  * The version of the script. Used for backward compatibility.
- * @global {string}
+ * @global {String}
  */
 let version;
 
@@ -36,19 +36,19 @@ function tick(elapsedTime, multiplier) { }
 
 /**
  * Main formula.
- * @returns {string} LaTeX equation
+ * @returns {String} LaTeX equation
  */
 function getPrimaryEquation() { }
 
 /**
  * Formula right below the main one.
- * @returns {string} LaTeX equation
+ * @returns {String} LaTeX equation
  */
 function getSecondaryEquation() { }
 
 /**
  * Formula at the bottom of the equation area.
- * @returns {string} LaTeX equation
+ * @returns {String} LaTeX equation
  */
 function getTertiaryEquation() { }
 
@@ -79,8 +79,8 @@ function use3DGraph() { }
 function get3DGraphPoint() { }
 
 /**
- * @param {string} symbol LaTeX symbol to use in this formula instead of theory.latexSymbol
- * @returns {string} LaTeX representation of the publication multiplier formula
+ * @param {String} symbol LaTeX symbol to use in this formula instead of theory.latexSymbol
+ * @returns {String} LaTeX representation of the publication multiplier formula
  */
 function getPublicationMultiplierFormula(symbol) { }
 
@@ -113,13 +113,13 @@ function postPublish() { }
  * You may have to keep track of some internal variables to help calculations.
  * If some values needs to be preserved when reloading the game, serialize
  * these values in the form of a string so that it is part of the save file.
- * @returns {string}
+ * @returns {String}
  */
 function getInternalState() { }
 
 /**
  * Given the string that you provided with getInternalState, set the internal
  * state of the theory. This function needs to support empty/corrupted strings.
- * @param {string} state
+ * @param {String} state
  */
 function setInternalState(state) { }

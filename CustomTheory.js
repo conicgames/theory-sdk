@@ -1,7 +1,9 @@
-﻿import { Currency, FreeCost, ConstantCost, LinearCost, FirstFreeCost, ExponentialCost } from "./api/CostAndCurrency.js"
-import { parseBigNumber, Rounding, BigNumber, Vector3 } from "./api/Numerics.js"
-import { log, Utils, Localization } from "./api/Utils.js"
-import { QuaternaryEntry, Upgrade, theory } from "./api/Theory.js"
+﻿import { ExponentialCost, FirstFreeCost } from "./api/Costs";
+import { Localization } from "./api/Localization";
+import { parseBigNumber } from "./api/BigNumber";
+import { theory } from "./api/Theory";
+import { BigNumber } from "./api/Vector3";
+import { Utils } from "./api/Utils";
 
 var id = "my_custom_theory_id"
 var name = "My Custom Theory";
