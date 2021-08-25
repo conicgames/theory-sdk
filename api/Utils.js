@@ -4,7 +4,7 @@ import { BigNumber } from "./BigNumber";
   * Similar to console.log, but sends a message to the SDK.
   * @param {Object} message
   */
-export function log(message) {}
+export function log(message);
 
 /**
  * Various formatting and calculation methods.
@@ -15,7 +15,7 @@ export class Utils {
      * @param {String} value
      * @returns {String}
      */
-    static getMath(value) { }
+    static getMath(value);
 
     /**
      * Adds '\(' and '\)' for inline LaTeX math display and an LaTeX arrow between the values.
@@ -23,7 +23,7 @@ export class Utils {
      * @param {String} valueRight
      * @returns {String}
      */
-    static getMathTo(valueLeft, valueRight) { }
+    static getMathTo(valueLeft, valueRight);
 
     /**
      * A value that increases exponentially using repeated steps.

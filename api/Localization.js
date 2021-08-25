@@ -8,14 +8,14 @@ export class Localization {
      * @param {...object} args Values to use in place of {0} and {1}
      * @returns {String}
      */
-    static format(text, args) { }
+    static format(text, args);
 
     /**
      * Access to the translation service of the game.
      * @param {String} id ID from the translation source document
      * @returns {String} Translated sentence from the game
      */
-    static get(id) { }
+    static get(id);
 
     /**
      * Sentence: "Unlock {term}"

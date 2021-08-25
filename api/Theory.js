@@ -12,7 +12,7 @@ export class QuaternaryEntry {
      * @param {String} name Left side of the equality sign
      * @param {String} value Right side of the equality sign
      */
-    constructor(name, value) {}
+    constructor(name, value);
 }
 
 /**
@@ -187,13 +187,13 @@ export class Theory {
      * @param {number} index Index of the quaternary entry, starting at 0
      * @returns {String} LaTeX string of the name of the quaternary entry 
      */
-    quaternaryName(index) {}
+    quaternaryName(index);
 
     /**
      * @param {number} index Index of the quaternary entry, starting at 0
      * @returns {String} LaTeX string of the value of the quaternary entry 
      */
-    quaternaryValue(index) {}
+    quaternaryValue(index);
 
     /**
      * Creates a new currency
@@ -207,7 +207,7 @@ export class Theory {
      * @param {Cost} cost Cost model to use for this upgrade
      * @returns {Upgrade}
      */
-    createUpgrade(id, currency, cost) {}
+    createUpgrade(id, currency, cost);
     
     /**
      * @param {number} id Unique ID among permanent upgrades
@@ -215,14 +215,14 @@ export class Theory {
      * @param {Cost} cost Cost model to use for this upgrade
      * @returns {Upgrade}
      */
-    createPermanentUpgrade(id, currency, cost) {}
+    createPermanentUpgrade(id, currency, cost);
     
     /**
      * @param {number} id Unique ID among milestone upgrades
      * @param {number} maxLevel Max level of this upgrade
      * @returns {Upgrade}
      */
-    createMilestoneUpgrade(id, maxLevel) {}
+    createMilestoneUpgrade(id, maxLevel);
     
     /**
      * @param {number} id Unique ID among permanent upgrades
@@ -230,7 +230,7 @@ export class Theory {
      * @param {number|BigNumber} cost Cost model to use for this upgrade
      * @returns {Upgrade}
      */
-    createPublicationUpgrade(id, currency, cost) {}
+    createPublicationUpgrade(id, currency, cost);
     
     /**
      * @param {number} id Unique ID among permanent upgrades
@@ -238,7 +238,7 @@ export class Theory {
      * @param {number|BigNumber} cost Cost model to use for this upgrade
      * @returns {Upgrade}
      */
-    createBuyAllUpgrade(id, currency, cost) {}
+    createBuyAllUpgrade(id, currency, cost);
     
     /**
      * @param {number} id Unique ID among permanent upgrades
@@ -246,14 +246,14 @@ export class Theory {
      * @param {number|BigNumber} cost Cost model to use for this upgrade
      * @returns {Upgrade}
      */
-    createAutoBuyerUpgrade(id, currency, cost) {}
+    createAutoBuyerUpgrade(id, currency, cost);
     
     /**
      * Sets the progress needed to buy milestones.
      * The nth milestones will cost n*firstTarget
      * @param {BigNumber} firstTarget Cost of the first milestone
      */
-    setMilestoneProgress(firstTarget) {}
+    setMilestoneProgress(firstTarget);
     
     /**
      * Sets the progress needed to buy milestones.
@@ -261,7 +261,7 @@ export class Theory {
      * @param {BigNumber} firstTarget Cost of the first milestone
      * @param {BigNumber} step Difference between subsequent milestones
      */
-    setMilestoneProgress(firstTarget, step) {}
+    setMilestoneProgress(firstTarget, step);
     
     /**
      * Force refresh the primary equation. (Main formula)

@@ -4,9 +4,9 @@ import { BigNumber } from "./BigNumber";
  * Defines the accepted modes for auto-reset features.
  */
 export class AutoResetMode {
-    /** @returns {AutoResetMode} */ static get RATIO() { }
-    /** @returns {AutoResetMode} */ static get TIME() { }
-    /** @returns {AutoResetMode} */ static get EXPRESSION() { }
+    /** @returns {AutoResetMode} */ static get RATIO();
+    /** @returns {AutoResetMode} */ static get TIME();
+    /** @returns {AutoResetMode} */ static get EXPRESSION();
 }
 
 /**

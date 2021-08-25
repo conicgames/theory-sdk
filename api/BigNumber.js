@@ -10,16 +10,16 @@
  * @param {String} value
  * @returns {BigNumber}
  */
-export function parseBigNumber(value) { }
+export function parseBigNumber(value);
 
 /**
  * Defines the accepted rounding rules for converting a BigNumber
  * to a string using the 'toString' method.
  */
 export class Rounding {
-    /** @returns {Rounding} */ static get UP() { }
-    /** @returns {Rounding} */ static get DOWN() { }
-    /** @returns {Rounding} */ static get NEAREST() { }
+    /** @returns {Rounding} */ static get UP();
+    /** @returns {Rounding} */ static get DOWN();
+    /** @returns {Rounding} */ static get NEAREST();
 }
  
 /**
@@ -39,7 +39,7 @@ export class BigNumber {
      * @param {number|string} value
      * @returns {BigNumber}
      */
-    static from(value) {}
+    static from(value);
 
     /**
      * Tries to convert a string to a BigNumber.
@@ -48,7 +48,7 @@ export class BigNumber {
      * @param {BigNumber} out_result This value will be overwritten
      * @returns {boolean} Success = true, Failure = false
      */
-    static tryParse(value, out_result) {}
+    static tryParse(value, out_result);
 
     /**
      * @returns {BigNumber} A copy of the instance
@@ -59,7 +59,7 @@ export class BigNumber {
      * @param {BigNumber} value
      * @returns {BigNumber} this^value
      */
-    pow(value) {}
+    pow(value);
 
     /**
      * @returns {BigNumber} Natural logarithm of 'this'
@@ -95,13 +95,13 @@ export class BigNumber {
      * @param {BigNumber} value
      * @returns {BigNumber} Minimum between 'this' and value
      */
-    min(value) {}
+    min(value);
 
     /**
      * @param {BigNumber} value
      * @returns {BigNumber} Maximum between 'this' and value
      */
-    max(value) {}
+    max(value);
 
     /**
      * @returns {BigNumber} Absolute value of 'this'
@@ -140,5 +140,5 @@ export class BigNumber {
      * @param {Rounding} [rounding] The rounding rule for decimals at any scale.
      * @returns {String}
      */
-    toString(decimals, maxDepth, rounding) {}
+    toString(decimals, maxDepth, rounding);
 }

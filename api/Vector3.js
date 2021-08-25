@@ -2,11 +2,13 @@
  * Holds a representation of a 3D vector.
  */
 export class Vector3 {
+    /** @returns {Vector3} */ static get ZERO();
+
     /** @constructor
-      * @param {number} x X coordinate
-      * @param {number} y Y coordinate
-      * @param {number} z Z coordinate
-      */
+     * @param {number} x X coordinate
+     * @param {number} y Y coordinate
+     * @param {number} z Z coordinate
+     */
     constructor(x, y, z) {
         /**
          * @type {number} X coordinate
@@ -31,13 +33,13 @@ export class Vector3 {
      * @param {Vector3} value
      * @returns {Vector3} Component-wise minimum between 'this' and value
      */
-    min(value) {}
+    min(value);
     
     /**
      * @param {Vector3} value
      * @returns {Vector3} Component-wise maximum between 'this' and value
      */
-    max(value) {}
+    max(value);
     
     /**
      * @returns {number} Norm of the vector

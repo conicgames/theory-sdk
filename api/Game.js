@@ -11,6 +11,14 @@ import { Upgrade, Variable } from "./Upgrades";
  * Properties of the game.
  */
 export class Game {
+    constructor() {
+        /**
+         * @type {Theory} The currently active theory. Can be set to null.
+         * @public
+         */
+        this.activeTheory;
+    }
+
     /**
      * @returns {BigNumber} f(t)
      */
@@ -45,7 +53,7 @@ export class Game {
      * @param {number} index - Index of the x_i value. Starts at 0. 
      * @returns {BigNumber}
      */
-    xi(index) {}
+    xi(index);
     
     /**
      * @returns {BigNumber} μ
@@ -186,7 +194,7 @@ export class Game {
      * Use -1 or 1 for maximum.
      * For more control, use the 'buy' method of each independent upgrade.
      * @param {Upgrade[]} upgrades List of upgrades to buy
-     * @param {number} bulkAmount Will buy a multiple of this amount of each upgrade
+     * @param {number} [bulkAmount] Will buy a multiple of this amount of each upgrade. Default: -1 (max)
      * @param {boolean} [ignoreToggle] If true, buy all upgrade regardless of the checkbox. Default: false
      */
     buy(upgrades, bulkAmount, ignoreToggle);

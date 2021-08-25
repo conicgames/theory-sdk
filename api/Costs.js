@@ -8,7 +8,7 @@ export class Cost{
      * @param {number} level Starts at 0 for the cost of the first level
      * @returns {BigNumber} Cost of a single level, i.e., not cumulative
      */
-    getCost(level) { }
+    getCost(level);
 }
 
 /**
@@ -19,7 +19,7 @@ export class FreeCost extends Cost {
      * It's free. Did you expect parameters?
      * @constructor
      */
-    constructor() { }
+    constructor();
 }
 
 /**
@@ -31,7 +31,7 @@ export class FirstFreeCost extends Cost {
      * @constructor
      * @param {Cost} costModel Cost model to use after the first level
      */
-    constructor(costModel) {}
+    constructor(costModel);
 }
 
 /**
@@ -43,7 +43,7 @@ export class ConstantCost extends Cost {
      * @constructor
      * @param {number|BigNumber} cost The cost of the upgrade
      */
-    constructor(cost) {}
+    constructor(cost);
 }
 
 /**
@@ -57,7 +57,7 @@ export class LinearCost extends Cost {
      * @param {number|BigNumber} initialCost
      * @param {number|BigNumber} progress
      */
-    constructor(initialCost, progress) {}
+    constructor(initialCost, progress);
 }
 
 /**
@@ -71,5 +71,5 @@ export class ExponentialCost extends Cost {
      * @param {number|BigNumber} initialCost
      * @param {number|BigNumber} progress
      */
-    constructor(initialCost, progress) {}
+    constructor(initialCost, progress);
 }

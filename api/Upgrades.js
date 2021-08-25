@@ -100,35 +100,35 @@ export class Upgrade {
      * The amount is always positive and relative to the current level.
      * @param {function(number):void} onBought
      */
-    set bought(onBought) {}
+    set bought(onBought);
 
     /**
      * Sets a function to call when the level decreases of a given amount.
      * The amount is always positive and relative to the current level.
      * @param {function(number):void} onRefunded
      */
-    set refunded(onRefunded) {}
+    set refunded(onRefunded);
 
     /**
      * Sets a function to call when the level increases or decreases of a given amount.
      * The amount is always positive and relative to the current level.
      * @param {function(number):void} onBoughtOrRefunded
      */
-    set boughtOrRefunded(onBoughtOrRefunded) {}
+    set boughtOrRefunded(onBoughtOrRefunded);
 
     /**
      * Buys a specified amount of this upgrade. Does nothing if it cannot afford it.
      * Enter a negative value to buy the maximum amount.
      * @param {number} amount Number of levels to purchase
      */
-    buy(amount) {}
+    buy(amount);
 
     /**
      * Refunds a specified amount of this upgrade. Does nothing if it cannot refund it.
      * Enter a negative value to refund all levels.
      * @param {number} amount Number of levels to refund
      */
-    refund(amount) {}
+    refund(amount);
 }
 
 /**
