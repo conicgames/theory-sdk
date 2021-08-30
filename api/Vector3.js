@@ -5,9 +5,9 @@ export class Vector3 {
     /** @returns {Vector3} */ static get ZERO();
 
     /** @constructor
-     * @param {number} x X coordinate
-     * @param {number} y Y coordinate
-     * @param {number} z Z coordinate
+     * @param {number} x - X coordinate
+     * @param {number} y - Y coordinate
+     * @param {number} z - Z coordinate
      */
     constructor(x, y, z) {
         /**

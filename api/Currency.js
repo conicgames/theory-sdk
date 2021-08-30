@@ -1,7 +1,7 @@
 import { BigNumber } from "./BigNumber";
 
 /**
- * Holds a single currency of the theory
+ * Holds a single currency
  */
 export class Currency {
     constructor() {

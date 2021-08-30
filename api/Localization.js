@@ -4,15 +4,15 @@
 export class Localization {
     /**
      * Provides safe formatting using C# syntax.
-     * @param {String} text Templated literal, e.g., "Increase {0} by {1}"
-     * @param {...object} args Values to use in place of {0} and {1}
+     * @param {String} text - Templated literal, e.g., "Increase {0} by {1}"
+     * @param {...object} args - Values to use in place of {0} and {1}
      * @returns {String}
      */
     static format(text, args);
 
     /**
      * Access to the translation service of the game.
-     * @param {String} id ID from the translation source document
+     * @param {String} id - ID from the translation source document
      * @returns {String} Translated sentence from the game
      */
     static get(id);

@@ -1,14 +1,11 @@
 ﻿import { ExponentialCost, FirstFreeCost } from "./api/Costs";
 import { Localization } from "./api/Localization";
-import { parseBigNumber } from "./api/BigNumber";
+import { parseBigNumber, BigNumber } from "./api/BigNumber";
 import { theory } from "./api/Theory";
-import { BigNumber } from "./api/Vector3";
 import { Utils } from "./api/Utils";
 
-var id = "my_custom_theory_id"
+var id = "my_custom_theory_id";
 var name = "My Custom Theory";
-var api = 1;
-var version = 1;
 
 var rhoN = BigNumber.ZERO;
 var rhoNm1 = BigNumber.ZERO;

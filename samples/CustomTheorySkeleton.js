@@ -2,25 +2,25 @@
  * A unique ID for the theory.
  * @global {String}
  */
-let id;
+var id;
 
 /**
  * Name of the theory. Displayed on the top of the equation.
  * @global {String}
  */
-let name;
+var name;
 
 /**
  * The API level used by this script.
  * @global {String}
  */
-let api;
+var api;
 
 /**
  * The version of the script. Used for backward compatibility.
  * @global {String}
  */
-let version;
+var version;
 
 /**
  * Update the availability of each upgrade using their dependencies.
@@ -29,8 +29,8 @@ function updateAvailability();
 
 /**
  * Performs a single update tick by updating all currencies.
- * @param {number} elapsedTime Real elapsed time since last tick
- * @param {number} multiplier Multiplier to the elapsed time to account for rewards. (either 1 or 1.5)
+ * @param {number} elapsedTime - Real elapsed time since last tick
+ * @param {number} multiplier - Multiplier to the elapsed time to account for rewards. (either 1 or 1.5)
  */
 function tick(elapsedTime, multiplier);
 
@@ -60,7 +60,7 @@ function getQuaternaryValues();
 
 /**
  * Some currencies might only be visible when specific milestones are purchased.
- * @param {number} index Index of the currency, starting at 0
+ * @param {number} index - Index of the currency, starting at 0
  * @returns {boolean}
  */
 function isCurrencyVisible(index);
@@ -79,13 +79,13 @@ function use3DGraph();
 function get3DGraphPoint();
 
 /**
- * @param {String} symbol LaTeX symbol to use in this formula instead of theory.latexSymbol
+ * @param {String} symbol - LaTeX symbol to use in this formula instead of theory.latexSymbol
  * @returns {String} LaTeX representation of the publication multiplier formula
  */
 function getPublicationMultiplierFormula(symbol);
 
 /**
- * @param {BigNumber} tau Tau value at which the publication multiplier should be calculated
+ * @param {BigNumber} tau - Tau value at which the publication multiplier should be calculated
  * @returns {BigNumber} Publication multiplier
  */
 function getPublicationMultiplier(tau);

@@ -193,9 +193,9 @@ export class Game {
      * is set to 10 and it could afford 25, it will buy 20 (2x10).
      * Use -1 or 1 for maximum.
      * For more control, use the 'buy' method of each independent upgrade.
-     * @param {Upgrade[]} upgrades List of upgrades to buy
-     * @param {number} [bulkAmount] Will buy a multiple of this amount of each upgrade. Default: -1 (max)
-     * @param {boolean} [ignoreToggle] If true, buy all upgrade regardless of the checkbox. Default: false
+     * @param {Upgrade[]} upgrades - List of upgrades to buy
+     * @param {number} [bulkAmount] - Will buy a multiple of this amount of each upgrade. Default: -1 (max)
+     * @param {boolean} [ignoreToggle] - If true, buy all upgrade regardless of the checkbox. Default: false
      */
     buy(upgrades, bulkAmount, ignoreToggle);
 
@@ -203,8 +203,8 @@ export class Game {
      * Refund the specified amount of level of all provided upgrades.
      * If the amount is greater that the current level, it will refund all levels.
      * Use -1 for maximum.
-     * @param {Upgrade[]} upgrades List of upgrades to refund
-     * @param {number} amount Amount to refund
+     * @param {Upgrade[]} upgrades - List of upgrades to refund
+     * @param {number} amount - Amount to refund
      */
     refund(upgrades, amount);
 }

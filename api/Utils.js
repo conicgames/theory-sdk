@@ -29,10 +29,10 @@ export class Utils {
      * A value that increases exponentially using repeated steps.
      * For example, the difference in value for basePower=2, stepLength=3 will be
      * 1, 1, 1, 2, 2, 2, 4, 4, 4, 8, 8, 8, ...
-     * @param {number} level Level of the upgrade
-     * @param {number} basePower How the value difference increases
-     * @param {number} stepLength How many times the same difference is used
-     * @param {number} offset Value when the level is 0
+     * @param {number} level - Level of the upgrade
+     * @param {number} basePower - How the value difference increases
+     * @param {number} stepLength - How many times the same difference is used
+     * @param {number} offset - Value when the level is 0
      * @returns {BigNumber}
      */
     static getStepwisePowerSum(level, basePower, stepLength, offset) { 

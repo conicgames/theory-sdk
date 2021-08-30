@@ -5,7 +5,7 @@ import { BigNumber } from "./BigNumber";
  */
 export class Cost{
     /**
-     * @param {number} level Starts at 0 for the cost of the first level
+     * @param {number} level - Starts at 0 for the cost of the first level
      * @returns {BigNumber} Cost of a single level, i.e., not cumulative
      */
     getCost(level);
@@ -29,7 +29,7 @@ export class FreeCost extends Cost {
 export class FirstFreeCost extends Cost {
     /**
      * @constructor
-     * @param {Cost} costModel Cost model to use after the first level
+     * @param {Cost} costModel - Cost model to use after the first level
      */
     constructor(costModel);
 }
@@ -41,7 +41,7 @@ export class FirstFreeCost extends Cost {
 export class ConstantCost extends Cost {
     /**
      * @constructor
-     * @param {number|BigNumber} cost The cost of the upgrade
+     * @param {number|BigNumber} cost - The cost of the upgrade
      */
     constructor(cost);
 }

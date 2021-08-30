@@ -1,4 +1,4 @@
- /**
+/**
  * Similar to parseFloat, decode a string into a BigNumber.
  * Accepted format are one of the following forms:
  *   123.456
@@ -45,7 +45,7 @@ export class BigNumber {
      * Tries to convert a string to a BigNumber.
      * Alternative: parseBigNumber(value).
      * @param {String} value
-     * @param {BigNumber} out_result This value will be overwritten
+     * @param {BigNumber} out_result - This value will be overwritten
      * @returns {boolean} Success = true, Failure = false
      */
     static tryParse(value, out_result);
@@ -135,9 +135,9 @@ export class BigNumber {
 
     /**
      * Converts a BigNumber to a string.
-     * @param {number} [decimals] The maximum number of decimals when below 1e6.
-     * @param {number} [maxDepth] The maximum of 'e' to use, e.g., 1 means that it shows 1e1000000 instead of ee6.
-     * @param {Rounding} [rounding] The rounding rule for decimals at any scale.
+     * @param {number} [decimals] - The maximum number of decimals when below 1e6.
+     * @param {number} [maxDepth] - The maximum of 'e' to use, e.g., 1 means that it shows 1e1000000 instead of ee6.
+     * @param {Rounding} [rounding] - The rounding rule for decimals at any scale.
      * @returns {String}
      */
     toString(decimals, maxDepth, rounding);

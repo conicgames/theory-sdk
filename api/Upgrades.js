@@ -119,14 +119,14 @@ export class Upgrade {
     /**
      * Buys a specified amount of this upgrade. Does nothing if it cannot afford it.
      * Enter a negative value to buy the maximum amount.
-     * @param {number} amount Number of levels to purchase
+     * @param {number} amount - Number of levels to purchase
      */
     buy(amount);
 
     /**
      * Refunds a specified amount of this upgrade. Does nothing if it cannot refund it.
      * Enter a negative value to refund all levels.
-     * @param {number} amount Number of levels to refund
+     * @param {number} amount - Number of levels to refund
      */
     refund(amount);
 }

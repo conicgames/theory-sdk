@@ -9,8 +9,8 @@ import { Upgrade } from "./Upgrades";
  */
 export class QuaternaryEntry {
     /** @constructor
-     * @param {String} name Left side of the equality sign
-     * @param {String} value Right side of the equality sign
+     * @param {String} name - Left side of the equality sign
+     * @param {String} value - Right side of the equality sign
      */
     constructor(name, value);
 }
@@ -184,13 +184,13 @@ export class Theory {
     get quaternaryCount();
 
     /**
-     * @param {number} index Index of the quaternary entry, starting at 0
+     * @param {number} index - Index of the quaternary entry, starting at 0
      * @returns {String} LaTeX string of the name of the quaternary entry 
      */
     quaternaryName(index);
 
     /**
-     * @param {number} index Index of the quaternary entry, starting at 0
+     * @param {number} index - Index of the quaternary entry, starting at 0
      * @returns {String} LaTeX string of the value of the quaternary entry 
      */
     quaternaryValue(index);
@@ -202,48 +202,48 @@ export class Theory {
     createCurrency();
     
     /**
-     * @param {number} id Unique ID among regular upgrades
-     * @param {Currency} currency Currency to use for this upgrade
-     * @param {Cost} cost Cost model to use for this upgrade
+     * @param {number} id - Unique ID among regular upgrades
+     * @param {Currency} currency - Currency to use for this upgrade
+     * @param {Cost} cost - Cost model to use for this upgrade
      * @returns {Upgrade}
      */
     createUpgrade(id, currency, cost);
     
     /**
-     * @param {number} id Unique ID among permanent upgrades
-     * @param {Currency} currency Currency to use for this upgrade
-     * @param {Cost} cost Cost model to use for this upgrade
+     * @param {number} id - Unique ID among permanent upgrades
+     * @param {Currency} currency - Currency to use for this upgrade
+     * @param {Cost} cost - Cost model to use for this upgrade
      * @returns {Upgrade}
      */
     createPermanentUpgrade(id, currency, cost);
     
     /**
-     * @param {number} id Unique ID among milestone upgrades
-     * @param {number} maxLevel Max level of this upgrade
+     * @param {number} id - Unique ID among milestone upgrades
+     * @param {number} maxLevel - Max level of this upgrade
      * @returns {Upgrade}
      */
     createMilestoneUpgrade(id, maxLevel);
     
     /**
-     * @param {number} id Unique ID among permanent upgrades
-     * @param {Currency} currency Currency to use for this upgrade
-     * @param {number|BigNumber} cost Cost model to use for this upgrade
+     * @param {number} id - Unique ID among permanent upgrades
+     * @param {Currency} currency - Currency to use for this upgrade
+     * @param {number|BigNumber} cost - Cost model to use for this upgrade
      * @returns {Upgrade}
      */
     createPublicationUpgrade(id, currency, cost);
     
     /**
-     * @param {number} id Unique ID among permanent upgrades
-     * @param {Currency} currency Currency to use for this upgrade
-     * @param {number|BigNumber} cost Cost model to use for this upgrade
+     * @param {number} id - Unique ID among permanent upgrades
+     * @param {Currency} currency - Currency to use for this upgrade
+     * @param {number|BigNumber} cost - Cost model to use for this upgrade
      * @returns {Upgrade}
      */
     createBuyAllUpgrade(id, currency, cost);
     
     /**
-     * @param {number} id Unique ID among permanent upgrades
-     * @param {Currency} currency Currency to use for this upgrade
-     * @param {number|BigNumber} cost Cost model to use for this upgrade
+     * @param {number} id - Unique ID among permanent upgrades
+     * @param {Currency} currency - Currency to use for this upgrade
+     * @param {number|BigNumber} cost - Cost model to use for this upgrade
      * @returns {Upgrade}
      */
     createAutoBuyerUpgrade(id, currency, cost);
@@ -251,15 +251,15 @@ export class Theory {
     /**
      * Sets the progress needed to buy milestones.
      * The nth milestones will cost n*firstTarget
-     * @param {BigNumber} firstTarget Cost of the first milestone
+     * @param {BigNumber} firstTarget - Cost of the first milestone
      */
     setMilestoneProgress(firstTarget);
     
     /**
      * Sets the progress needed to buy milestones.
      * The nth milestones will cost firstTarget + (n-1) * step
-     * @param {BigNumber} firstTarget Cost of the first milestone
-     * @param {BigNumber} step Difference between subsequent milestones
+     * @param {BigNumber} firstTarget - Cost of the first milestone
+     * @param {BigNumber} step - Difference between subsequent milestones
      */
     setMilestoneProgress(firstTarget, step);
     
