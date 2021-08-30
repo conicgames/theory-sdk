@@ -29,8 +29,11 @@ export class BigNumber {
     /** @returns {BigNumber} */ static get ZERO();
     /** @returns {BigNumber} */ static get ONE();
     /** @returns {BigNumber} */ static get TWO();
+    /** @returns {BigNumber} */ static get THREE();
+    /** @returns {BigNumber} */ static get FIVE();
     /** @returns {BigNumber} */ static get TEN();
     /** @returns {BigNumber} */ static get HUNDRED();
+    /** @returns {BigNumber} */ static get THOUSAND();
     /** @returns {BigNumber} */ static get E();
     /** @returns {BigNumber} */ static get PI();
 

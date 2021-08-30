@@ -104,15 +104,15 @@ var init = () => {
 
     {
         qTerms = theory.createMilestoneUpgrade(0, 2);
-        qTerms.getDescription = (amount) => Localization.getUpgradeUnlockDesc(qTerms.level == 0 ? "q_3" : "q_4");
-        qTerms.getInfo = (amount) => Localization.getUpgradeUnlockInfo(qTerms.level == 0 ? "q_3" : "q_4");
+        qTerms.description = Localization.getUpgradeUnlockDesc(qTerms.level == 0 ? "q_3" : "q_4");
+        qTerms.info = Localization.getUpgradeUnlockInfo(qTerms.level == 0 ? "q_3" : "q_4");
         qTerms.boughtOrRefunded = (_) => updateAvailability();
     }
 
     {
         rTerms = theory.createMilestoneUpgrade(1, 2);
-        rTerms.getDescription = (amount) => Localization.getUpgradeUnlockDesc(rTerms.level == 0 ? "r_3" : "r_4");
-        rTerms.getInfo = (amount) => Localization.getUpgradeUnlockInfo(rTerms.level == 0 ? "r_3" : "r_4");
+        rTerms.description = Localization.getUpgradeUnlockDesc(rTerms.level == 0 ? "r_3" : "r_4");
+        rTerms.info = Localization.getUpgradeUnlockInfo(rTerms.level == 0 ? "r_3" : "r_4");
         rTerms.boughtOrRefunded = (_) => updateAvailability();
     }
 
