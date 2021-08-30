@@ -17,8 +17,9 @@ quaternaryEntries = [];
 var init = () => {
     currency = theory.createCurrency();
 
-    /////////////////////
+    ///////////////////
     // Regular Upgrades
+
     // q1
     {
         let getDesc = (level) => "\\dot{q}_1=" + getDQ1(level).toString(0) + "\\times q_2";
@@ -97,7 +98,7 @@ var init = () => {
     theory.createBuyAllUpgrade(1, currency, 1e18);
     theory.createAutoBuyerUpgrade(2, currency, 1e35);
 
-    /////////////////////
+    //////////////////////
     // Checkpoint Upgrades
     theory.setMilestoneProgress(1e25, 1e25);
 
@@ -117,15 +118,15 @@ var init = () => {
 
     {
         q1Exp = theory.createMilestoneUpgrade(2, 3);
-        q1Exp.getDescription = (amount) => Localization.getUpgradeIncCustomExpDesc("q_1", "0.05");
-        q1Exp.getInfo = (amount) => Localization.getUpgradeIncCustomExpInfo("q_1", "0.05");
+        q1Exp.description = Localization.getUpgradeIncCustomExpDesc("q_1", "0.05");
+        q1Exp.info = Localization.getUpgradeIncCustomExpInfo("q_1", "0.05");
         q1Exp.boughtOrRefunded = (_) => theory.invalidatePrimaryEquation();
     }
 
     {
         r1Exp = theory.createMilestoneUpgrade(3, 3);
-        r1Exp.getDescription = (amount) => Localization.getUpgradeIncCustomExpDesc("r_1", "0.05");
-        r1Exp.getInfo = (amount) => Localization.getUpgradeIncCustomExpInfo("r_1", "0.05");
+        r1Exp.description = Localization.getUpgradeIncCustomExpDesc("r_1", "0.05");
+        r1Exp.info = Localization.getUpgradeIncCustomExpInfo("r_1", "0.05");
         r1Exp.boughtOrRefunded = (_) => theory.invalidatePrimaryEquation();
     }
 
