@@ -1,4 +1,4 @@
-﻿import { ExponentialCost, FirstFreeCost } from "../api/Costs";
+﻿import { ExponentialCost, FirstFreeCost, LinearCost } from "../api/Costs";
 import { Localization } from "../api/Localization";
 import { parseBigNumber, BigNumber } from "../api/BigNumber";
 import { theory } from "../api/Theory";
@@ -89,7 +89,7 @@ var init = () => {
 
     ///////////////////////
     //// Milestone Upgrades
-    theory.setMilestoneProgress(1e25);
+    theory.setMilestoneCost(new LinearCost(25, 25));
 
     {
         c1Exp = theory.createMilestoneUpgrade(0, 3);
@@ -152,8 +152,8 @@ var tick = (elapsedTime, multiplier) => {
         let vc3 = getC3(c3.level);
         let vc4 = getC4(c4.level);
         let term1 = vc1 * vc2 * (logTerm.level > 0 ? BigNumber.ONE + rhoN.Max(BigNumber.ONE).log() / BigNumber.HUNDRED : BigNumber.ONE);
-        let term2 = c3Term.level > 0 ? (vc3 * rhoNm1.pow(BigNumber.from(0.2))) : BigNumber.ZERO;
-        let term3 = c4Term.level > 0 ? (vc4 * rhoNm2.pow(BigNumber.from(0.3))) : BigNumber.ZERO;
+        let term2 = c3Term.level > 0 ? (vc3 * rhoNm1.pow(0.2)) : BigNumber.ZERO;
+        let term3 = c4Term.level > 0 ? (vc4 * rhoNm2.pow(0.3)) : BigNumber.ZERO;
 
         currency.value = rhoN + bonus * tickPower * (term1 + term2 + term3) + epsilon;
 
@@ -201,8 +201,10 @@ var getPrimaryEquation = () => {
 var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho";
 var getTertiaryEquation = () => Localization.format(stringTickspeed, getTickspeed().toString(0));
 
-var getPublicationMultiplier = (tau) => tau.isZero ? BigNumber.ONE : tau.pow(BigNumber.from(0.164)) / BigNumber.from(3);
+var getPublicationMultiplier = (tau) => tau.isZero ? 1 : tau.pow(0.164) / BigNumber.THREE;
 var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.164}}{3}";
+var getTau = () => currency.value;
+var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
 
 var postPublish = () => {
     time = 0;
@@ -213,12 +215,12 @@ var postPublish = () => {
 }
 
 var getQ1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
-var getQ2 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
+var getQ2 = (level) => BigNumber.TWO.pow(level);
 var getC1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 1);
 var getC1Exponent = (level) => BigNumber.from(1 + 0.05 * level);
-var getC2 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
-var getC3 = (level) => BigNumber.TEN.pow(BigNumber.from(level));
-var getC4 = (level) => BigNumber.TEN.pow(BigNumber.from(level));
+var getC2 = (level) => BigNumber.TWO.pow(level);
+var getC3 = (level) => BigNumber.TEN.pow(level);
+var getC4 = (level) => BigNumber.TEN.pow(level);
 var getTickspeed = () => getQ1(q1.level) * getQ2(q2.level);
 
 init();

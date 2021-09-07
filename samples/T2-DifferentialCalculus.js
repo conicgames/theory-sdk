@@ -100,19 +100,19 @@ var init = () => {
 
     //////////////////////
     // Checkpoint Upgrades
-    theory.setMilestoneProgress(1e25, 1e25);
+    theory.setMilestoneCost(new LinearCost(25, 25));
 
     {
         qTerms = theory.createMilestoneUpgrade(0, 2);
-        qTerms.description = Localization.getUpgradeUnlockDesc(qTerms.level == 0 ? "q_3" : "q_4");
-        qTerms.info = Localization.getUpgradeUnlockInfo(qTerms.level == 0 ? "q_3" : "q_4");
+        qTerms.getDescription = (_) => Localization.getUpgradeUnlockDesc(qTerms.level == 0 ? "q_3" : "q_4");
+        qTerms.getInfo = (_) => Localization.getUpgradeUnlockInfo(qTerms.level == 0 ? "q_3" : "q_4");
         qTerms.boughtOrRefunded = (_) => updateAvailability();
     }
 
     {
         rTerms = theory.createMilestoneUpgrade(1, 2);
-        rTerms.description = Localization.getUpgradeUnlockDesc(rTerms.level == 0 ? "r_3" : "r_4");
-        rTerms.info = Localization.getUpgradeUnlockInfo(rTerms.level == 0 ? "r_3" : "r_4");
+        rTerms.getDescription = (_) => Localization.getUpgradeUnlockDesc(rTerms.level == 0 ? "r_3" : "r_4");
+        rTerms.getInfo = (_) => Localization.getUpgradeUnlockInfo(rTerms.level == 0 ? "r_3" : "r_4");
         rTerms.boughtOrRefunded = (_) => updateAvailability();
     }
 
@@ -154,8 +154,8 @@ var tick = (elapsedTime, multiplier) => {
     if (rTerms.level > 0) r3 = r3 + dt * getDR3(dr3.level) * (rTerms.level > 1 ? r4 : BigNumber.ONE);
     if (rTerms.level > 1) r4 = r4 + dt * getDR4(dr4.level);
 
-    currency.value = currency.value + bonus * dt * (q1.pow(getQ1Exp(q1Exp.level)) *
-                                                    r1.pow(getR1Exp(r1Exp.level)));
+    currency.value += bonus * dt * (q1.pow(getQ1Exp(q1Exp.level)) *
+                                    r1.pow(getR1Exp(r1Exp.level)));
 
     theory.invalidateQuaternaryValues();
 }
@@ -228,8 +228,10 @@ var getQuaternaryValues = () => {
     return quaternaryEntries;
 }
 
-var getPublicationMultiplier = (tau) => tau.isZero ? BigNumber.ONE : tau.pow(BigNumber.from(0.198)) / BigNumber.from(100);
+var getPublicationMultiplier = (tau) => tau.isZero ? 1 : tau.pow(0.198) / BigNumber.HUNDRED;
 var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.198}}{100}";
+var getTau = () => currency.value;
+var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
 
 var getDQ1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
 var getDQ2 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);

@@ -71,7 +71,7 @@ var init = () => {
 
     /////////////////////
     // Checkpoint Upgrades
-    theory.setMilestoneProgress(1e25);
+    theory.setMilestoneCost(new LinearCost(25, 25));
 
     {
         q1Exp = theory.createMilestoneUpgrade(0, 3);
@@ -115,7 +115,7 @@ var tick = (elapsedTime, multiplier) => {
 
     q = q + dq.max(BigNumber.ZERO);
     q = q.min(vc2 * vc3);
-    currency.value = currency.value + bonus * vq1 * vq2 * q * dt;
+    currency.value += bonus * vq1 * vq2 * q * dt;
 
     theory.invalidateTertiaryEquation();
 }
@@ -157,14 +157,16 @@ var getPrimaryEquation = () => {
 var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho";
 var getTertiaryEquation = () => "q=" + q.toString();
 
-var getPublicationMultiplier = (tau) => tau.isZero ? BigNumber.ONE : tau.pow(BigNumber.from(0.159));
+var getPublicationMultiplier = (tau) => tau.isZero ? 1 : tau.pow(0.159);
 var getPublicationMultiplierFormula = (symbol) => "{" + symbol + "}^{0.159}";
+var getTau = () => currency.value;
+var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
 
 var getQ1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
-var getQ2 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
+var getQ2 = (level) => BigNumber.TWO.pow(level);
 var getC1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 1);
-var getC2 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
-var getC3 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
+var getC2 = (level) => BigNumber.TWO.pow(level);
+var getC3 = (level) => BigNumber.TWO.pow(level);
 var getQ1Exp = (level) => BigNumber.from(1 + level * 0.05);
 var getC3Exp = (level) => BigNumber.from(1 + level * 0.05);
 

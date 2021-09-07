@@ -18,6 +18,11 @@ export class Localization {
     static get(id);
 
     /**
+     * @returns {boolean} Is the current active language Right-to-Left?
+     */
+    static get isRTL();
+
+    /**
      * Sentence: "Unlock {term}"
      * @param {String} term
      * @returns {String}

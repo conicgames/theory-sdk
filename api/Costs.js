@@ -73,3 +73,15 @@ export class ExponentialCost extends Cost {
      */
     constructor(initialCost, progress);
 }
+
+/**
+ * Cost model for an upgrade that increases following
+ * a custom cost function.
+ */
+export class CustomCost extends Cost {
+    /**
+     * @constructor
+     * @param {function(number):BigNumber} costFunction - Function returning the cost of a given level (not cumulative).
+     */
+    constructor(costFunction);
+}

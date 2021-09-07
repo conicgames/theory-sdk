@@ -11,18 +11,6 @@ var id;
 var name;
 
 /**
- * The API level used by this script.
- * @global {String}
- */
-var api;
-
-/**
- * The version of the script. Used for backward compatibility.
- * @global {String}
- */
-var version;
-
-/**
  * Update the availability of each upgrade using their dependencies.
  */
 function updateAvailability();
@@ -66,15 +54,16 @@ function getQuaternaryValues();
 function isCurrencyVisible(index);
 
 /**
- * Informs the game to use the 3D visualization instead of the 2D graph.
- * @returns {boolean}
+ * Defining this function activates 2D visualization.
+ * Note: the point must be in the range [-3.4e38, 3.4e38] (single-precision floating point number)
+ * @returns {number} Current graph value
  */
-function use3DGraph();
+function get2DGraphValue();
 
 /**
- * When using the 3D visualization, returns the current point to display.
- * Rescale your points to stay as much as possible in the range [-1,1]^3
- * @returns {Vector3}
+ * Defining this function activates 3D visualization.
+ * Note: Rescale your points to stay as much as possible in the range [-1,1]^3
+ * @returns {Vector3} Current point to display
  */
 function get3DGraphPoint();
 
@@ -97,6 +86,12 @@ function getPublicationMultiplier(tau);
  * @returns {BigNumber}
  */
 function getTau();
+
+/**
+ * Returns an number between 0 and 100 for the current completion of the theory.
+ * @returns {BigNumber}
+ */
+function getCompletion();
 
 /**
  * Called right before publishing.
@@ -123,3 +118,43 @@ function getInternalState();
  * @param {String} state
  */
 function setInternalState(state);
+
+/**
+ * Called right before starting a theory
+ */
+function resume();
+
+/**
+ * @returns {string} The message to display in the confirmation box.
+ */
+function getResetStageMessage();
+
+/**
+ * @returns {boolean} Is the "reset" icon displayed
+ */
+function canResetStage();
+
+/**
+ * Resets the current stage
+ */
+function resetStage();
+
+/**
+ * @returns {boolean} Is the left arrow is displayed?
+ */
+function canGoToPreviousStage();
+
+/**
+ * @returns {boolean} Is the right arrow is displayed?
+ */
+function canGoToNextStage();
+
+/**
+ * Change the current stage
+ */
+function goToPreviousStage();
+
+/**
+ * Change the current stage
+ */
+function goToNextStage();

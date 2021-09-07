@@ -111,7 +111,7 @@ var init = () => {
 
     //////////////////////
     // Checkpoint Upgrades
-    theory.setMilestoneProgress(1e25);
+    theory.setMilestoneCost(new LinearCost(25, 25));
 
     {
         dimension = theory.createMilestoneUpgrade(0, 1);
@@ -259,27 +259,29 @@ var getTertiaryEquation = () => {
     let result = "";
 
     result += "\\begin{matrix}q=";
-    result += q;
+    result += q.toString();
     if (dimension.level > 0) { result += ",&r="; result += r; }
     result += ",&C=";
-    result += C;
+    result += C.toString();
     result += "\\end{matrix}";
 
     return result;
 }
 
-var getPublicationMultiplier = (tau) => tau.isZero ? BigNumber.ONE : tau.pow(BigNumber.from(0.196)) / BigNumber.from(50);
+var getPublicationMultiplier = (tau) => tau.isZero ? 1 : tau.pow(0.196) / 50;
 var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.196}}{50}";
+var getTau = () => currency.value;
+var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
 
 var getQ1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
-var getQ2 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
+var getQ2 = (level) => BigNumber.TWO.pow(level);
 var getR1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
-var getR2 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
+var getR2 = (level) => BigNumber.TWO.pow(level);
 var getC1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 1);
-var getC2 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
+var getC2 = (level) => BigNumber.TWO.pow(level);
 var getC3 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
-var getC4 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
-var getC5 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
+var getC4 = (level) => BigNumber.TWO.pow(level);
+var getC5 = (level) => BigNumber.TWO.pow(level);
 var getC1Exp = (level) => BigNumber.from(1 + level * 0.05);
 
 init();

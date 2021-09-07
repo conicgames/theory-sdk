@@ -100,12 +100,12 @@ var init = () => {
 
     /////////////////////
     // Checkpoint Upgrades
-    theory.setMilestoneProgress(1e25);
+    theory.setMilestoneCost(new LinearCost(25, 25));
 
     {
         terms = theory.createMilestoneUpgrade(0, 3);
-        terms.description = Localization.getUpgradeAddTermDesc(terms.level == 0 ? "q^2" : terms.level == 1 ? "q^3" : "q^4");
-        terms.info = Localization.getUpgradeAddTermInfo(terms.level == 0 ? "q^2" : terms.level == 1 ? "q^3" : "q^4");
+        terms.getDescription = (_) => Localization.getUpgradeAddTermDesc(terms.level == 0 ? "q^2" : terms.level == 1 ? "q^3" : "q^4");
+        terms.getInfo = (_) => Localization.getUpgradeAddTermInfo(terms.level == 0 ? "q^2" : terms.level == 1 ? "q^3" : "q^4");
         terms.boughtOrRefunded = (_) => { theory.invalidatePrimaryEquation(); updateAvailability(); }
     }
 
@@ -146,7 +146,7 @@ var tick = (elapsedTime, multiplier) => {
     let q1q2 = vq1 * vq2;
 
     let p = (q + BigNumber.ONE).Square() - BigNumber.ONE;
-    q = (BigNumber.ONE + p + BigNumber.TWO.pow(BigNumber.from(1 + multQDot.level)) * q1q2 * dt).sqrt() - BigNumber.ONE;
+    q = (BigNumber.ONE + p + BigNumber.TWO.pow(1 + multQDot.level) * q1q2 * dt).sqrt() - BigNumber.ONE;
     let qe2 = q * q;
     let qe3 = qe2 * q;
     let qe4 = qe3 * q;
@@ -158,7 +158,7 @@ var tick = (elapsedTime, multiplier) => {
     let term5 = terms.level > 2 ? vc6 * qe4 : BigNumber.ZERO;
     let bonus = theory.publicationMultiplier;
 
-    currency.value = currency.value + bonus * dt * (term1 + term2 + term3 + term4 + term5);
+    currency.value += bonus * dt * (term1 + term2 + term3 + term4 + term5);
 
     theory.invalidateTertiaryEquation();
 }
@@ -207,17 +207,19 @@ var getSecondaryEquation = () => {
 
 var getTertiaryEquation = () => "q=" + q.toString();
 
-var getPublicationMultiplier = (tau) => tau.isZero ? BigNumber.ONE : tau.pow(BigNumber.from(0.165)) / BigNumber.from(4);
+var getPublicationMultiplier = (tau) => tau.isZero ? 1 : tau.pow(0.165) / BigNumber.FOUR;
 var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.165}}{4}";
+var getTau = () => currency.value;
+var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
 
 var getC1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
-var getC2 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
-var getC3 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
-var getC4 = (level) => BigNumber.THREE.pow(BigNumber.from(level));
-var getC5 = (level) => BigNumber.FIVE.pow(BigNumber.from(level));
-var getC6 = (level) => BigNumber.TEN.pow(BigNumber.from(level));
+var getC2 = (level) => BigNumber.TWO.pow(level);
+var getC3 = (level) => BigNumber.TWO.pow(level);
+var getC4 = (level) => BigNumber.THREE.pow(level);
+var getC5 = (level) => BigNumber.FIVE.pow(level);
+var getC6 = (level) => BigNumber.TEN.pow(level);
 var getQ1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
-var getQ2 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
+var getQ2 = (level) => BigNumber.TWO.pow(level);
 var getC1Exp = (level) => BigNumber.from(1 + level * 0.15);
 
 init();

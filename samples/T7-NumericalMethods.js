@@ -88,7 +88,7 @@ var init = () => {
 
     //////////////////////
     // Checkpoint Upgrades
-    theory.setMilestoneProgress(1e25);
+    theory.setMilestoneCost(new LinearCost(25, 25));
 
     {
         dimension = theory.createMilestoneUpgrade(0, 1);
@@ -138,8 +138,6 @@ var updateAvailability = () => {
     r1r2Term.isAvailable = dimension.level > 0;
 }
 
-var isCurrencyVisible = (index) => index == 0 || (index == 1 && dimension.level > 0);
-
 var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
     let bonus = theory.publicationMultiplier;
@@ -163,8 +161,8 @@ var tick = (elapsedTime, multiplier) => {
     let drho23 = r1r2Term.level > 0 ? (BigNumber.HALF * vc6 * rho1Sqrt / rho2Sqrt).min(rho2 * BigNumber.HUNDRED) : BigNumber.ZERO;
     let dtq1bonus = dt * vq1 * bonus;
 
-    currency1.value = currency1.value + dtq1bonus * (drho11 + drho12 + drho13);
-    currency2.value = currency2.value + dtq1bonus * (drho21 + drho22 + drho23);
+    currency1.value += dtq1bonus * (drho11 + drho12 + drho13);
+    currency2.value += dtq1bonus * (drho21 + drho22 + drho23);
 }
 
 var getPrimaryEquation = () => {
@@ -205,16 +203,19 @@ var getSecondaryEquation = () => {
     return result;
 }
 
-var getPublicationMultiplier = (tau) => tau.isZero ? BigNumber.ONE : tau.pow(BigNumber.from(0.152));
+var isCurrencyVisible = (index) => index == 0 || (index == 1 && dimension.level > 0);
+var getPublicationMultiplier = (tau) => tau.isZero ? 1 : tau.pow(0.152);
 var getPublicationMultiplierFormula = (symbol) => "{" + symbol + "}^{0.152}";
+var getTau = () => currency1.value;
+var get2DGraphValue = () => currency1.value.sign * (BigNumber.ONE + currency1.value.abs()).log10().toNumber();
 
 var getQ1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
 var getC1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 1);
-var getC2 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
-var getC3 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
-var getC4 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
-var getC5 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
-var getC6 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
+var getC2 = (level) => BigNumber.TWO.pow(level);
+var getC3 = (level) => BigNumber.TWO.pow(level);
+var getC4 = (level) => BigNumber.TWO.pow(level);
+var getC5 = (level) => BigNumber.TWO.pow(level);
+var getC6 = (level) => BigNumber.TWO.pow(level);
 var getC1Exp = (level) => BigNumber.from(1 + level * 0.05);
 
 init();

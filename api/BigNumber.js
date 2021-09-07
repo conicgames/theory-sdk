@@ -30,7 +30,12 @@ export class BigNumber {
     /** @returns {BigNumber} */ static get ONE();
     /** @returns {BigNumber} */ static get TWO();
     /** @returns {BigNumber} */ static get THREE();
+    /** @returns {BigNumber} */ static get FOUR();
     /** @returns {BigNumber} */ static get FIVE();
+    /** @returns {BigNumber} */ static get SIX();
+    /** @returns {BigNumber} */ static get SEVEN();
+    /** @returns {BigNumber} */ static get EIGHT();
+    /** @returns {BigNumber} */ static get NINE();
     /** @returns {BigNumber} */ static get TEN();
     /** @returns {BigNumber} */ static get HUNDRED();
     /** @returns {BigNumber} */ static get THOUSAND();
@@ -57,6 +62,11 @@ export class BigNumber {
      * @returns {BigNumber} A copy of the instance
      */
     clone();
+
+    /**
+     * @returns {number} -1, 0, or 1
+     */
+    get sign();
 
     /**
      * @param {BigNumber} value
@@ -112,26 +122,39 @@ export class BigNumber {
     abs();
 
     /**
-     * This only applies to values less than 1e6.
+     * Note: This only applies to values less than 1e6.
      * @returns {BigNumber} Nearest integer
      */
     round();
 
     /**
-     * This only applies to values less than 1e6
+     * Note: This only applies to values less than 1e6
      * @returns {BigNumber} Greatest integer less than or equal to 'this'
      */
     floor();
 
     /**
-     * This only applies to values less than 1e6
+     * Note: This only applies to values less than 1e6
      * @returns {BigNumber} Least integer greater than or equal to 'this'
      */
     ceil();
 
     /**
-     * Convert a BigNumber to a native number. If 'this' cannot be contained
-     * in a native number, 'infinity' is returned.
+     * Note: Only applies to numbers in [-1.79e308, 1.79e308]. Returns 1 otherwise.
+     * @returns {BigNumber} Cosine of the number.
+     */
+    cos();
+
+    /**
+     * Note: Only applies to numbers in [-1.79e308, 1.79e308]. Returns 0 otherwise.
+     * @returns {BigNumber} Sine of the number.
+     */
+    sin();
+
+    /**
+     * Convert a BigNumber to a native JS number. If 'this' cannot be contained
+     * in a native number, Number.POSITIVE_INFINITY or Number.NEGATIVE_INFINITY
+     * is returned depending on the sign of the number.
      * @returns {number}
      */
     toNumber();

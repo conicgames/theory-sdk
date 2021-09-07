@@ -137,7 +137,7 @@ var init = () => {
 
     /////////////////////
     // Checkpoint Upgrades
-    theory.setMilestoneProgress(1e25);
+    theory.setMilestoneCost(new LinearCost(25, 25));
 
     {
         dimension = theory.createMilestoneUpgrade(0, 1);
@@ -198,9 +198,9 @@ var tick = (elapsedTime, multiplier) => {
     let vb2 = getB2(b2.level).pow(getB2Exp(b2Exp.level));
     let vb3 = getB3(b3.level).pow(getB3Exp(b3Exp.level));
 
-    currency1.value = currency1.value + dt * bonus * (vc11 * vb1 + vc12 * vb2 + vc13 * vb3);
-    currency2.value = currency2.value + dt * bonus * (vc21 * vb1 + vc22 * vb2 + vc23 * vb3);
-    currency3.value = currency3.value + dt * bonus * (vc31 * vb1 + vc32 * vb2 + vc33 * vb3);
+    currency1.value += dt * bonus * (vc11 * vb1 + vc12 * vb2 + vc13 * vb3);
+    currency2.value += dt * bonus * (vc21 * vb1 + vc22 * vb2 + vc23 * vb3);
+    currency3.value += dt * bonus * (vc31 * vb1 + vc32 * vb2 + vc33 * vb3);
 }
 
 var getPrimaryEquation = () => {
@@ -237,18 +237,20 @@ var getSecondaryEquation = () => {
 }
 
 var isCurrencyVisible = (index) => index < 2 || (index == 2 && dimension.level > 0);
-var getPublicationMultiplier = (tau) => tau.isZero ? BigNumber.ONE : tau.pow(BigNumber.from(0.147)) * BigNumber.from(3);
+var getPublicationMultiplier = (tau) => tau.isZero ? 1 : tau.pow(0.147) * BigNumber.THREE;
 var getPublicationMultiplierFormula = (symbol) => "3{" + symbol + "}^{0.147}";
+var getTau = () => currency1.value;
+var get2DGraphValue = () => currency1.value.sign * (BigNumber.ONE + currency1.value.abs()).log10().toNumber();
 
-var getC11 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
-var getC12 = (level) => BigNumber.TWO.pow(BigNumber.from(level)) - BigNumber.ONE;
-var getC13 = (level) => BigNumber.TWO.pow(BigNumber.from(level)) - BigNumber.ONE;
-var getC21 = (level) => BigNumber.TWO.pow(BigNumber.from(level)) - BigNumber.ONE;
-var getC22 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
-var getC23 = (level) => BigNumber.TWO.pow(BigNumber.from(level)) - BigNumber.ONE;
-var getC31 = (level) => BigNumber.TWO.pow(BigNumber.from(level)) - BigNumber.ONE;
-var getC32 = (level) => BigNumber.TWO.pow(BigNumber.from(level)) - BigNumber.ONE;
-var getC33 = (level) => BigNumber.TWO.pow(BigNumber.from(level));
+var getC11 = (level) => BigNumber.TWO.pow(level);
+var getC12 = (level) => BigNumber.TWO.pow(level) - BigNumber.ONE;
+var getC13 = (level) => BigNumber.TWO.pow(level) - BigNumber.ONE;
+var getC21 = (level) => BigNumber.TWO.pow(level) - BigNumber.ONE;
+var getC22 = (level) => BigNumber.TWO.pow(level);
+var getC23 = (level) => BigNumber.TWO.pow(level) - BigNumber.ONE;
+var getC31 = (level) => BigNumber.TWO.pow(level) - BigNumber.ONE;
+var getC32 = (level) => BigNumber.TWO.pow(level) - BigNumber.ONE;
+var getC33 = (level) => BigNumber.TWO.pow(level);
 var getB1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
 var getB2 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
 var getB3 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);

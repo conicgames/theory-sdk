@@ -197,9 +197,12 @@ export class Theory {
 
     /**
      * Creates a new currency
+     * Note: If multiple currency use the same symbol, the game will append a subscript
+     * @param {string} [symbol] - The ASCII symbol for the currency - Default: "ρ"
+     * @param {string} [latexSymbol] - The LaTeX symbol for the currency - Default: "\\rho"
      * @returns {Currency}
      */
-    createCurrency();
+    createCurrency(symbol, latexSymbol);
     
     /**
      * @param {number} id - Unique ID among regular upgrades
@@ -223,6 +226,17 @@ export class Theory {
      * @returns {Upgrade}
      */
     createMilestoneUpgrade(id, maxLevel);
+    
+    /**
+     * A singular upgrade is an upgrade shown separately at the
+     * top of the regular upgrades, like the "Prove Lemma" upgrade
+     * in the theory "Convergence Test"
+     * @param {number} id - Unique ID among singular upgraades
+     * @param {Currency} currency - Currency to use for this upgrade
+     * @param {Cost} cost - Cost model to use for this upgrade
+     * @returns {Upgrade}
+     */
+    createSingularUpgrade(id, currency, cost);
     
     /**
      * @param {number} id - Unique ID among permanent upgrades
@@ -249,19 +263,13 @@ export class Theory {
     createAutoBuyerUpgrade(id, currency, cost);
     
     /**
-     * Sets the progress needed to buy milestones.
-     * The nth milestones will cost n*firstTarget
-     * @param {BigNumber} firstTarget - Cost of the first milestone
+     * Sets the progress needed to buy milestones in logarithmic space.
+     * The nth milestones will cost 10^cost.getCost(n-1).
+     * For example, use "new LinearCost(25, 20)" to get
+     * milestones at 1e25, 1e45, 1e65, etc.
+     * @param {Cost} cost - Cost model for milestone upgrades.
      */
-    setMilestoneProgress(firstTarget);
-    
-    /**
-     * Sets the progress needed to buy milestones.
-     * The nth milestones will cost firstTarget + (n-1) * step
-     * @param {BigNumber} firstTarget - Cost of the first milestone
-     * @param {BigNumber} step - Difference between subsequent milestones
-     */
-    setMilestoneProgress(firstTarget, step);
+    setMilestoneCost(cost);
     
     /**
      * Force refresh the primary equation. (Main formula)
@@ -282,6 +290,11 @@ export class Theory {
      * Force refresh the quaternary value list. (List of values on the right side, e.g., Differential Calculus)
      */
     invalidateQuaternaryValues();
+
+    /**
+     * Clears the graph
+     */
+    clearGraph();
 
     /**
      * Performs a "Publication".
