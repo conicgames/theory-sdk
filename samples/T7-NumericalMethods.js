@@ -204,7 +204,7 @@ var getSecondaryEquation = () => {
 }
 
 var isCurrencyVisible = (index) => index == 0 || (index == 1 && dimension.level > 0);
-var getPublicationMultiplier = (tau) => tau.isZero ? 1 : tau.pow(0.152);
+var getPublicationMultiplier = (tau) => tau.pow(0.152);
 var getPublicationMultiplierFormula = (symbol) => "{" + symbol + "}^{0.152}";
 var getTau = () => currency1.value;
 var get2DGraphValue = () => currency1.value.sign * (BigNumber.ONE + currency1.value.abs()).log10().toNumber();

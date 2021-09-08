@@ -75,7 +75,7 @@ function getPublicationMultiplierFormula(symbol);
 
 /**
  * @param {BigNumber} tau - Tau value at which the publication multiplier should be calculated
- * @returns {BigNumber} Publication multiplier
+ * @returns {BigNumber} Publication multiplier. Note: The result will be clamped to [1,∞)
  */
 function getPublicationMultiplier(tau);
 
@@ -83,7 +83,7 @@ function getPublicationMultiplier(tau);
  * Given the current state of the game, returns the value that tau should have.
  * The game keeps the maximum between the current value of tau and the value
  * returned by this function.
- * @returns {BigNumber}
+ * @returns {BigNumber} Note: The result will be clamped to [0,∞)
  */
 function getTau();
 

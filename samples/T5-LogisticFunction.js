@@ -157,7 +157,7 @@ var getPrimaryEquation = () => {
 var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho";
 var getTertiaryEquation = () => "q=" + q.toString();
 
-var getPublicationMultiplier = (tau) => tau.isZero ? 1 : tau.pow(0.159);
+var getPublicationMultiplier = (tau) => tau.pow(0.159);
 var getPublicationMultiplierFormula = (symbol) => "{" + symbol + "}^{0.159}";
 var getTau = () => currency.value;
 var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();

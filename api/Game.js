@@ -13,7 +13,7 @@ import { Upgrade, Variable } from "./Upgrades";
 export class Game {
     constructor() {
         /**
-         * @type {Theory} The currently active theory. Can be set to null.
+         * @type {Theory} The currently active theory. Set to null to stop the current theory.
          * @public
          */
         this.activeTheory;

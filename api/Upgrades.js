@@ -50,7 +50,9 @@ export class Upgrade {
 
         /**
          * Current level of the upgrade. Default: 0.
-         * Note: Can only be modified within a custom theory
+         * Notes:
+         *  - Can only be modified within a custom theory.
+         *  - Cannot be negative or lower than maxLevel 
          * @type {number}
          * @public
          */
@@ -58,7 +60,9 @@ export class Upgrade {
 
         /**
          * Maximum level of the upgrade. Default: Max integer.
-         * Note: Can only be modified within a custom theory
+         * Notes:
+         *  - Can only be modified within a custom theory.
+         *  - Cannot be negative or lower than the current level 
          * @type {number}
          * @public
          */

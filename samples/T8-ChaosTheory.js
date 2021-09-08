@@ -234,7 +234,7 @@ var getTertiaryEquation = () => {
 
 var getCoordString = (x) => x.toFixed(x >= 0 ? (x < 10 ? 3 : 2) : (x <= -10 ? 1 : 2));
 
-var getPublicationMultiplier = (tau) => tau.isZero ? 1 : tau.pow(0.15);
+var getPublicationMultiplier = (tau) => tau.pow(0.15);
 var getPublicationMultiplierFormula = (symbol) => "{" + symbol + "}^{0.15}";
 var getTau = () => currency.value;
 var get3DGraphPoint = () => swizzles[equation.level]((state - center) * scale);
