@@ -53,6 +53,8 @@ export class Upgrade {
          * Notes:
          *  - Can only be modified within a custom theory.
          *  - Cannot be negative or lower than maxLevel 
+         *  - When set, 'bought', 'refunded', 'boughtOrRefunded'
+         *    will be called depending on the previous level.
          * @type {number}
          * @public
          */

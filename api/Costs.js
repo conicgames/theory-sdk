@@ -75,6 +75,40 @@ export class ExponentialCost extends Cost {
 }
 
 /**
+ * Cost model for an upgrade that repeats the same cost
+ * before going to the next level. The implementation
+ * is equivalent to cost.getCost(Math.floor(level/stepSize)).
+ */
+export class StepwiseCost extends Cost {
+    /**
+     * @constructor
+     * @param {Cost} cost - Cost model
+     * @param {number} stepSize - Number of repetition of the same cost level
+     */
+    constructor(cost, stepSize);
+}
+
+/**
+ * Cost model for an upgrade that initially follows a cost
+ * model, and then switches to another one.
+ * Note that when level == maxFirstCostLevel, the second cost
+ * model will be called as if the level was 0. For example:
+ *   let firstCost = new FreeCost()
+ *   let secondCost = new LinearCost(1, 1)
+ *   let cost = new CompositeCost(10, firstCost, secondCost)
+ * cost.getCost(10) is equivalent to secondCost.getCost(0).
+ */
+ export class CompositeCost extends Cost {
+    /**
+     * @constructor
+     * @param {number} maxfirstCostLevel - Amount of level used for the first cost model
+     * @param {Cost} firstCost - Cost model to use when level < maxfirstCostLevel
+     * @param {Cost} secondCost - Cost model to use when level >= maxfirstCostLevel
+     */
+    constructor(maxfirstCostLevel, firstCost, secondCost);
+}
+
+/**
  * Cost model for an upgrade that increases following
  * a custom cost function.
  */

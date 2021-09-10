@@ -874,8 +874,8 @@ var resetStage = () => {
 }
 
 var canGoToPreviousStage = () => lemma.level > 0 && provedLemmas == lemmaCount;
-var goToPreviousStage = () => lemma.refund(1);
+var goToPreviousStage = () => lemma.level -= 1;
 var canGoToNextStage = () => lemma.level < provedLemmas;
-var goToNextStage = () => lemma.buy(1);
+var goToNextStage = () => lemma.level += 1;
 
 init();

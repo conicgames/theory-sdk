@@ -1,4 +1,4 @@
-﻿import { ConstantCost, CustomCost, ExponentialCost, FirstFreeCost, FreeCost, LinearCost } from "./api/Costs";
+﻿import { CompositeCost, ConstantCost, CustomCost, ExponentialCost, FirstFreeCost, FreeCost, LinearCost, StepwiseCost } from "./api/Costs";
 import { Localization } from "./api/Localization";
 import { parseBigNumber, BigNumber } from "./api/BigNumber";
 import { theory } from "./api/Theory";
@@ -29,7 +29,7 @@ var init = () => {
     {
         let getDesc = (level) => "c_2=2^{" + level + "}";
         let getInfo = (level) => "c_2=" + getC2(level).toString(0);
-        c2 = theory.createUpgrade(1, currency, new ExponentialCost(40, Math.log2(10)));
+        c2 = theory.createUpgrade(1, currency, new ExponentialCost(5, Math.log2(10)));
         c2.getDescription = (_) => Utils.getMath(getDesc(c2.level));
         c2.getInfo = (amount) => Utils.getMathTo(getInfo(c2.level), getInfo(c2.level + amount));
     }
@@ -94,7 +94,7 @@ var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.16
 var getTau = () => currency.value;
 var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
 
-var getC1 = (level) => Utils.getStepwisePowerSum(level, Infinity, 10, 0);
+var getC1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
 var getC2 = (level) => BigNumber.TWO.pow(level);
 var getC1Exponent = (level) => BigNumber.from(1 + 0.05 * level);
 var getC2Exponent = (level) => BigNumber.from(1 + 0.05 * level);
