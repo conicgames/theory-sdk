@@ -149,11 +149,16 @@ export class Game {
      * @returns {Achievement[]} List of all achievements
      */
     get achievements();
-    
+
     /**
      * @returns {StoryChapter[]} List of all story chapters
      */
     get storyChapters();
+    
+    /**
+     * @returns {Story} Story chapters
+     */
+    get story();
     
     /**
      * @returns {Automation} Automation features
@@ -207,6 +212,28 @@ export class Game {
      * @param {number} amount - Amount to refund
      */
     refund(upgrades, amount);
+    
+    /**
+     * Creates your own achievement.
+     * Note: You are responsible for serializing and deserializing the "isUnlocked" state.
+     * @param {string} name - Name of the achievement
+     * @param {string} description - Description of the achievement.
+     * @param {string} hint - Hint of the achievement.
+     * @param {function():boolean} unlockCondition - Function returning if the achievement can be unlocked. Checks every second. Stops being called once it is unlocked.
+     * @param {function():number} [progress] - Function returning if the progress towards the achievement. In [0, 1].
+     * @returns {Achievement}
+     */
+    createAchievement(name, description, hint, unlockCondition, progress);
+    
+    /**
+     * Creates your own story chapter.
+     * Note: You are responsible for serializing and deserializing the "isUnlocked" state.
+     * @param {string} title - Title of the chapter
+     * @param {string} text - Text of the chapter. You need to split lines yourself using '\n'.
+     * @param {function():boolean} unlockCondition - Function returning if the chapter can be unlocked. Checks every second. Stops being called once it is unlocked.
+     * @returns {StoryChapter}
+     */
+    createStoryChapter(title, text, unlockCondition);
 }
 
 /**

@@ -1,7 +1,8 @@
-﻿import { CompositeCost, ConstantCost, CustomCost, ExponentialCost, FirstFreeCost, FreeCost, LinearCost, StepwiseCost } from "./api/Costs";
+﻿import { ExponentialCost, FirstFreeCost, LinearCost } from "./api/Costs";
 import { Localization } from "./api/Localization";
 import { parseBigNumber, BigNumber } from "./api/BigNumber";
 import { theory } from "./api/Theory";
+import { StoryChapter } from "./api/StoryChapter"
 import { Utils } from "./api/Utils";
 
 var id = "my_custom_theory_id";
@@ -10,6 +11,9 @@ var name = "My Custom Theory";
 var currency;
 var c1, c2;
 var c1Exp, c2Exp;
+
+var achievement1, achievement2;
+var chapter1, chapter2;
 
 var init = () => {
     currency = theory.createCurrency();
@@ -57,6 +61,16 @@ var init = () => {
         c2Exp.info = Localization.getUpgradeIncCustomExpInfo("c_2", "0.05");
         c2Exp.boughtOrRefunded = (_) => theory.invalidatePrimaryEquation();
     }
+    
+    /////////////////
+    //// Achievements
+    achievement1 = game.createAchievement("Achievement 1", "Description 1", "Hint 1", () => c1.level > 1);
+    achievement2 = game.createAchievement("Achievement 2", "Description 2", "Hint 2", () => c2.level > 1);
+
+    ///////////////////
+    //// Story chapters
+    chapter1 = game.createStoryChapter("My First Chapter", "This is line 1,\nand this is line 2.\n\nNice.", () => c1.level > 0);
+    chapter2 = game.createStoryChapter("My Second Chapter", "This is line 1 again,\nand this is line 2... again.\n\nNice again.", () => c2.level > 0);
 
     updateAvailability();
 }
@@ -93,6 +107,25 @@ var getPublicationMultiplier = (tau) => tau.pow(0.164) / BigNumber.THREE;
 var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.164}}{3}";
 var getTau = () => currency.value;
 var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
+
+var getInternalState = () => {
+    return "a" + (achievement1.isUnlocked ? "1" : "") +
+                 (achievement1.isUnlocked ? "2" : "") +
+           " c" + (chapter1.isUnlocked ? "1" : "") +
+                  (chapter2.isUnlocked ? "2" : "");
+}
+
+var setInternalState = (state) => {
+    let values = state.split(" ");
+    if (values.length > 0) {
+        achievement1.isUnlocked = values[0].includes("1");
+        achievement2.isUnlocked = values[0].includes("2");
+    }
+    if (values.length > 1) {
+        chapter1.isUnlocked = values[1].includes("1");
+        chapter2.isUnlocked = values[1].includes("2");
+    }
+}
 
 var getC1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
 var getC2 = (level) => BigNumber.TWO.pow(level);
