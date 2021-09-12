@@ -1,6 +1,8 @@
+import { Achievement } from "./Achievement";
 import { BigNumber } from "./BigNumber";
 import { Cost } from "./Costs";
 import { Currency } from "./Currency";
+import { StoryChapter } from "./StoryChapter";
 import { Upgrade } from "./Upgrades";
 
 /**
@@ -194,6 +196,16 @@ export class Theory {
      * @returns {String} LaTeX string of the value of the quaternary entry 
      */
     quaternaryValue(index);
+    
+    /**
+     * @returns {Achievement[]} List of all achievements of this theory
+     */
+    get achievements();
+
+    /**
+     * @returns {StoryChapter[]} List of all story chapters of this theory
+     */
+    get storyChapters();
 
     /**
      * Creates a new currency
@@ -301,6 +313,38 @@ export class Theory {
      * Does nothing if publications are not available or the tau value is lower than the previous publication.
      */
     publish();
+    
+    /**
+     * Creates your own achievement.
+     * @param {number} id - Unique ID within the current custom theory achievements
+     * @param {string} name - Name of the achievement
+     * @param {string} description - Description of the achievement.
+     * @param {function():boolean} unlockCondition - Function returning if the achievement can be unlocked. Checks every second. Stops being called once it is unlocked.
+     * @param {function():number} [progress] - Function returning if the progress towards the achievement. In [0, 1].
+     * @returns {Achievement}
+     */
+    createAchievement(id, name, description, unlockCondition, progress);
+    
+    /**
+     * Creates your own secret achievement.
+     * @param {number} id - Unique ID within the current custom theory achievements
+     * @param {string} name - Name of the secret achievement
+     * @param {string} description - Description of the secret achievement.
+     * @param {string} hint - Hint of the secret achievement.
+     * @param {function():boolean} unlockCondition - Function returning if the achievement can be unlocked. Checks every second. Stops being called once it is unlocked.
+     * @returns {Achievement}
+     */
+    createSecretAchievement(id, name, description, hint, unlockCondition);
+    
+    /**
+     * Creates your own story chapter.
+     * @param {number} id - Unique ID within the current custom theory story chapters
+     * @param {string} title - Title of the chapter
+     * @param {string} text - Text of the chapter. You need to split lines yourself using '\n'.
+     * @param {function():boolean} unlockCondition - Function returning if the chapter can be unlocked. Checks every second. Stops being called once it is unlocked.
+     * @returns {StoryChapter}
+     */
+    createStoryChapter(id, title, text, unlockCondition);
 
     /**
      * Completely resets the theory. Only available within its own custom theory.

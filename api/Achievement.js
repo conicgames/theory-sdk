@@ -49,7 +49,7 @@ export class Achievement {
     get stars();
     
     /**
-     * @returns {Date} Date in UTC timezone
+     * @returns {Date} Date in UTC timezone. Null if not unlocked.
      */
     get dateUnlocked();
     

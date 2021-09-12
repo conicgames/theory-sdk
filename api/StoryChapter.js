@@ -12,6 +12,7 @@ export class StoryChapter {
          */
          this.isUnlocked;
     }
+    
     /**
      * @returns {number} Unique id
      */
