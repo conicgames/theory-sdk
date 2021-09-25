@@ -24,6 +24,8 @@ export class Rounding {
  
 /**
  * Holds a representation of an arbitrarily large number.
+ * The class also supports the mathematical operators:
+ *    +, -, *, /, +=, -=, *=, /=, ==, !=
  */
 export class BigNumber {
     /** @returns {BigNumber} */ static get ZERO();

@@ -41,10 +41,10 @@ function getSecondaryEquation();
 function getTertiaryEquation();
 
 /**
- * List of values on the right side, e.g., Differential Calculus
+ * List of values on the right side of the equation area, e.g., Differential Calculus
  * @returns {Array.<QuaternaryEntry>} List of Quaternary entries
  */
-function getQuaternaryValues();
+function getQuaternaryEntries();
 
 /**
  * Some currencies might only be visible when specific milestones are purchased.

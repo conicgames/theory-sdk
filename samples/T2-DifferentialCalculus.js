@@ -203,7 +203,7 @@ var getPrimaryEquation = () => {
 
 var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho";
 
-var getQuaternaryValues = () => {
+var getQuaternaryEntries = () => {
     if (quaternaryEntries.length == 0)
     {
         quaternaryEntries.push(new QuaternaryEntry("q_1", null));
