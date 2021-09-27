@@ -1,10 +1,8 @@
-﻿import { ExponentialCost, FirstFreeCost, FreeCost, LinearCost } from "./api/Costs";
+﻿import { ExponentialCost, FreeCost, LinearCost } from "./api/Costs";
 import { Localization } from "./api/Localization";
-import { parseBigNumber, BigNumber, Rounding } from "./api/BigNumber";
+import { BigNumber } from "./api/BigNumber";
 import { theory } from "./api/Theory";
-import { StoryChapter } from "./api/StoryChapter"
 import { Utils } from "./api/Utils";
-import { Color } from "./api/ui/properties/Color";
 
 var id = "my_custom_theory_id";
 var name = "My Custom Theory";
@@ -28,7 +26,7 @@ var init = () => {
     // c1
     {
         let getDesc = (level) => "c_1=" + getC1(level).toString(0);
-        c1 = theory.createUpgrade(0, currency, new FreeCost());//new FirstFreeCost(new ExponentialCost(15, Math.log2(2))));
+        c1 = theory.createUpgrade(0, currency, new FirstFreeCost(new ExponentialCost(15, Math.log2(2))));
         c1.getDescription = (_) => Utils.getMath(getDesc(c1.level));
         c1.getInfo = (amount) => Utils.getMathTo(getDesc(c1.level), getDesc(c1.level + amount));
         c1.bought = (_) => popup.show();
@@ -69,22 +67,13 @@ var init = () => {
     
     /////////////////
     //// Achievements
-    achievement1 = theory.createAchievement(0, "Achievement 1", "Description 1", () => c1.level > 11);
-    achievement2 = theory.createSecretAchievement(1, "Achievement 2", "Description 2", "Maybe you should buy two levels of c2?", () => c2.level > 11);
+    achievement1 = theory.createAchievement(0, "Achievement 1", "Description 1", () => c1.level > 1);
+    achievement2 = theory.createSecretAchievement(1, "Achievement 2", "Description 2", "Maybe you should buy two levels of c2?", () => c2.level > 1);
 
     ///////////////////
     //// Story chapters
-    chapter1 = theory.createStoryChapter(0, "My First Chapter", "This is line 1,\nand this is line 2.\n\nNice.", () => c1.level > 10);
-    chapter2 = theory.createStoryChapter(1, "My Second Chapter", "This is line 1 again,\nand this is line 2... again.\n\nNice again.", () => c2.level > 10);
-
-    let counter = 0;
-    button = ui.createButton({
-        text: "test",
-    })
-    popup = ui.createPopup({
-        title: "My title",
-        content: button
-    });
+    chapter1 = theory.createStoryChapter(0, "My First Chapter", "This is line 1,\nand this is line 2.\n\nNice.", () => c1.level > 0);
+    chapter2 = theory.createStoryChapter(1, "My Second Chapter", "This is line 1 again,\nand this is line 2... again.\n\nNice again.", () => c2.level > 0);
 
     updateAvailability();
 }
