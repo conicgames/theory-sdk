@@ -173,9 +173,7 @@ var tick = (elapsedTime, multiplier) => {
     theory.invalidateTertiaryEquation();
 }
 
-var getInternalState = () => {
-    return state.x.toString() + " " + state.y.toString() + " " + state.z.toString();
-}
+var getInternalState = () => `${state.x} ${state.y} ${state.z}`
 
 var setInternalState = (stateString) => {
     let values = stateString.split(" ");

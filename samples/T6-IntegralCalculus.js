@@ -197,9 +197,7 @@ var calculateIntegral = (c1, c2, c3, c4, c5, bonus) =>
     return bonus * (term1 + term2 + term3 + term4);
 }
 
-var getInternalState = () => {
-    return q.toString() + " " + r.toString() + " " + previousCurrency.toString() + " " + C.toString();
-}
+var getInternalState = () => `${q} ${r} ${previousCurrency} ${C}`
 
 var setInternalState = (state) => {
     let values = state.split(" ");

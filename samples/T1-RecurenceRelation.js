@@ -161,9 +161,7 @@ var tick = (elapsedTime, multiplier) => {
     }
 }
 
-var getInternalState = () => {
-    return rhoN.toString() + " " + rhoNm1.toString() + " " + rhoNm2.toString() + " " + time.toString();
-}
+var getInternalState = () => `${rhoN} ${rhoNm1} ${rhoNm2} ${time}`
 
 var setInternalState = (state) => {
     let values = state.split(" ");

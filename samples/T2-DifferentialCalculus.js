@@ -160,10 +160,7 @@ var tick = (elapsedTime, multiplier) => {
     theory.invalidateQuaternaryValues();
 }
 
-var getInternalState = () => {
-    return q1.toString() + " " + q2.toString() + " " + q3.toString() + " " + q4.toString() + " " +
-           r1.toString() + " " + r2.toString() + " " + r3.toString() + " " + r4.toString();
-}
+var getInternalState = () => `${q1} ${q2} ${q3} ${q4} ${r1} ${r2} ${r3} ${r4}`
 
 var setInternalState = (state) => {
     let values = state.split(" ");

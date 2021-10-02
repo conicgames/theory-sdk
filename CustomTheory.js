@@ -14,9 +14,6 @@ var c1Exp, c2Exp;
 var achievement1, achievement2;
 var chapter1, chapter2;
 
-var popup;
-var button;
-
 var init = () => {
     currency = theory.createCurrency();
 

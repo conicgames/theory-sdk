@@ -120,7 +120,7 @@ var tick = (elapsedTime, multiplier) => {
     theory.invalidateTertiaryEquation();
 }
 
-var getInternalState = () => q.toString();
+var getInternalState = () => `${q}`
 
 var setInternalState = (state) => {
     let values = state.split(" ");
