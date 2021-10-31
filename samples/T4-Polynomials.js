@@ -6,6 +6,8 @@ import { Utils } from "../api/Utils";
 
 var id = "polynomials"
 var name = "Polynomials";
+var description = "A implementation of the 'Polynomials' theory from the game."
+var authors = "Gilles-Philippe Paillé"
 
 var q = BigNumber.ZERO;
 var q1, q2;

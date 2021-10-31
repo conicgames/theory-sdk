@@ -6,6 +6,8 @@ import { Utils } from "../api/Utils";
 
 var id = "integral_calculus"
 var name = "Integral Calculus";
+var description = "A implementation of the 'Integral Calculus' theory from the game."
+var authors = "Gilles-Philippe Paillé"
 
 var q = BigNumber.ZERO;
 var r = BigNumber.ONE;

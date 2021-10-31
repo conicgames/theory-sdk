@@ -1,14 +1,26 @@
 /**
  * A unique ID for the theory.
- * @global {String}
+ * @global {string}
  */
 var id;
 
 /**
  * Name of the theory. Displayed on the top of the equation.
- * @global {String}
+ * @global {string}
  */
 var name;
+
+/**
+ * Description of the theory. Displayed when the user downloads the theory.
+ * @global {string}
+ */
+var description;
+
+/**
+ * Author(s) of the theory. Displayed when the user downloads the theory.
+ * @global {string}
+ */
+var authors;
 
 /**
  * Update the availability of each upgrade using their dependencies.

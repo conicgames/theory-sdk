@@ -2,7 +2,7 @@
  * Image source for a UIImage
  */
  export class ImageSource {
-    /** @returns {ImageSource} */ static get ASPECT_FILL();
+    /** @returns {ImageSource} */ static get ADD();
     /** @returns {ImageSource} */ static get ACCELERATE();
     /** @returns {ImageSource} */ static get ACHIEVEMENTS();
     /** @returns {ImageSource} */ static get ARROW_120();
@@ -25,6 +25,7 @@
     /** @returns {ImageSource} */ static get REFUND();
     /** @returns {ImageSource} */ static get RESET();
     /** @returns {ImageSource} */ static get REWARDS();
+    /** @returns {ImageSource} */ static get SDK();
     /** @returns {ImageSource} */ static get SECRET();
     /** @returns {ImageSource} */ static get SETTINGS();
     /** @returns {ImageSource} */ static get STAR_EMPTY();

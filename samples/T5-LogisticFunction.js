@@ -6,6 +6,8 @@ import { Utils } from "../api/Utils";
 
 var id = "logistic_function"
 var name = "Logistic Function";
+var description = "A implementation of the 'Logistic Function' theory from the game."
+var authors = "Gilles-Philippe Paillé"
 
 var q = BigNumber.ONE;
 

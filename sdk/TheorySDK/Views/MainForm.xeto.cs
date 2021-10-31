@@ -29,7 +29,7 @@ namespace TheorySDK.Views
             _app.Logger.MessageLogged += OnMessageLogged;
 
             _app.OnStart();
-
+            
             UpdateFields();
             UpdateServerStatus();
             OnTcpServerChanged();
