@@ -1,0 +1,20 @@
+name: Update Custom Theories Repository
+
+on: workflow_dispatch
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - id: 'update_custom_theories'
+        uses: jroehl/gsheet.action@release
+        with:
+          spreadsheetId: "1rMvOfyPRpKDb-Rd4IDfnrG_ICpo17UY0TmAi_wKPNXs"
+          commands: |
+            [
+              { "command": "getData", "args": { "range": "'Reviewed'!A:B" } }
+            ]
+      - name: dump results
+        env:
+          RESULTS: ${{ steps.update_worksheet.outputs.results }}
+        run: echo "$RESULTS" | jq
