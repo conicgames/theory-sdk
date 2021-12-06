@@ -31,5 +31,5 @@ At that point, the selected custom theory will be active in the game. Open the .
 
 Once connected to the game, the SDK will display a command line. A command is Javascript expression sent to your device and executed within the current context of the theory. Some useful examples:
 
- - currency.value = BigNumber.from(1e100)
- - theory.reset()
+ - `currency.value = BigNumber.from(1e100)`
+ - `theory.reset()`
