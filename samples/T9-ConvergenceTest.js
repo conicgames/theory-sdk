@@ -6,8 +6,9 @@ import { Utils } from "../api/Utils";
 
 var id = "convergence_test"
 var name = "Convergence Test";
-var description = "A implementation of the 'Convergence Test' theory from the game."
-var authors = "Gilles-Philippe Paillé"
+var description = "A implementation of the 'Convergence Test' theory from the game.";
+var authors = "Gilles-Philippe Paillé";
+var version = 1;
 
 var c11, c12, c13;
 var c21, c22, c23, c24;

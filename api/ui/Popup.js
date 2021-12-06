@@ -25,12 +25,6 @@
          * @type {boolean}
          * @public
          */
-        this.isXButtonVisible;
-
-        /**
-         * @type {boolean}
-         * @public
-         */
         this.isPeekable;
         
         /**

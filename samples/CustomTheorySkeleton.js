@@ -23,6 +23,12 @@ var description;
 var authors;
 
 /**
+ * Version of the theory for the public repository.
+ * @global {numeric}
+ */
+var version;
+
+/**
  * Update the availability of each upgrade using their dependencies.
  */
 function updateAvailability();

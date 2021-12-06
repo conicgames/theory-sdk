@@ -6,8 +6,9 @@ import { ui } from "../api/ui/UI"
 
 var id = "custom_ui_id";
 var name = "Custom UI";
-var description = "A custom theory to demonstrate UI capabilities."
-var authors = "Gilles-Philippe Paillé"
+var description = "A custom theory to demonstrate UI capabilities.";
+var authors = "Gilles-Philippe Paillé";
+var version = 1;
 
 var popup = ui.createPopup({
     title: "My Popup",
@@ -42,6 +43,6 @@ var popup = ui.createPopup({
             ui.createButton({text: "Close", onClicked: () => popup.hide()})
         ]
     })
-})
+});
 
-popup.show()
+popup.show();

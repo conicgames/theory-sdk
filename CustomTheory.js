@@ -6,6 +6,9 @@ import { Utils } from "./api/Utils";
 
 var id = "my_custom_theory_id";
 var name = "My Custom Theory";
+var description = "A basic theory.";
+var authors = "Gilles-Philippe Paillé";
+var version = 1;
 
 var currency;
 var c1, c2;

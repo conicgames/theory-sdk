@@ -96,7 +96,7 @@ import { TextAlignment } from "./properties/TextAlignment";
         this.onCompleted;
         
         /**
-         * @type {function(void):void}
+         * @type {function(string, string):void} Parameters: (oldTextValue, newTextValue) 
          * @public
          */
         this.onTextChanged;

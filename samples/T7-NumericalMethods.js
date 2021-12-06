@@ -6,8 +6,9 @@ import { Utils } from "../api/Utils";
 
 var id = "numerical_methods"
 var name = "Numerical Methods";
-var description = "A implementation of the 'Numerical Methods' theory from the game."
-var authors = "Gilles-Philippe Paillé"
+var description = "A implementation of the 'Numerical Methods' theory from the game.";
+var authors = "Gilles-Philippe Paillé";
+var version = 1;
 
 var q1, c1, c2, c3, c4, c5, c6;
 var dimension, r12Term, r22Term, r1r2Term, c1Exp;

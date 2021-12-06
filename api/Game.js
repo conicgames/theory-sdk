@@ -106,11 +106,6 @@ export class Game {
     get sigmaTotal();
     
     /**
-     * @returns {boolean} Is there a reward (via ad or purchase) active at the moment?
-     */
-    get isRewardActive();
-    
-    /**
      * @returns {Variable[]} List of all variables
      */
     get variables();
@@ -174,6 +169,16 @@ export class Game {
      * @returns {Statistics} Statistics of the game (Statistics popup)
      */
     get statistics();
+    
+    /**
+     * @returns {boolean} Is there a reward (via ad or purchase) currently active?
+     */
+    get isRewardActive();
+    
+    /**
+     * @returns {boolean} Is the game currently in the offline progress screen?
+     */
+     get isCalculatingOfflineProgress();
 
     /**
      * Performs a "Prestige"

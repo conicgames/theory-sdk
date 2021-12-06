@@ -6,8 +6,9 @@ import { Utils } from "../api/Utils";
 
 var id = "linear_algebra"
 var name = "Linear Algebra";
-var description = "A implementation of the 'Linear Algebra' theory from the game."
-var authors = "Gilles-Philippe Paillé"
+var description = "A implementation of the 'Linear Algebra' theory from the game.";
+var authors = "Gilles-Philippe Paillé";
+var version = 1;
 
 var currency1, currency2, currency3;
 var c11, c12, c13, c21, c22, c23, c31, c32, c33, b1, b2, b3;
