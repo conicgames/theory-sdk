@@ -21,8 +21,15 @@ The SDK is a simple tool that links your computer to the game, enabling live upd
 - Select the theory file (default is CustomTheory.js at the root of the SDK folder).
 
 ### In the game
-- Open the Theory Selection popup
+- Open the Theory Selection popup and click on the SDK icon.
 - Enter the IP address and the port of the SDK.
 - Tap "Connect to SDK".
 
-At that point, the selected custom theory will be active in the game. Open the .js file in your favorite Javascript IDE and start editing! All runtime errors will be sent back to the SDK in the logs.
+At that point, the selected custom theory will be active in the game. Open the .js file in your favorite Javascript IDE and start editing! The script will be sent to the game every time the .js file is saved. All runtime errors will be sent back to the SDK in the logs.
+
+### Command Line
+
+Once connected to the game, the SDK will display a command line. A command is Javascript expression sent to your device and executed within the current context of the theory. Some useful examples:
+
+ - currency.value = BigNumber.from(1e100)
+ - theory.reset()
