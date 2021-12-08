@@ -45,6 +45,18 @@ export class Theory {
          * @public
          */
          this.secondaryEquationHeight;
+
+        /**
+         * @type {number} The buy amount of the 'Upgrades' panel
+         * @public
+         */
+         this.buyAmountUpgrades;
+
+         /**
+          * @type {number} The buy amount of the 'Permanent Upgrades' panel
+          * @public
+          */
+          this.buyAmountPermanentUpgrades;
     }
 
     /**

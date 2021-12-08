@@ -26,17 +26,5 @@ export class BuyAmounts {
          * @public
          */
         this.researches;
-        
-        /**
-         * @type {number}
-         * @public
-         */
-        this.theoryUpgrades;
-        
-        /**
-         * @type {number}
-         * @public
-         */
-        this.theoryPermanentUpgrades;
     }
 }
