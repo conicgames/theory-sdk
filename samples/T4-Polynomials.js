@@ -1,14 +1,14 @@
-import { ExponentialCost, FirstFreeCost } from "../api/Costs";
-import { Localization } from "../api/Localization";
-import { parseBigNumber, BigNumber } from "../api/BigNumber";
-import { theory } from "../api/Theory";
-import { Utils } from "../api/Utils";
+import { ExponentialCost, FirstFreeCost } from "./api/Costs";
+import { Localization } from "./api/Localization";
+import { parseBigNumber, BigNumber } from "./api/BigNumber";
+import { theory } from "./api/Theory";
+import { Utils } from "./api/Utils";
 
 var id = "polynomials"
 var name = "Polynomials";
 var description = "A implementation of the 'Polynomials' theory from the game.";
 var authors = "Gilles-Philippe Paillé";
-var version = 1;
+var version = 2;
 
 var q = BigNumber.ZERO;
 var q1, q2;
