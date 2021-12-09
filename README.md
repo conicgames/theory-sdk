@@ -35,6 +35,12 @@ Once connected to the game, the SDK will display a command line. A command is Ja
  - `theory.reset()`
  - `log(aVariable)`
 
+## Coding
+### Limitations (to do)
+ - Import
+ - Performance
+ - Javascript subset
+
 ## Sharing
 
 Before thinking about sharing your theory to a large audience, please make sure that it is balanced, fun to play, and in an almost final state. By experience, it is very hard to change some fundamental parts of a theory after its release so make sure to test it thouroughly yourself and/or with a small group ofpeople who don't mind resetting their progress for testing purpose.
