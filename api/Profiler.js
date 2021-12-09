@@ -3,7 +3,7 @@
  */
 
 /**
- * Class for profiling a single part of code.
+ * Class for profiling a single part of code. All values are in seconds.
  * Use the 'profilers' instance to create a profiler.
  */
  export class Profiler {
