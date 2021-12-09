@@ -6,7 +6,7 @@ import { Utils } from "../api/Utils";
 
 var id = "integral_calculus"
 var name = "Integral Calculus";
-var description = "A implementation of the 'Integral Calculus' theory from the game.";
+var description = "An implementation of the 'Integral Calculus' theory from the game.";
 var authors = "Gilles-Philippe Paillé";
 var version = 1;
 
@@ -261,7 +261,7 @@ var getTertiaryEquation = () => {
 
     result += "\\begin{matrix}q=";
     result += q.toString();
-    if (dimension.level > 0) { result += ",&r="; result += r; }
+    if (dimension.level > 0) { result += ",&r="; result += r.toString(); }
     result += ",&C=";
     result += C.toString();
     result += "\\end{matrix}";

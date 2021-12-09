@@ -6,7 +6,7 @@ import { Utils } from "../api/Utils";
 
 var id = "chaos_theory"
 var name = "Chaos Theory";
-var description = "A implementation of the 'Chaos Theory' from the game.";
+var description = "An implementation of the 'Chaos Theory' from the game.";
 var authors = "Gilles-Philippe Paillé";
 var version = 1;
 
