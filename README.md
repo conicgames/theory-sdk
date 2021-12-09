@@ -34,3 +34,17 @@ Once connected to the game, the SDK will display a command line. A command is Ja
  - `currency.value = BigNumber.from(1e100)`
  - `theory.reset()`
  - `log(aVariable)`
+
+## Sharing
+
+Before thinking about sharing your theory to a large audience, please make sure that it is balanced, fun to play, and in an almost final state. By experience, it is very hard to change some fundamental parts of a theory after its release so make sure to test it thouroughly yourself and/or with a small group ofpeople who don't mind resetting their progress for testing purpose.
+
+### Manual
+You can share your theory to other players by uploading your js file to a public server, e.g., GitHub. Then, copy the URL to the raw text file and share the URL to other players.
+
+### Public Repository
+A public repository of custom theories is accessible from the game itself. These theories are hosted on a public (readonly) GitHub repository and let your theory be played by a larger audience than manual sharing.
+
+To submit your custom theory, use the [Google Form](https://forms.gle/uTmuHfewxpA2vvq96), create a pull request to the [GitHub page of the public repository](https://github.com/conicgames/custom-theories), or contact us directly on the [Discord server](https://discord.gg/S9UheTC) or on the [Reddit community](https://www.reddit.com/r/ExponentialIdle).
+
+**Note**: Since these theories are available to all players, every submission will be reviewed for quality assurance. Unbalanced, inappropriate, or buggy theories will be rejected. We will contact you to let you know about issues.
