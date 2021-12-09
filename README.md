@@ -29,7 +29,8 @@ At that point, the selected custom theory will be active in the game. Open the .
 
 ### Command Line
 
-Once connected to the game, the SDK will display a command line. A command is Javascript expression sent to your device and executed within the current context of the theory. Some useful examples:
+Once connected to the game, the SDK will display a command line. A command is Javascript expression sent to your device and executed within the current context of the theory. Commands are useful for inspecting the state of the theory without having to put logging expressions in the script itself. They are also useful for modifying values at runtime to change the current state of the theory. Some useful examples:
 
  - `currency.value = BigNumber.from(1e100)`
  - `theory.reset()`
+ - `log(aVariable)`
