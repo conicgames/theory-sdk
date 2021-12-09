@@ -14,7 +14,7 @@
             <Label Text="IP Address: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
         </TableCell>
         <TableCell ScaleWidth="True">
-          <ComboBox x:Name="ipComboBox" ReadOnly="True" SelectedIndexChanged="OnIpChanged" />
+          <ComboBox x:Name="IpComboBox" ReadOnly="True" SelectedIndexChanged="OnIpChanged" />
         </TableCell>
       </TableRow>
       <TableRow>
@@ -22,7 +22,7 @@
           <Label Text="Port: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
         </TableCell>
         <TableCell>
-          <TextBox x:Name="port" TextChanging="OnPortTextChanging" BackgroundColor="#333" TextColor="White" ShowBorder="False" />
+          <TextBox x:Name="Port" TextChanging="OnPortTextChanging" BackgroundColor="#333" TextColor="White" ShowBorder="False" />
         </TableCell>
       </TableRow>
       <TableRow>
@@ -32,7 +32,7 @@
         <TableCell>
           <StackLayout Orientation="Horizontal">
             <StackLayoutItem Expand="True">
-              <TextBox x:Name="theoryPath" ReadOnly="True" BackgroundColor="#333" TextColor="White" ShowBorder="False" MouseUp="OnTheoryPathClicked" PlaceholderText="Click to select a file..." />
+              <TextBox x:Name="TheoryPath" ReadOnly="True" BackgroundColor="#333" TextColor="White" ShowBorder="False" MouseUp="OnTheoryPathClicked" PlaceholderText="Click to select a file..." />
             </StackLayoutItem>
           </StackLayout>
         </TableCell>
@@ -42,13 +42,13 @@
           <Label Text="Server Status: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center"/>
         </TableCell>
         <TableCell>
-          <Label x:Name="serverStatus" TextColor="White" />
+          <Label x:Name="ServerStatus" TextColor="White" />
         </TableCell>
       </TableRow>
     </TableLayout>
     <StackLayoutItem Expand="True">
-      <RichTextArea x:Name="log" Font="Consolas" Text="" BackgroundColor="#333" TextColor="White" ReadOnly="True" />
+      <RichTextArea x:Name="Log" Font="Consolas" Text="" BackgroundColor="#333" TextColor="White" ReadOnly="True" />
     </StackLayoutItem>
-    <TextBox x:Name="commandLine" Visible="False" BackgroundColor="#333" TextColor="White" ShowBorder="False" PlaceholderText="Enter a command..." TextChanging="OnCommandEntered"/>
+    <TextBox x:Name="CommandLine" Visible="False" BackgroundColor="#333" TextColor="White" ShowBorder="False" PlaceholderText="Enter a command..." TextChanging="OnCommandLineTextChanging" KeyDown="OnCommandLineKeyDown" />
 	</StackLayout>
 </Form>

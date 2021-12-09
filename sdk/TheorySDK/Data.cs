@@ -8,10 +8,9 @@ namespace TheorySDK
 {
     public class Data
     {
-        public delegate void DataChangedDelegate();
-        public DataChangedDelegate IpAddressChanged;
-        public DataChangedDelegate PortChanged;
-        public DataChangedDelegate TheoryPathChanged;
+        public Action IpAddressChanged;
+        public Action PortChanged;
+        public Action TheoryPathChanged;
 
         private string _ipAddress = "";
         public string IpAddress { get => _ipAddress; set { if (value != _ipAddress) { _ipAddress = value; IpAddressChanged?.Invoke(); } } }
@@ -21,5 +20,7 @@ namespace TheorySDK
 
         private string _theoryPath = "";
         public string TheoryPath { get => _theoryPath; set { if (_theoryPath != value) { _theoryPath = value; TheoryPathChanged?.Invoke(); } } }
+
+        public List<string> CommandHistory { get; set; } = new List<string>() { "" };
     }
 }

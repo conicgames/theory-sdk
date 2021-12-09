@@ -129,7 +129,7 @@ namespace TheorySDK
 
         public void ExecuteScript(string script)
         {
-            Logger.Log("Executing Script...");
+            Logger.Log("Executing Command...");
             SendCommand("ExecuteScript", script);
         }
 
