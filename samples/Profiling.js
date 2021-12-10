@@ -31,13 +31,13 @@ var tick = (elapsedTime, multiplier) => {
     profilers.exec("profiler2", expensiveFunction);
 
     // After executing the code, you can display the desired statistics in the SDK
-    log(profiler1.mean) // Method 1
-    log(profilers.get("profiler2").min) // Method 2
+    // using the following commands:
 
-    // Note that the 'log' expression above will be printed every tick,
-    // which might flood you SDK console. To avoid that, I recommend to avoid
-    // logging in the script itself and use the command line in the SDK app
-    // to display the statistics.
+    //log(profiler1.mean) // Method 1
+    //log(profilers.get("profiler2").mean) // Method 2
+
+    // Note that the 'log' expression above will be printed every tick if executed
+    // in the script itself, which might flood you SDK console. To avoid that, I
+    // recommend to avoid logging in the script itself and use the command line in
+    // the SDK app to display the statistics.
 }
-
-init();

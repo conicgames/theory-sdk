@@ -29,6 +29,13 @@ var authors;
 var version;
 
 /**
+ * Permissions required to be accepted by the user for the theory to be
+ * installed and have access to some functionalities. 
+ * @global {Permissions}
+ */
+var permissions;
+
+/**
  * Update the availability of each upgrade using their dependencies.
  */
 function updateAvailability();

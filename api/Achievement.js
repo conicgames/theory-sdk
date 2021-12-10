@@ -5,8 +5,8 @@ export class Achievement {
     constructor() {
         /**
          * Can only be modified if you own the achievement.
-         * Will not trigger the achievement when set to 'true'.
-         * Only the unlock condition can trigger the achievement.
+         * Will not trigger the achievement popup when set to 'true'.
+         * Only the unlock condition can trigger the achievement popup.
          * @type {boolean}
          * @public
          */

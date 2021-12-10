@@ -109,8 +109,8 @@ export class StepwiseCost extends Cost {
 }
 
 /**
- * Cost model for an upgrade that increases following
- * a custom cost function.
+ * Cost model for an upgrade that increases following a custom cost function.
+ * Note: Upgrades using this cost model will enforce a maxLevel of 2000.
  */
 export class CustomCost extends Cost {
     /**
