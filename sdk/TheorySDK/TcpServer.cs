@@ -26,6 +26,10 @@ namespace TheorySDK
         private Socket _client = null;
         private BlockingCollection<string> _messageQueue = new BlockingCollection<string>();
 
+        private object _serverMutex = new object();
+        private object _clientMutex = new object();
+        private object _messageQueueMutex = new object();
+
         public TcpServer(Logger logger, string ipAddress, int port)
         {
             _logger = logger;
@@ -38,15 +42,27 @@ namespace TheorySDK
 
         public void SendMessage(string message)
         {
-            _messageQueue.Add(message);
+            lock (_messageQueueMutex)
+            {
+                if (_messageQueue != null)
+                    _messageQueue.Add(message);
+            }
         }
 
         public void Dispose()
         {
-            if (_client != null)
-                _client.Close();
+            lock (_clientMutex)
+            {
+                if (_client != null)
+                    _client.Close();
+            }
 
-            _server.Close();
+            lock (_serverMutex)
+            {
+                if (_server != null)
+                    _server.Close();
+            }
+
             _serverThread.Join();
         }
 
@@ -58,16 +74,21 @@ namespace TheorySDK
 
             try
             {
-                _server = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                lock (_server)
+                    _server = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                
                 _server.Bind(localEndPoint);
                 _server.Listen(1);
 
                 while (true)
                 {
                     _logger.Log("Waiting for client...");
-                    _client = _server.Accept();
+                    var client = _server.Accept();
+                    lock (_clientMutex)
+                        _client = client;
                     _logger.Log("Client connected.");
-                    _messageQueue = new BlockingCollection<string>();
+                    lock (_messageQueueMutex)
+                        _messageQueue = new BlockingCollection<string>();
                     ClientConnected?.Invoke();
                     var stream = new NetworkStream(_client);
 
@@ -76,9 +97,12 @@ namespace TheorySDK
                         var writer = new StreamWriter(stream);
                         foreach (var message in _messageQueue.GetConsumingEnumerable())
                         {
-                            writer.WriteLine(message);
-                            writer.Flush();
-                            //_logger.Log("Message sent.");
+                            try
+                            {
+                                writer.WriteLine(message);
+                                writer.Flush();
+                            }
+                            catch (Exception) { }
                         }
                     }));
 
@@ -107,8 +131,10 @@ namespace TheorySDK
 
                     _client.Shutdown(SocketShutdown.Both);
                     _client.Close();
-                    _client = null;
-                    _messageQueue = null;
+                    lock (_clientMutex)
+                        _client = null;
+                    lock (_messageQueueMutex)
+                        _messageQueue = null;
                     _logger.Log("Client disconnected.");
                     ClientDisconnected?.Invoke();
                 }
@@ -123,8 +149,10 @@ namespace TheorySDK
                 Console.WriteLine(e.ToString());
             }
 
-            _client = null;
-            _messageQueue = null;
+            lock (_clientMutex)
+                _client = null;
+            lock (_messageQueueMutex)
+                _messageQueue = null;
 
             _logger.Log("Stopping server.");
         }

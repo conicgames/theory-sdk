@@ -42,4 +42,18 @@ export class Utils {
         let d = stepLength / (basePower - 1);
         return (d + modPart) * (basePower ^ intPart) - d + offset;
     }
+
+    /**
+     * Calculates the value of s_n(x) = x * Π_i^n (1 - (x/(k*π))^2)
+     * @param {number} n
+     * @param {BigNumber|number} x
+     * @returns {BigNumber}
+     */
+    static getWeierstrassSineProd(m, x) { 
+        // Pseudo code
+        let intPart = level / stepLength;
+        let modPart = level - intPart * stepLength;
+        let d = stepLength / (basePower - 1);
+        return (d + modPart) * (basePower ^ intPart) - d + offset;
+    }
 }
