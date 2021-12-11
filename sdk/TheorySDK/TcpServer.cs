@@ -74,7 +74,7 @@ namespace TheorySDK
 
             try
             {
-                lock (_server)
+                lock (_serverMutex)
                     _server = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 
                 _server.Bind(localEndPoint);
