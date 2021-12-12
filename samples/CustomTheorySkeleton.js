@@ -183,3 +183,42 @@ function goToPreviousStage();
  * Change the current stage
  */
 function goToNextStage();
+
+/**
+ * Returns a UI element (View class) to put on top
+ * of the equation area. This function is ignored
+ * if getEquationDelegate is defined.
+ * @returns{View} An instance of a UI element.
+ */
+ function getEquationOverlay();
+
+ /**
+  * Returns a UI element (View class) to replace
+  * the equation area. This function is ignored
+  * if getUIDelegate is defined.
+  * @returns{View} An instance of a UI element.
+  */
+function getEquationDelegate();
+
+/**
+ * Returns a UI element (View class) to replace
+ * the currency bar. This function is ignored
+ * if getUIDelegate is defined.
+ * @returns{View} An instance of a UI element.
+ */
+function getCurrencyBarDelegate();
+
+/**
+ * Returns a UI element (View class) to replace
+ * the upgrade list. This function is ignored
+ * if getUIDelegate is defined.
+ * @returns{View} An instance of a UI element.
+ */
+function getUpgradeListDelegate();
+
+ /**
+  * Returns a UI element (View class) to replace
+  * the whole UI of the theory (apart from the title bar).
+  * @returns{View} An instance of a UI element.
+  */
+function getUIDelegate();
