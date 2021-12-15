@@ -31,11 +31,10 @@ jobs:
         with:
           dotnet-version: '5.0.x'
       - name: Set Version number
-        uses: mad9000/actions-find-and-replace-string@2
+        uses: datamonsters/replace-action
         with:
-          source: .\sdk\TheorySDK\Version.cs
-          find: Local
-          replace: v${{ github.event.inputs.version }}
+          files: '.\\sdk\\TheorySDK\\Version.cs'
+          replacements: 'Local=v${{ github.event.inputs.version }}'
       - run: cat .\sdk\TheorySDK\Version.cs
       - run: dotnet publish .\sdk\TheorySDK.Wpf\TheorySDK.Wpf.csproj -c Release -o bin
       - run: New-Item "Launch SDK.bat"; Set-Content 'Launch SDK.bat' 'start "" "bin\TheorySDK.Wpf.exe"'
