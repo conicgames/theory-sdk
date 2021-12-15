@@ -29,6 +29,7 @@ namespace TheorySDK.Views
         public MainForm()
         {
             XamlReader.Load(this);
+            Title += " - " + Version.VersionString;
             Icon = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.icon48x48.ico"));
             _app = new App();
 
