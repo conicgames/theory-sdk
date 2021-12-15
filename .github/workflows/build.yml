@@ -31,7 +31,7 @@ jobs:
         with:
           dotnet-version: '5.0.x'
       - name: Set Version number
-        uses: datamonsters/replace-action
+        uses: datamonsters/replace-action@v2
         with:
           files: '.\\sdk\\TheorySDK\\Version.cs'
           replacements: 'Local=v${{ github.event.inputs.version }}'
