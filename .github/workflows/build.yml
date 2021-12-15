@@ -60,7 +60,7 @@ jobs:
       - name: Set Version number
         uses: datamonsters/replace-action@v2
         with:
-          files: '.\\sdk\\TheorySDK\\Version.cs'
+          files: './sdk/TheorySDK/Version.cs'
           replacements: 'Local=v${{ github.event.inputs.version }}'
       - run: dotnet publish ./sdk/TheorySDK.Gtk/TheorySDK.Gtk.csproj -c Release -o bin
       - run: echo "./bin/TheorySDK.Gtk" >> launchSDK.sh; chmod +x launchSDK.sh
@@ -87,7 +87,7 @@ jobs:
       - name: Set Version number
         uses: datamonsters/replace-action@v2
         with:
-          files: '.\\sdk\\TheorySDK\\Version.cs'
+          files: './sdk/TheorySDK/Version.cs'
           replacements: 'Local=v${{ github.event.inputs.version }}'
       - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -c Release -o bin
       - run: echo "./bin/TheorySDK.Mac" >> launchSDK.sh; chmod +x launchSDK.sh
