@@ -51,9 +51,9 @@ export class Utils {
      */
     static getWeierstrassSineProd(m, x) { 
         // Pseudo code
-        let intPart = level / stepLength;
-        let modPart = level - intPart * stepLength;
-        let d = stepLength / (basePower - 1);
-        return (d + modPart) * (basePower ^ intPart) - d + offset;
+        let result = 1;
+        for(let i = 1; i <= m; ++i)
+            result *= 1 - (x / (Math.PI * k))^2;
+        return x * result;
     }
 }

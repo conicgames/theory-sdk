@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace TheorySDK
 {
+    public class Script
+    {
+        public string Name { get; set; } = "Script name";
+        public string Code { get; set; } = "";
+    }
+
     public class Data
     {
         public Action IpAddressChanged;
@@ -21,6 +27,8 @@ namespace TheorySDK
         private string _theoryPath = "";
         public string TheoryPath { get => _theoryPath; set { if (_theoryPath != value) { _theoryPath = value; TheoryPathChanged?.Invoke(); } } }
 
+        public List<Script> Scripts { get; set; } = new List<Script>();
+        
         public List<string> CommandHistory { get; set; } = new List<string>() { "" };
     }
 }

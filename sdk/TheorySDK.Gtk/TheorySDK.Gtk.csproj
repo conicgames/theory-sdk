@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Eto.Platform.Gtk" Version="2.5.11" />
+    <PackageReference Include="Eto.Platform.Gtk" Version="2.6.0" />
+    <PackageReference Include="Jint" Version="3.0.0-beta-2037" />
   </ItemGroup>
 	
 </Project>

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheorySDK", "TheorySDK\TheorySDK.csproj", "{98CD1C60-3128-44F9-9B63-1BE6B6B4640D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheorySDK", "TheorySDK\TheorySDK.csproj", "{98CD1C60-3128-44F9-9B63-1BE6B6B4640D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheorySDK.Gtk", "TheorySDK.Gtk\TheorySDK.Gtk.csproj", "{2C246C69-A411-4B57-ADA3-3BFC43BC6977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheorySDK.Gtk", "TheorySDK.Gtk\TheorySDK.Gtk.csproj", "{2C246C69-A411-4B57-ADA3-3BFC43BC6977}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheorySDK.Mac", "TheorySDK.Mac\TheorySDK.Mac.csproj", "{ACE1AD26-9EFB-4A0C-B20B-7889D0FF62F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheorySDK.Mac", "TheorySDK.Mac\TheorySDK.Mac.csproj", "{ACE1AD26-9EFB-4A0C-B20B-7889D0FF62F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheorySDK.Wpf", "TheorySDK.Wpf\TheorySDK.Wpf.csproj", "{675CEF75-BCE7-4024-8465-6E8A73A349AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheorySDK.Wpf", "TheorySDK.Wpf\TheorySDK.Wpf.csproj", "{675CEF75-BCE7-4024-8465-6E8A73A349AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

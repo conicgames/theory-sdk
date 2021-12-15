@@ -1,23 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Eto.Forms;
+using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace TheorySDK
 {
     public class App
     {
-        public delegate void ChangeDelegate();
-        public ChangeDelegate DataLoaded;
-        public ChangeDelegate TcpServerChanging;
-        public ChangeDelegate TcpServerChanged;
+        public Action DataLoaded;
+        public Action ClientConnected;
+        public Action ClientDisconnected;
 
         private Data _data = new Data();
         public Data Data { get => _data; private set => _data = value; }
-        public TcpServer TcpServer { get; private set; } = null;
-        public FileWatcher FileWatcher { get; private set; } = null;
         public Logger Logger { get; private set; } = new Logger();
+
+        private long _messageId = 0;
+        private ConcurrentDictionary<long, string> _remoteResults = new ConcurrentDictionary<long, string>();
+        private Semaphore _remoteResultsSemaphore = new Semaphore(0, int.MaxValue);
+
+        public FileWatcher _fileWatcher { get; set; } = null;
+        private TcpServer _tcpServer { get; set; } = null;
+        private object _tcpServerMutex = new object();
+
+        private CancellationTokenSource _remoteCancellationTokenSource = null;
+        private object _remoteCancellationTokenSourceMutex = new object();
 
         public void OnStart()
         {
@@ -45,61 +55,80 @@ namespace TheorySDK
 
         public void OnExit()
         {
-            if (TcpServer != null)
-                TcpServer.Dispose();
+            if (_tcpServer != null)
+                _tcpServer.Dispose();
 
-            if (FileWatcher != null)
-                FileWatcher.Dispose();
+            if (_fileWatcher != null)
+                _fileWatcher.Dispose();
 
+            Save();
+        }
+
+        public void Save()
+        {
             try
             {
                 Serializer.Serialize(Data);
             }
-            catch (Exception)
-            {
-            }
+            catch (Exception) { }
         }
 
         public void CreateTcpServer()
         {
-            TcpServerChanging?.Invoke();
-
-            if (TcpServer != null)
+            lock (_tcpServerMutex)
             {
-                TcpServer.Dispose();
-                TcpServer = null;
+                if (_tcpServer != null)
+                {
+                    _tcpServer.Dispose();
+                    _tcpServer = null;
+                }
+
+                _tcpServer = new TcpServer(Logger, Data.IpAddress, Data.Port);
+                _tcpServer.ClientConnected += OnClientConnected;
+                _tcpServer.ClientDisconnected += OnClientDisconnected;
+                _tcpServer.MessageReceived += OnMessageReceived;
             }
-            
-            TcpServer = new TcpServer(Logger, Data.IpAddress, Data.Port);
-            TcpServer.ClientConnected += SendTheory;
-            TcpServer.MessageReceived += OnMessageReceived;
-            TcpServerChanged?.Invoke();
         }
 
         private void CreateFileWatcher()
         {
-            if (FileWatcher != null)
+            if (_fileWatcher != null)
             {
-                FileWatcher.Dispose();
-                FileWatcher = null;
+                _fileWatcher.Dispose();
+                _fileWatcher = null;
             }
 
             if (File.Exists(Data.TheoryPath))
             {
-                FileWatcher = new FileWatcher(Logger, Data.TheoryPath);
-                FileWatcher.FileChanged += SendTheory;
+                _fileWatcher = new FileWatcher(Logger, Data.TheoryPath);
+                _fileWatcher.FileChanged += SendTheory;
             }
         }
 
-        private void SendCommand(string key, string value)
+        public bool HasClient()
         {
-            var command = new Dictionary<string, string>() { { key, value } };
-            TcpServer.SendMessage(JsonSerializer.Serialize(command));
+            lock (_tcpServerMutex)
+                return _tcpServer?.HasClient ?? false;
+        }
+
+        private long SendCommand(string key, string value)
+        {
+            var id = _messageId++;
+            var command = Tuple.Create(id, key, value);
+            
+            lock (_tcpServerMutex)
+            {
+                if (!_tcpServer.HasClient)
+                    throw new Exception("Cannot send command without client.");
+
+                _tcpServer.SendMessage(JsonSerializer.Serialize(command));
+            }
+            return id;
         }
 
         private void SendTheory()
         {
-            if (!TcpServer.HasClient || !File.Exists(Data.TheoryPath))
+            if (!File.Exists(Data.TheoryPath))
                 return;
 
             Logger.Log("Sending theory...");
@@ -127,29 +156,88 @@ namespace TheorySDK
                 Logger.Log(error);
         }
 
-        public void ExecuteScript(string script)
+        public long ExecuteRemoteScript(string script)
         {
-            Logger.Log("Executing Command...");
-            SendCommand("ExecuteScript", script);
+            return SendCommand("ExecuteScript", script);
+        }
+
+        public async Task ExecuteLocalScript(string script)
+        {
+            lock (_remoteCancellationTokenSourceMutex)
+                _remoteCancellationTokenSource = new CancellationTokenSource();
+
+            await Task.Run(() =>
+            {
+                var lastLogTime = DateTime.UtcNow;
+                ScriptExecutor.Execute(script,
+                                       _remoteCancellationTokenSource.Token,
+                                       (o) =>
+                                       {
+                                           // Ensure we don't flood the logs and freeze the UI
+                                           var timeDifference = DateTime.UtcNow - lastLogTime;
+                                           if (timeDifference.TotalMilliseconds < 30)
+                                               Thread.Sleep(50 - (int)timeDifference.TotalMilliseconds);
+                                           lastLogTime = DateTime.UtcNow;
+                                           Logger.Log(o.ToString());
+                                       },
+                                       (s, c) => WaitForResult(ExecuteRemoteScript(s), c));
+
+                lock (_remoteCancellationTokenSourceMutex)
+                    _remoteCancellationTokenSource = null;
+            });
+        }
+
+        public void CancelScriptExecution()
+        {
+            lock (_remoteCancellationTokenSourceMutex)
+                _remoteCancellationTokenSource?.Cancel();
+        }
+
+        private string WaitForResult(long id, CancellationToken cancellationToken)
+        {
+            while (!_remoteResults.ContainsKey(id) && !cancellationToken.IsCancellationRequested)
+                _remoteResultsSemaphore.WaitOne(500);
+
+            if (_remoteResults.TryGetValue(id, out string result))
+                return result;
+
+            return null;
+        }
+
+        private void OnClientConnected()
+        {
+            SendTheory();
+            ClientConnected?.Invoke();
+        }
+
+        private void OnClientDisconnected()
+        {
+            CancelScriptExecution();
+            ClientDisconnected?.Invoke();
         }
 
         private void OnMessageReceived(string message)
         {
             try
             {
-                var commands = JsonSerializer.Deserialize<Dictionary<string, string>>(message);
+                var commandInfo = JsonSerializer.Deserialize<Tuple<long, string, string>>(message);
+                var id = commandInfo.Item1;
+                var key = commandInfo.Item2;
+                var value = commandInfo.Item3;
 
-                foreach (var command in commands)
+                switch (key)
                 {
-                    switch (command.Key)
-                    {
-                        case "Log":
-                            Logger.Log(command.Value);
-                            break;
-                        default:
-                            Logger.Log("Unkown message: " + command.Key);
-                            break;
-                    }
+                    case "Log":
+                        Logger.Log(value);
+                        break;
+                    case "Result":
+                        var result = JsonSerializer.Deserialize<Tuple<long, string>>(value);
+                        _remoteResults.TryAdd(result.Item1, result.Item2);
+                        _remoteResultsSemaphore.Release();
+                        break;
+                    default:
+                        Logger.Log("Unkown message: " + key);
+                        break;
                 }
             }
             catch(Exception)

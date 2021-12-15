@@ -15,13 +15,16 @@ namespace TheorySDK.Views
         private readonly TextBox Port = null;
         private readonly TextBox TheoryPath = null;
         private readonly Label ServerStatus = null;
-        private readonly RichTextArea Log = null;
+        private readonly TextArea Log = null;
         private readonly TextBox CommandLine = null;
+        private readonly ScriptPanel ScriptPanel = null;
 
         private List<string> _history;
         private readonly int _maxHistoryCount = 10;
         private int _historyIndex = 0;
         private bool _isSettingHistory = false;
+        private bool _isUpdatingFields = false;
+        private UITimer _autosaveTimer = new UITimer();
 
         public MainForm()
         {
@@ -29,17 +32,22 @@ namespace TheorySDK.Views
             Icon = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.icon48x48.ico"));
             _app = new App();
 
-            _app.TcpServerChanging += OnTcpServerChanging;
-            _app.TcpServerChanged += OnTcpServerChanged;
+            _app.ClientConnected += UpdateServerStatus;
+            _app.ClientDisconnected += UpdateServerStatus;
             _app.DataLoaded += UpdateFields;
             _app.Logger.MessageLogged += OnMessageLogged;
 
             _app.OnStart();
+            
+            _autosaveTimer.Interval = 30;
+            _autosaveTimer.Elapsed += (s,e) => _app.Save();
+            _autosaveTimer.Start();
+
+            ScriptPanel.Init(_app);
 
             InitializeHistory();
             UpdateFields();
             UpdateServerStatus();
-            OnTcpServerChanged();
         }
 
         private void InitializeHistory()
@@ -54,24 +62,24 @@ namespace TheorySDK.Views
 
         private void UpdateFields()
         {
+            _isUpdatingFields = true;
             IpComboBox.Items.Clear();
             IpComboBox.Items.Add("Any", "");
 
             foreach (var ip in TcpServer.GetIPAddressList())
                 IpComboBox.Items.Add(ip, ip);
 
-            IpComboBox.SelectedKey = _app.Data.IpAddress;
+            IpComboBox.SelectedKey = _app.Data.IpAddress ?? "";
             Port.Text = _app.Data.Port.ToString();
             TheoryPath.Text = _app.Data.TheoryPath;
+            _isUpdatingFields = false;
         }
 
         private void UpdateServerStatus()
         {
             Application.Instance.AsyncInvoke(() =>
             {
-                bool hasClient = _app.TcpServer?.HasClient ?? false;
-                ServerStatus.Text = hasClient ? "Connected" : "Waiting for client...";
-                CommandLine.Visible = hasClient;
+                ServerStatus.Text = _app.HasClient() ? "Connected" : "Waiting for client...";
             });
         }
 
@@ -88,27 +96,10 @@ namespace TheorySDK.Views
             }
         }
 
-        private void OnTcpServerChanging()
-        {
-            if (_app.TcpServer != null)
-            {
-                _app.TcpServer.ClientConnected -= UpdateServerStatus;
-                _app.TcpServer.ClientDisconnected -= UpdateServerStatus;
-            }
-        }
-
-        private void OnTcpServerChanged()
-        {
-            if (_app.TcpServer != null)
-            {
-                _app.TcpServer.ClientConnected += UpdateServerStatus;
-                _app.TcpServer.ClientDisconnected += UpdateServerStatus;
-            }
-        }
-
         private void OnIpChanged(object sender, EventArgs e)
         {
-            _app.Data.IpAddress = IpComboBox.SelectedKey;
+            if (!_isUpdatingFields)
+                _app.Data.IpAddress = IpComboBox.SelectedKey;
         }
 
         private void OnTheoryPathClicked(object sender, EventArgs e)
@@ -164,15 +155,23 @@ namespace TheorySDK.Views
         {
             if (e.Text == "\r" || e.Text == "\n" || e.Text == "\r\n")
             {
-                _app.ExecuteScript(e.OldText);
-                _history[_history.Count - 1] = e.OldText;
-                _history.Add("");
+                if (_app.HasClient())
+                {
+                    _app.Logger.Log("Executing remote script...");
+                    _app.ExecuteRemoteScript(e.OldText);
+                    _history[_history.Count - 1] = e.OldText;
+                    _history.Add("");
 
-                if (_history.Count > _maxHistoryCount)
-                    _history.RemoveRange(0, _history.Count - _maxHistoryCount);
-                
-                _historyIndex = _history.Count - 1;
-                CommandLine.Text = "";
+                    if (_history.Count > _maxHistoryCount)
+                        _history.RemoveRange(0, _history.Count - _maxHistoryCount);
+
+                    _historyIndex = _history.Count - 1;
+                    CommandLine.Text = "";
+                }
+                else
+                {
+                    _app.Logger.Log("Error: Cannot send command without client.");
+                }
             }
             else if (!_isSettingHistory)
             {

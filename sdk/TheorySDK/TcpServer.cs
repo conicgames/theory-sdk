@@ -11,12 +11,10 @@ namespace TheorySDK
 {
     public class TcpServer : IDisposable
     {
-        public delegate void TcpServerStateDelegate();
-        public delegate void MessageReceivedDelegate(string message);
-        public TcpServerStateDelegate ClientConnected;
-        public TcpServerStateDelegate ClientDisconnected;
-        public MessageReceivedDelegate MessageReceived;
-        public bool HasClient { get => _client != null; }
+        public Action ClientConnected;
+        public Action ClientDisconnected;
+        public Action<string> MessageReceived;
+        public bool HasClient { get { lock (_clientMutex) return _client != null; } }
 
         private readonly Logger _logger;
         private readonly IPAddress _ipAddress;
@@ -24,6 +22,7 @@ namespace TheorySDK
         private readonly Thread _serverThread;
         private Socket _server = null;
         private Socket _client = null;
+        private bool _isDisposing = false;
         private BlockingCollection<string> _messageQueue = new BlockingCollection<string>();
 
         private object _serverMutex = new object();
@@ -44,7 +43,7 @@ namespace TheorySDK
         {
             lock (_messageQueueMutex)
             {
-                if (_messageQueue != null)
+                if (_messageQueue != null && !_messageQueue.IsAddingCompleted)
                     _messageQueue.Add(message);
             }
         }
@@ -59,6 +58,7 @@ namespace TheorySDK
 
             lock (_serverMutex)
             {
+                _isDisposing = true;
                 if (_server != null)
                     _server.Close();
             }
@@ -75,68 +75,74 @@ namespace TheorySDK
             try
             {
                 lock (_serverMutex)
-                    _server = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                
-                _server.Bind(localEndPoint);
-                _server.Listen(1);
-
-                while (true)
                 {
-                    _logger.Log("Waiting for client...");
-                    var client = _server.Accept();
-                    lock (_clientMutex)
-                        _client = client;
-                    _logger.Log("Client connected.");
-                    lock (_messageQueueMutex)
-                        _messageQueue = new BlockingCollection<string>();
-                    ClientConnected?.Invoke();
-                    var stream = new NetworkStream(_client);
+                    if (!_isDisposing)
+                        _server = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                }
 
-                    var sendThread = new Thread(new ThreadStart(() =>
+                if (_server != null)
+                {
+                    _server.Bind(localEndPoint);
+                    _server.Listen(1);
+
+                    while (true)
                     {
-                        var writer = new StreamWriter(stream);
-                        foreach (var message in _messageQueue.GetConsumingEnumerable())
+                        _logger.Log("Waiting for client...");
+                        var client = _server.Accept();
+                        lock (_clientMutex)
+                            _client = client;
+                        _logger.Log("Client connected.");
+                        lock (_messageQueueMutex)
+                            _messageQueue = new BlockingCollection<string>();
+                        ClientConnected?.Invoke();
+                        var stream = new NetworkStream(_client);
+
+                        var sendThread = new Thread(new ThreadStart(() =>
                         {
+                            var writer = new StreamWriter(stream);
+                            foreach (var message in _messageQueue.GetConsumingEnumerable())
+                            {
+                                try
+                                {
+                                    writer.WriteLine(message);
+                                    writer.Flush();
+                                }
+                                catch (Exception) { }
+                            }
+                        }));
+
+                        var receiveThread = new Thread(new ThreadStart(() =>
+                        {
+                            var reader = new StreamReader(stream);
                             try
                             {
-                                writer.WriteLine(message);
-                                writer.Flush();
+                                while (true)
+                                {
+                                    string message = reader.ReadLine();
+                                    if (string.IsNullOrEmpty(message))
+                                        break;
+                                    //_logger.Log("Message received.");
+                                    MessageReceived?.Invoke(message);
+                                }
                             }
                             catch (Exception) { }
-                        }
-                    }));
+                        }));
 
-                    var receiveThread = new Thread(new ThreadStart(() =>
-                    {
-                        var reader = new StreamReader(stream);
-                        try
-                        {
-                            while (true)
-                            {
-                                string message = reader.ReadLine();
-                                if (string.IsNullOrEmpty(message))
-                                    break;
-                                //_logger.Log("Message received.");
-                                MessageReceived?.Invoke(message);
-                            }
-                        }
-                        catch (Exception) { }
-                    }));
+                        sendThread.Start();
+                        receiveThread.Start();
+                        receiveThread.Join();
+                        _messageQueue.CompleteAdding();
+                        sendThread.Join();
 
-                    sendThread.Start();
-                    receiveThread.Start();
-                    receiveThread.Join();
-                    _messageQueue.CompleteAdding();
-                    sendThread.Join();
-
-                    _client.Shutdown(SocketShutdown.Both);
-                    _client.Close();
-                    lock (_clientMutex)
-                        _client = null;
-                    lock (_messageQueueMutex)
-                        _messageQueue = null;
-                    _logger.Log("Client disconnected.");
-                    ClientDisconnected?.Invoke();
+                        _client.Shutdown(SocketShutdown.Both);
+                        _client.Close();
+                        lock (_clientMutex)
+                            _client = null;
+                        lock (_messageQueueMutex)
+                            _messageQueue = null;
+                        _logger.Log("Client disconnected.");
+                        ClientDisconnected?.Invoke();
+                    }
                 }
             }
             catch (SocketException e)

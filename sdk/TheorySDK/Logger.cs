@@ -4,8 +4,7 @@ namespace TheorySDK
 {
     public class Logger
     {
-        public delegate void MessageLoggedDelegate(string message);
-        public MessageLoggedDelegate MessageLogged;
+        public Action<string> MessageLogged;
 
         public void Log(string message)
         {

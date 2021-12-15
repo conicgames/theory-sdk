@@ -38,8 +38,17 @@
     /** @returns {ImageSource} */ static get WARNING();
 
     /**
+     * Retreives an image from an URI.
+     * Limitations: This function can only be called directly,
+     * and its argument must be a string literal.
+     * Examples:
+     *   ImageSource.fromUri("http://some.url.com/image.png"); // OK
+     *   ImageSource.fromUri("http://some.url.com/" + "image.png"); // Error
+     *   ImageSource.fromUri(getImage()); // Error
+     *   ImageSource.fromUri(urls[0]); // Error
+     *   var getUri = ImageSource.fromUri; getUri("http://some.url.com/image.png") // Error
      * @param {string} uri - The URI of the image
-     * @param {number} [useCache] - Specifies is the image can be cached. Default: true.
+     * @param {boolean} [useCache] - Specifies is the image can be cached. Default: true.
      * @returns {ImageSource}
      */
     fromUri(uri, useCache);
