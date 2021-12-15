@@ -30,6 +30,13 @@ jobs:
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x'
+      - name: Set Version number
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "Local Build"
+          replace: v${{ github.event.inputs.version }}
+          regex: false
+          include: "./sdk/TheorySDK/Version.cs"
       - run: dotnet publish .\sdk\TheorySDK.Wpf\TheorySDK.Wpf.csproj -c Release -o bin
       - run: New-Item "Launch SDK.bat"; Set-Content 'Launch SDK.bat' 'start "" "bin\TheorySDK.Wpf.exe"'
       - run: 7z a TheorySDK.Win.${{ github.event.inputs.version }}.zip . -x!".git" -x!".github" -x!".gitignore" -x!sdk
