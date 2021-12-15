@@ -51,6 +51,7 @@ namespace TheorySDK
                 var engine = new Jint.Engine(cfg =>
                 {
                     cfg.Culture(culture);
+                    cfg.AllowClr();
                     cfg.CatchClrExceptions();
                     cfg.SetTypeConverter((e) => new TypeConverterWrapper(new DefaultTypeConverter(e)));
                     cfg.CancellationToken(cancellationToken);
@@ -59,6 +60,10 @@ namespace TheorySDK
                 engine.SetValue("remote", new Func<string, string>((s) =>
                 {
                     var result = executeRemote(s, cancellationToken);
+
+                    if (result == null)
+                        return null;
+
                     return JsonSerializer.Deserialize<string>(result);
                 }));
                 engine.Execute(script);

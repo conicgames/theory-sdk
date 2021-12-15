@@ -126,6 +126,11 @@ namespace TheorySDK.Views
                 var time = DateTime.Now.ToString("hh:mm:ss");
                 string value = (Log.Text.Length == 0 ? "" : "\n") + "[" + time + "] " + message;
                 Log.Append(value, true);
+                
+                var maxLength = 2000 * 80;
+                
+                if (Log.Text.Length > maxLength)
+                    Log.Text = Log.Text.Substring(Log.Text.Length - maxLength);
             }));
         }
 

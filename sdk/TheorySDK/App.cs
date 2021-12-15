@@ -128,7 +128,7 @@ namespace TheorySDK
 
         private void SendTheory()
         {
-            if (!File.Exists(Data.TheoryPath))
+            if (!File.Exists(Data.TheoryPath) || !HasClient())
                 return;
 
             Logger.Log("Sending theory...");
