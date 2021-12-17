@@ -89,7 +89,7 @@ jobs:
         with:
           files: './sdk/TheorySDK/Version.cs'
           replacements: 'Local=v${{ github.event.inputs.version }}'
-      - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -p:UseAppHost=true -c Release -o bin
+      - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -p:PublishSingleFile=true -p:UseAppHost=true -c Release -o bin
       - run: echo "./bin/TheorySDK.Mac" >> launchSDK.sh; chmod +x launchSDK.sh
       - name: Codesign executable
         env: 
@@ -105,7 +105,7 @@ jobs:
           security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PWD build.keychain
           /usr/bin/codesign --force -s $MACOS_IDENTITY_ID "./bin/TheorySDK.Mac" -v
-          rm certificate.p21
+          rm certificate.p12
       - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Mac.${{ github.event.inputs.version }}.tgz .
       - name: Gets latest created release info
         id: latest_release_info
