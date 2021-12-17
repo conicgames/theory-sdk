@@ -8,16 +8,14 @@
 	<StackLayout Spacing="10">
 		<Label x:Name="MessageLabel" TextColor="White" TextAlignment="Center" />
     <StackLayoutItem HorizontalAlignment="Stretch">
-      <TableLayout Spacing="5,0">
-        <TableRow>
-          <TableCell ScaleWidth="True">
-            <Button Text="Yes" Height="24" BackgroundColor="#333" TextColor="White" Click="OnYesClicked" />
-          </TableCell>
-          <TableCell ScaleWidth="True">
-            <Button Text="No" Height="24" BackgroundColor="#333" TextColor="White" Click="OnNoClicked" />
-          </TableCell>
-        </TableRow>
-      </TableLayout>
+      <StackLayout Orientation="Horizontal" Spacing="5">
+        <StackLayoutItem Expand="True">
+          <Button Text="Yes" Height="24" BackgroundColor="#333" TextColor="White" Click="OnYesClicked" />
+        </StackLayoutItem>
+        <StackLayoutItem Expand="True">
+          <Button Text="No" Height="24" BackgroundColor="#333" TextColor="White" Click="OnNoClicked" />
+        </StackLayoutItem>
+      </StackLayout>
     </StackLayoutItem>
 	</StackLayout>
 </Dialog>

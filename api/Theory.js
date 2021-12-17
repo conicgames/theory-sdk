@@ -321,6 +321,12 @@ export class Theory {
     clearGraph();
 
     /**
+     * Performs a "tick" on the active theory.
+     * Only works on custom theories coming from the SDK.
+     */
+    tick();
+
+    /**
      * Performs a "Publication".
      * Does nothing if publications are not available or the tau value is lower than the previous publication.
      */

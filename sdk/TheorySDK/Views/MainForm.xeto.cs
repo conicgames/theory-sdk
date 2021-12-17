@@ -4,6 +4,7 @@ using Eto.Serialization.Xaml;
 using System;
 using static System.Reflection.Assembly;
 using System.Collections.Generic;
+using System.Text;
 
 namespace TheorySDK.Views
 {
@@ -16,7 +17,10 @@ namespace TheorySDK.Views
         private readonly TextBox TheoryPath = null;
         private readonly Label ServerStatus = null;
         private readonly TextArea Log = null;
+        private readonly Label CommandLineSpacer = null;
+        private readonly StackLayout CommandLineLayout = null;
         private readonly TextBox CommandLine = null;
+        private readonly ImageView QuestionImage = null;
         private readonly ScriptPanel ScriptPanel = null;
 
         private List<string> _history;
@@ -25,12 +29,14 @@ namespace TheorySDK.Views
         private bool _isSettingHistory = false;
         private bool _isUpdatingFields = false;
         private UITimer _autosaveTimer = new UITimer();
+        private StringBuilder _pendingLogs = new StringBuilder();
 
         public MainForm()
         {
             XamlReader.Load(this);
             Title += " - " + Version.VersionString;
             Icon = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.icon48x48.ico"));
+            QuestionImage.Image = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.png"));
             _app = new App();
 
             _app.ClientConnected += UpdateServerStatus;
@@ -80,7 +86,10 @@ namespace TheorySDK.Views
         {
             Application.Instance.AsyncInvoke(() =>
             {
-                ServerStatus.Text = _app.HasClient() ? "Connected" : "Waiting for client...";
+                var hasClient = _app.HasClient();
+                ServerStatus.Text = hasClient ? "Connected" : "Waiting for client...";
+                CommandLineSpacer.Visible = hasClient;
+                CommandLineLayout.Visible = hasClient;
             });
         }
 
@@ -121,16 +130,38 @@ namespace TheorySDK.Views
 
         private void OnMessageLogged(string message)
         {
-            Application.Instance.AsyncInvoke(new Action(() =>
+            lock (_pendingLogs)
             {
                 var time = DateTime.Now.ToString("hh:mm:ss");
-                string value = (Log.Text.Length == 0 ? "" : "\n") + "[" + time + "] " + message;
-                Log.Append(value, true);
-                
-                var maxLength = 2000 * 80;
-                
-                if (Log.Text.Length > maxLength)
-                    Log.Text = Log.Text.Substring(Log.Text.Length - maxLength);
+                string log = "[" + time + "] " + message;
+                _pendingLogs.AppendLine(log);
+            }
+            Application.Instance.AsyncInvoke(new Action(() =>
+            {
+                string logs = null;
+
+                lock (_pendingLogs)
+                {
+                    if (_pendingLogs.Length > 0)
+                    {
+                        logs = _pendingLogs.ToString();
+                        _pendingLogs.Clear();
+                    }
+                }
+
+                if (logs != null)
+                {
+                    Log.Append(logs, true);
+
+                    // We remove half of the text whenever we pass a threshold instead of
+                    // simply removing the excess. This avoid having to modify the text
+                    // at each iteration when the limit is reached.
+                    // 
+                    var maxLength = 8000;
+
+                    if (Log.Text.Length > maxLength)
+                        Log.Text = Log.Text.Substring(Log.Text.Length - maxLength / 2);
+                }
             }));
         }
 
@@ -155,6 +186,20 @@ namespace TheorySDK.Views
                 _isSettingHistory = false;
                 CommandLine.CaretIndex = CommandLine.Text.Length;
             }
+        }
+
+        private async void ShowCommandLineInstructions(object sender, EventArgs e)
+        {
+            await InformationDialog.Show(this, "Command Line Instructions",
+                "A command is Javascript expression sent to your device and executed within\n" +
+                "the current context of the theory. Commands are useful for inspecting\n" +
+                "the state of the theory without having to put logging expressions in the\n" +
+                "script itself. They are also useful for modifying values at runtime to change\n" +
+                "the current state of the theory. Some useful examples:\n\n" +
+                "theory.reset(); // Resets the theory\n" +
+                "currency.value = 1e100; // Sets the currency to test a specific part of the theory\n" +
+                "log(aVariable) // Displays the value in the logs of the SDK.\n\n" +
+                "Use the up and down arrows to navigate through your command history.");
         }
 
         private void OnCommandLineTextChanging(object sender, TextChangingEventArgs e)

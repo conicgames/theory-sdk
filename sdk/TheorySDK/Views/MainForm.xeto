@@ -11,8 +11,8 @@
   <TableLayout Spacing="5, 5">
     <TableRow>
       <TableCell ScaleWidth="True">
-        <StackLayout HorizontalContentAlignment="Stretch" Spacing="5">
-          <TableLayout Spacing="5,5">
+        <StackLayout HorizontalContentAlignment="Stretch">
+          <TableLayout Spacing="5,5" Padding="0,0,0,5">
             <TableRow>
               <TableCell>
                 <Label Text="IP Address: " Height="24" TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
@@ -53,10 +53,22 @@
           <StackLayoutItem Expand="True">
             <TextArea x:Name="Log" Font="Consolas" Text="" BackgroundColor="#333" TextColor="White" ReadOnly="True" />
           </StackLayoutItem>
-          <TextBox x:Name="CommandLine" Height="24" BackgroundColor="#333" TextColor="White" ShowBorder="False" PlaceholderText="Enter a command..." TextChanging="OnCommandLineTextChanging" KeyDown="OnCommandLineKeyDown" />
+          <Label x:Name="CommandLineSpacer" Height="5" Visible="False" />
+          <StackLayoutItem>
+            <StackLayout x:Name="CommandLineLayout" Visible="False" Orientation="Horizontal">
+              <StackLayoutItem Expand="True">
+                <TextBox x:Name="CommandLine" Height="24" BackgroundColor="#333" TextColor="White" ShowBorder="False" PlaceholderText="Enter a command..." TextChanging="OnCommandLineTextChanging" KeyDown="OnCommandLineKeyDown" />
+              </StackLayoutItem>
+              <Label Width="5" />
+              <StackLayoutItem VerticalAlignment="Center">
+                <ImageView x:Name="QuestionImage" Height="16" MouseUp="ShowCommandLineInstructions" />
+              </StackLayoutItem>
+            </StackLayout>
+          </StackLayoutItem>
         </StackLayout>
       </TableCell>
       <TableCell>
+        <!-- Separator -->
         <Label Text="" BackgroundColor="#444" Width="2" />
       </TableCell>
       <TableCell ScaleWidth="True">

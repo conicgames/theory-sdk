@@ -4,9 +4,16 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <ApplicationIcon></ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\question.png" />
+  </ItemGroup>
   
   <ItemGroup>
     <EmbeddedResource Include="Resources\icon48x48.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\question.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
@@ -20,6 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\InformationDialog.xeto.cs">
+      <DependentUpon>InformationDialog.xeto</DependentUpon>
+    </Compile>
     <Compile Update="Views\ConfirmationDialog.xeto.cs">
       <DependentUpon>ConfirmationDialog.xeto</DependentUpon>
     </Compile>

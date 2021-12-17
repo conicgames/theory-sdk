@@ -18,6 +18,11 @@ export class Localization {
     static get(id);
 
     /**
+     * @returns {string} Language code of the game selected by the player
+     */
+    static get language();
+
+    /**
      * @returns {boolean} Is the current active language Right-to-Left?
      */
     static get isRTL();
@@ -129,6 +134,22 @@ export class Localization {
      * @returns {String}
      */
     static getUpgradeMultCustomInfo(paramName, amount)
+
+    /**
+     * Sentence: "\\downarrow {paramName} by {amount}"
+     * @param {String} paramName
+     * @param {String} amount
+     * @returns {String}
+     */
+    static getUpgradeDecCustomDesc(paramName, amount)
+
+    /**
+     * Sentence: "Decreases {paramName} by {amount}"
+     * @param {String} paramName
+     * @param {String} amount
+     * @returns {String}
+     */
+    static getUpgradeDecCustomInfo(paramName, amount)
 
     /**
      * Sentence: "\\uparrow {paramName} exponent by {amount}"

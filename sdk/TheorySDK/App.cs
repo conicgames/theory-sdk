@@ -164,27 +164,29 @@ namespace TheorySDK
         public async Task ExecuteLocalScript(string script)
         {
             lock (_remoteCancellationTokenSourceMutex)
+            {
+                if (_remoteCancellationTokenSource != null)
+                    return;
                 _remoteCancellationTokenSource = new CancellationTokenSource();
+            }
 
             await Task.Run(() =>
             {
                 var lastLogTime = DateTime.UtcNow;
                 ScriptExecutor.Execute(script,
                                        _remoteCancellationTokenSource.Token,
-                                       (o) =>
-                                       {
-                                           // Ensure we don't flood the logs and freeze the UI
-                                           var timeDifference = DateTime.UtcNow - lastLogTime;
-                                           if (timeDifference.TotalMilliseconds < 30)
-                                               Thread.Sleep(50 - (int)timeDifference.TotalMilliseconds);
-                                           lastLogTime = DateTime.UtcNow;
-                                           Logger.Log(o.ToString());
-                                       },
+                                       (o) => Logger.Log(o.ToString()),
                                        (s, c) => WaitForResult(ExecuteRemoteScript(s), c));
 
                 lock (_remoteCancellationTokenSourceMutex)
                     _remoteCancellationTokenSource = null;
             });
+        }
+
+        public bool IsExecutingLocalScript()
+        {
+            lock (_remoteCancellationTokenSourceMutex)
+                return _remoteCancellationTokenSource != null;
         }
 
         public void CancelScriptExecution()

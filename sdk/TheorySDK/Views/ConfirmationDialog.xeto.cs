@@ -12,9 +12,10 @@ namespace TheorySDK.Views
 		private bool Answer { get; set; } = false;
 		private Label MessageLabel = null;
 
-		public static async Task<bool> Show(Control owner, string text)
+		public static async Task<bool> Show(Control owner, string title, string text)
         {
 			var dialog = new ConfirmationDialog();
+			dialog.Title = title;
 			dialog.MessageLabel.Text = text;
 			await dialog.ShowModalAsync(owner);
 			return dialog.Answer;

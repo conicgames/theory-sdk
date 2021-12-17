@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using static System.Reflection.Assembly;
 using Eto.Forms;
 using Eto.Drawing;
 using Eto.Serialization.Xaml;
@@ -13,6 +14,7 @@ namespace TheorySDK.Views
 		private App _app = null;
 		private bool _internalSelectionChanged = false;
 
+		private readonly ImageView QuestionImage = null;
 		private readonly ListBox ScriptList = null;
 		private readonly TextBox ScriptName = null;
 		private readonly Button ExecuteScriptButton = null;
@@ -27,6 +29,7 @@ namespace TheorySDK.Views
 		public void Init(App app)
         {
 			_app = app;
+			QuestionImage.Image = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.png"));
 			UpdateScriptList();
         }
 
@@ -42,7 +45,7 @@ namespace TheorySDK.Views
 			if (GetSelectedScript() == null)
 				return;
 
-			if (await ConfirmationDialog.Show(this, "Do you want to remove this script?"))
+			if (await ConfirmationDialog.Show(this, "Remove Local Script", "Do you want to remove this script?"))
 			{
 				int index = ScriptList.SelectedIndex;
 
@@ -74,6 +77,18 @@ namespace TheorySDK.Views
 				_internalSelectionChanged = false;
 			}
 		}
+
+		private async void ShowInstructions(object sender, EventArgs e)
+        {
+			await InformationDialog.Show(this, "Local Scripts Instructions",
+				"Use local scripts to automate some parts of theory development. For example, you can write a script that\n" +
+				"simulates a theory by requesting the game to do a tick, buy upgrades, publish, and buy milestones.\n\n" +
+				"As opposed to commands, local scripts are executed by the SDK application itself. To send a command\n" +
+				"to the game, use the 'remote' function. Some examples:\n\n" +
+				"remote(\"tick(10,1)\") // Does a tick of 10 seconds without ad bonus\n" +
+				"let currency = remote(\"currency.value\") // Queries game data. All results are returned strings\n\n" +
+				"Press Ctrl-Enter to execute the script and Esc to cancel the execution.");
+        }
 
 		private void OnScriptSelectionChanged(object sender, EventArgs e)
         {
@@ -119,6 +134,11 @@ namespace TheorySDK.Views
             }
 		}
 
+		private async void OnScriptListDoubleClick(object sender, EventArgs e)
+        {
+			await ExecuteSelectedScript();
+		}
+
 		private void OnScriptNameChanging(object sender, TextChangingEventArgs e)
         {
 			if (e.Text == "\r" || e.Text == "\n" || e.Text == "\r\n")
@@ -143,6 +163,8 @@ namespace TheorySDK.Views
 
 		private async void OnScriptCodeKeyDown(object sender, KeyEventArgs e)
 		{
+			if (e.KeyData == Keys.Escape)
+				_app.CancelScriptExecution();
 			if (e.Key == Keys.Enter && e.Modifiers == Keys.Control)
 				await ExecuteSelectedScript();
 			else if (e.Key == Keys.Enter)
@@ -190,6 +212,8 @@ namespace TheorySDK.Views
 
 			if (script == null)
 				_app.Logger.Log("Error: No script selected.");
+			else if (_app.IsExecutingLocalScript())
+				_app.Logger.Log("Error: A local script is already being executed.");
 			else
 			{
 				_app.Logger.Log("Executing local script...");

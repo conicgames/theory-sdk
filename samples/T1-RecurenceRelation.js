@@ -15,7 +15,7 @@ var rhoNm1 = BigNumber.ZERO;
 var rhoNm2 = BigNumber.ZERO;
 var time = 0;
 
-var stringTickspeed = "\\text{{" + Localization.format(Localization.get("TheoryPanelTickspeed"), "}}q_1q_2\\text{{", "}}{0}\\text{{") + "}}";
+var stringTickspeed = "\\text{{" + Localization.get("TheoryPanelTickspeed", "}}q_1q_2\\text{{", "}}{0}\\text{{") + "}}";
 var epsilon = BigNumber.from(1e-8);
 
 var currency;
@@ -110,16 +110,16 @@ var init = () => {
 
     {
         c3Term = theory.createMilestoneUpgrade(2, 1);
-        c3Term.description = Localization.format(Localization.getUpgradeAddTermDesc("\\rho_{n-1}^{0.2}"));
-        c3Term.info = Localization.format(Localization.getUpgradeAddTermInfo("\\rho_{n-1}^{0.2}"));
+        c3Term.description = Localization.getUpgradeAddTermDesc("\\rho_{n-1}^{0.2}");
+        c3Term.info = Localization.getUpgradeAddTermInfo("\\rho_{n-1}^{0.2}");
         c3Term.boughtOrRefunded = (_) => { theory.invalidatePrimaryEquation(); updateAvailability(); };
         c3Term.canBeRefunded = (_) => c4Term.level == 0;
     }
 
     {
         c4Term = theory.createMilestoneUpgrade(3, 1);
-        c4Term.description = Localization.format(Localization.getUpgradeAddTermDesc("\\rho_{n-2}^{0.3}"));
-        c4Term.info = Localization.format(Localization.getUpgradeAddTermInfo("\\rho_{n-2}^{0.3}"));
+        c4Term.description = Localization.getUpgradeAddTermDesc("\\rho_{n-2}^{0.3}");
+        c4Term.info = Localization.getUpgradeAddTermInfo("\\rho_{n-2}^{0.3}");
         c4Term.boughtOrRefunded = (_) => { theory.invalidatePrimaryEquation(); updateAvailability(); };
         c4Term.isAvailable = false;
     }

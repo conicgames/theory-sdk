@@ -51,10 +51,11 @@ namespace TheorySDK
                 var engine = new Jint.Engine(cfg =>
                 {
                     cfg.Culture(culture);
-                    cfg.AllowClr();
+                    cfg.AllowClr(typeof(System.IO.File).Assembly);
                     cfg.CatchClrExceptions();
                     cfg.SetTypeConverter((e) => new TypeConverterWrapper(new DefaultTypeConverter(e)));
                     cfg.CancellationToken(cancellationToken);
+                    cfg.CatchClrExceptions();
                 });
                 engine.SetValue("log", log);
                 engine.SetValue("remote", new Func<string, string>((s) =>
@@ -72,6 +73,9 @@ namespace TheorySDK
             {
                 log("Error: " + GetErrorMessage(e));
             }
+
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
         }
 
         private static string GetErrorMessage(Exception e)
