@@ -51,7 +51,7 @@
             </TableRow>
           </TableLayout>
           <StackLayoutItem Expand="True">
-            <TextArea x:Name="Log" Font="Consolas" Text="" BackgroundColor="#333" TextColor="White" ReadOnly="True" />
+            <TextArea x:Name="Log" Text="" BackgroundColor="#333" TextColor="White" ReadOnly="True" />
           </StackLayoutItem>
           <Label x:Name="CommandLineSpacer" Height="5" Visible="False" />
           <StackLayoutItem>

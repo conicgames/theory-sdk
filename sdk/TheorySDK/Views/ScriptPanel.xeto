@@ -47,7 +47,7 @@
           <TextBox x:Name="ScriptName" Height="24" BackgroundColor="#333" TextColor="White" ShowBorder="False" TextChanging="OnScriptNameChanging" ReadOnly="True"/>
           <!-- Script Code -->
           <StackLayoutItem Expand="True">
-            <TextArea x:Name="ScriptCode" Font="Consolas" Text="" BackgroundColor="#333" TextColor="White" TextChanged="OnScriptCodeChanged" KeyDown="OnScriptCodeKeyDown" ReadOnly="True"/>
+            <TextArea x:Name="ScriptCode" Text="" BackgroundColor="#333" TextColor="White" TextChanged="OnScriptCodeChanged" KeyDown="OnScriptCodeKeyDown" ReadOnly="True"/>
           </StackLayoutItem>
         </StackLayout>
       </TableCell>
