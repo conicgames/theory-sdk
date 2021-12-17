@@ -105,7 +105,8 @@ jobs:
           security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PWD build.keychain
           /usr/bin/codesign --force -s $MACOS_IDENTITY_ID "./bin/TheorySDK.Mac" -v
-      - run: zip -r TheorySDK.Mac.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
+          rm certificate.p21
+      - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Mac.${{ github.event.inputs.version }}.tgz .
       - name: Gets latest created release info
         id: latest_release_info
         uses: jossef/action-latest-release-info@v1.1.0
