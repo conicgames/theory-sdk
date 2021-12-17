@@ -89,7 +89,9 @@ jobs:
         with:
           files: './sdk/TheorySDK/Version.cs'
           replacements: 'Local=v${{ github.event.inputs.version }}'
-      - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -p:RuntimeIdentifier="osx-x64" -p:PublishSingleFile=true -p:UseAppHost=true -c Release -o ./bin/
+      - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -r osx-x64 -p:PublishSingleFile=true --self-contained true -p:PublishReadyToRunShowWarnings=true -c Release -o ./bin/
+      - run: rm ./bin/*.pdb
+      - run: chmod +x ./bin/TheorySDK.Mac
       - run: printf "#!/usr/bin/env bash\n./bin/TheorySDK.Mac.app/Contents/MacOS/TheorySDK.Mac" >> launchSDK.sh; chmod +x launchSDK.sh
       - name: Codesign executable
         env: 
