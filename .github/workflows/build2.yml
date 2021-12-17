@@ -35,7 +35,7 @@ jobs:
           security unlock-keychain -p $MACOS_KEYCHAIN_PWD build.keychain
           security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PWD build.keychain
-          /usr/bin/codesign --force --options runtime --timestamp -s $MACOS_IDENTITY_ID ./bin/TheorySDK.Mac -v
+          /usr/bin/codesign --force --preserve-metadata=entitlements --options runtime --timestamp -s $MACOS_IDENTITY_ID ./bin/TheorySDK.Mac -v
           rm certificate.p12
       - name: "Notarize Release Build"
         uses: devbotsxyz/xcode-notarize@v1
