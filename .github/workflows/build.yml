@@ -108,7 +108,16 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PWD build.keychain
           /usr/bin/codesign --force -s $MACOS_IDENTITY_ID ./bin/TheorySDK.Mac -v
           rm certificate.p12
-      - run: xattr -cr ./bin/TheorySDK.MAC.app/
+      - name: "Notarize Release Build"
+        uses: devbotsxyz/xcode-notarize@v1
+        with:
+          product-path: "./bin/TheorySDK.Mac.app"
+          appstore-connect-username: ${{ secrets.MACOS_NOTARIZATION_USERNAME }}
+          appstore-connect-password: ${{ secrets.MACOS_NOTARIZATION_PWD }}
+      - name: "Staple Release Build"
+        uses: devbotsxyz/xcode-staple@v1
+        with:
+          product-path: "./bin/TheorySDK.Mac.app"
       - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Mac.${{ github.event.inputs.version }}.tgz .
       - name: Gets latest created release info
         id: latest_release_info
