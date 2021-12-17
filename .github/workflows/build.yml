@@ -108,6 +108,7 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PWD build.keychain
           /usr/bin/codesign --force -s $MACOS_IDENTITY_ID ./bin/TheorySDK.Mac -v
           rm certificate.p12
+      - run: xattr -cr ./bin/TheorySDK.MAC.app/
       - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Mac.${{ github.event.inputs.version }}.tgz .
       - name: Gets latest created release info
         id: latest_release_info
