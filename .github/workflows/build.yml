@@ -89,9 +89,23 @@ jobs:
         with:
           files: './sdk/TheorySDK/Version.cs'
           replacements: 'Local=v${{ github.event.inputs.version }}'
-      - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -c Release -o bin
+      - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -p:RuntimeIdentifier="osx-x64" -p:PublishSingleFile=true -p:UseAppHost=true -c Release -o ./bin/
       - run: echo "./bin/TheorySDK.Mac" >> launchSDK.sh; chmod +x launchSDK.sh
-      - run: zip -r TheorySDK.Mac.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
+      - name: Codesign executable
+        env: 
+          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
+          MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
+          MACOS_IDENTITY_ID: ${{ secrets.MACOS_IDENTITY_ID }}
+          MACOS_KEYCHAIN_PWD: ${{ secrets.MACOS_KEYCHAIN_PWD }}
+        run: |
+          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+          security create-keychain -p $MACOS_KEYCHAIN_PWD build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p $MACOS_KEYCHAIN_PWD build.keychain
+          security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PWD build.keychain
+          rm certificate.p12
+      - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Mac.${{ github.event.inputs.version }}.tgz .
       - name: Gets latest created release info
         id: latest_release_info
         uses: jossef/action-latest-release-info@v1.1.0
@@ -99,6 +113,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }} 
-          asset_path: ./TheorySDK.Mac.${{ github.event.inputs.version }}.zip
-          asset_name: TheorySDK.Mac.${{ github.event.inputs.version }}.zip
+          asset_path: ./TheorySDK.Mac.${{ github.event.inputs.version }}.tgz
+          asset_name: TheorySDK.Mac.${{ github.event.inputs.version }}.tgz
           asset_content_type: application/zip
