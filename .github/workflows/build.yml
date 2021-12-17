@@ -95,15 +95,17 @@ jobs:
         env: 
           MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
           MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
+          MACOS_IDENTITY_ID: ${{ secrets.MACOS_IDENTITY_ID }}
+          MACOS_KEYCHAIN_PWD: ${{ secrets.MACOS_KEYCHAIN_PWD }}
         run: |
           echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
-          security create-keychain -p new_certificate build.keychain
+          security create-keychain -p $MACOS_KEYCHAIN_PWD build.keychain
           security default-keychain -s build.keychain
-          security unlock-keychain -p new_certificate build.keychain
+          security unlock-keychain -p $MACOS_KEYCHAIN_PWD build.keychain
           security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k new_certificate build.keychain
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PWD build.keychain
           security find-identity -v
-          /usr/bin/codesign --force -s 398D9023620E3CC7B04EE1F10DD44E69B4A643AD "./bin/TheorySDK.Mac" -v
+          /usr/bin/codesign --force -s $MACOS_IDENTITY_ID "./bin/TheorySDK.Mac" -v
       - run: zip -r TheorySDK.Mac.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
       - name: Gets latest created release info
         id: latest_release_info
