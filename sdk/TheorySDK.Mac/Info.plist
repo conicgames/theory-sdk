@@ -3,9 +3,9 @@
 <plist version="1.0">
   <dict>
     <key>CFBundleName</key>
-    <string>TheorySDK</string>
+    <string>Theory SDK</string>
     <key>CFBundleIdentifier</key>
-    <string>com.example.TheorySDK</string>
+    <string>com.conicgames.exponentialidlesdk</string>
     <key>CFBundleShortVersionString</key>
     <string>1.0</string>
     <key>LSMinimumSystemVersion</key>

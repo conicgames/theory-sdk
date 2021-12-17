@@ -7,6 +7,12 @@
     <RuntimeIdentifiers>osx-x64</RuntimeIdentifiers>
 
     <ApplicationIcon>icon256x256.ico</ApplicationIcon>
+
+    <PackageId>com.conicgames.exponentialidlesdk</PackageId>
+
+    <Authors>Gilles-Philippe Paille</Authors>
+
+    <Product>Theory SDK</Product>
   </PropertyGroup>
 	
   <ItemGroup>
