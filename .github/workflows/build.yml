@@ -102,6 +102,7 @@ jobs:
           security unlock-keychain -p new_certificate build.keychain
           security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k new_certificate build.keychain
+          security find-identity -v
           /usr/bin/codesign --force -s 398D9023620E3CC7B04EE1F10DD44E69B4A643AD "./bin/TheorySDK.Mac" -v
       - run: zip -r TheorySDK.Mac.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
       - name: Gets latest created release info
