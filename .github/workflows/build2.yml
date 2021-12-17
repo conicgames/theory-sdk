@@ -43,7 +43,7 @@ jobs:
           product-path: "./bin/TheorySDK.Mac.app"
           appstore-connect-username: ${{ secrets.MACOS_NOTARIZATION_USERNAME }}
           appstore-connect-password: ${{ secrets.MACOS_NOTARIZATION_PWD }}
-          primaryBundleId: com.conicgames.exponentialidlesdk
+          primary-bundle-id: com.conicgames.exponentialidlesdk
           verbose: true
       - name: "Staple Release Build"
         uses: devbotsxyz/xcode-staple@v1
