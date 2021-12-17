@@ -1,0 +1,47 @@
+name: Build Theory SDK Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number'
+        required: true
+        default: '1.0.0'
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+
+jobs:
+  build_mac:
+    runs-on: macos-latest
+    needs: create_release
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+      - name: Set Version number
+        uses: datamonsters/replace-action@v2
+        with:
+          files: './sdk/TheorySDK/Version.cs'
+          replacements: 'Local=v${{ github.event.inputs.version }}'
+      - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -r osx-x64 -p:PublishSingleFile=true --self-contained true -p:PublishReadyToRunShowWarnings=true -c Release -o ./bin/
+      - run: rm ./bin/*.pdb
+      - run: chmod +x ./bin/TheorySDK.Mac
+      - run: printf "#!/usr/bin/env bash\n./bin/TheorySDK.Mac.app/Contents/MacOS/TheorySDK.Mac" >> launchSDK.sh; chmod +x launchSDK.sh
+      - name: Codesign executable
+        env: 
+          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
+          MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
+          MACOS_IDENTITY_ID: ${{ secrets.MACOS_IDENTITY_ID }}
+          MACOS_KEYCHAIN_PWD: ${{ secrets.MACOS_KEYCHAIN_PWD }}
+        run: |
+          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+          security create-keychain -p $MACOS_KEYCHAIN_PWD build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p $MACOS_KEYCHAIN_PWD build.keychain
+          security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PWD build.keychain
+          /usr/bin/codesign --force -s $MACOS_IDENTITY_ID ./bin/TheorySDK.Mac -v
+          rm certificate.p12
+      - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Mac.${{ github.event.inputs.version }}.tgz .
