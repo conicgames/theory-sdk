@@ -14,7 +14,6 @@ env:
 jobs:
   build_mac:
     runs-on: macos-latest
-    needs: create_release
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
