@@ -70,7 +70,10 @@ namespace TheorySDK
             {
                 Serializer.Serialize(Data);
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                Logger.Log("Error while saving data: " + e.Message);
+            }
         }
 
         public void CreateTcpServer()
