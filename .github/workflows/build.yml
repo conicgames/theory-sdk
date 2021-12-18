@@ -90,7 +90,8 @@ jobs:
           files: './sdk/TheorySDK/Version.cs'
           replacements: 'Local=v${{ github.event.inputs.version }}'
       - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -r osx-x64 -p:PublishSingleFile=true --self-contained true -p:PublishReadyToRunShowWarnings=true -c Release -o ./bin/
-      - run: mv ./bin/TheorySDK.Mac.app/ ./TheorySDK.Mac.app/
+      - run: cp ./sdk/TheorySDK.Mac/Icon.icns ./bin/TheorySDK.Mac.app/Contents/Resources/
+      - run: mv ./bin/TheorySDK.Mac.app/ "./Theory SDK.app/"
       - run: rm -r ./bin
       - run: chmod -R 777 .
       - name: Codesign executable
@@ -106,18 +107,18 @@ jobs:
           security unlock-keychain -p $MACOS_KEYCHAIN_PWD build.keychain
           security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PWD build.keychain
-          /usr/bin/codesign --deep --force --verify --entitlements "./sdk/TheorySDK.Mac/Entitlements.plist" --options=runtime --no-strict --timestamp -s "$MACOS_IDENTITY_ID" ./TheorySDK.Mac.app/ -v
+          /usr/bin/codesign --deep --force --verify --entitlements "./sdk/TheorySDK.Mac/Entitlements.plist" --options=runtime --no-strict --timestamp -s "$MACOS_IDENTITY_ID" "./Theory SDK.app/" -v
           rm certificate.p12
       - name: "Notarize Release Build"
         uses: devbotsxyz/xcode-notarize@v1
         with:
-          product-path: "./TheorySDK.Mac.app"
+          product-path: "./Theory SDK.app"
           appstore-connect-username: ${{ secrets.MACOS_NOTARIZATION_USERNAME }}
           appstore-connect-password: ${{ secrets.MACOS_NOTARIZATION_PWD }}
       - name: "Staple Release Build"
         uses: devbotsxyz/xcode-staple@v1
         with:
-          product-path: "./TheorySDK.Mac.app"
+          product-path: "./Theory SDK.app"
       - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Mac.${{ github.event.inputs.version }}.tgz .
       - name: Gets latest created release info
         id: latest_release_info
