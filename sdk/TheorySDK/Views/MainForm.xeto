@@ -61,7 +61,7 @@
               </StackLayoutItem>
               <Label Width="5" />
               <StackLayoutItem VerticalAlignment="Center">
-                <ImageView x:Name="QuestionImage" Height="16" MouseUp="ShowCommandLineInstructions" />
+                <ImageView x:Name="QuestionImage" Width="16" Height="16" MouseUp="ShowCommandLineInstructions" />
               </StackLayoutItem>
             </StackLayout>
           </StackLayoutItem>

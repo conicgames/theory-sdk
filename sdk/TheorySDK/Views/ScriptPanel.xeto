@@ -14,7 +14,7 @@
                 <Label Text="Local Scripts" TextColor="White"/>
               </StackLayoutItem>
               <StackLayoutItem VerticalAlignment="Center">
-                <ImageView x:Name="QuestionImage" Height="16" MouseUp="ShowInstructions" />
+                <ImageView x:Name="QuestionImage" Width="16" Height="16" MouseUp="ShowInstructions" />
               </StackLayoutItem>
             </StackLayout>
           </StackLayoutItem>

@@ -26,9 +26,9 @@ namespace TheorySDK.Views
 			XamlReader.Load(this);
 
 			if (Eto.Platform.Instance.IsWpf)
-				ScriptCode.Font = new Font("consolas", 9);
+				ScriptCode.Font = new Font("consolas", ScriptCode.Font.Size);
 			else
-				ScriptCode.Font = new Font("monospace", 9);
+				ScriptCode.Font = new Font("monospace", ScriptCode.Font.Size);
 		}
 
 		public void Init(App app)

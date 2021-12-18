@@ -38,9 +38,9 @@ namespace TheorySDK.Views
             Icon = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.icon48x48.ico"));
             QuestionImage.Image = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.png"));
             if (Eto.Platform.Instance.IsWpf)
-                Log.Font = new Font("consolas", 9);
+                Log.Font = new Font("consolas", Log.Font.Size);
             else
-                Log.Font = new Font("monospace", 9);
+                Log.Font = new Font("monospace", Log.Font.Size);
             _app = new App();
 
             _app.ClientConnected += UpdateServerStatus;
