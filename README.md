@@ -7,7 +7,7 @@ After completing the last chapter of the game, you will be offered to play custo
 
 ## Installation
 Unzip the [latest release package](https://github.com/conicgames/theory-sdk/releases/latest) corresponding to your OS in folder of your choice. All platforms requires to install the [.NET 6.0 Runtime](https://dotnet.microsoft.com/download/dotnet/6.0/runtime).
-- Windows: Desktop Apps (.NET Desktop Runtime) (Suggested: [x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-6.0.1-windows-x64-installer))
+- Windows: Desktop Apps (.NET Desktop Runtime) (Suggested: [x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.1-windows-x64-installer))
 - Linux: Server Apps (SDK, only option)
 - macOS: Run Apps (.NET Runtime, only option) (Suggested: [x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-6.0.1-macos-x64-installer))
 
