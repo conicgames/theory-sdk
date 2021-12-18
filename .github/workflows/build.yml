@@ -116,7 +116,7 @@ jobs:
       - name: "Staple Release Build"
         uses: devbotsxyz/xcode-staple@v1
         with:
-          product-path: "./bin/TheorySDK.Mac.app"
+          product-path: "./TheorySDK.Mac.app"
       - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Mac.${{ github.event.inputs.version }}.tgz .
       - name: Gets latest created release info
         id: latest_release_info
