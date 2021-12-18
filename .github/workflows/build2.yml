@@ -19,8 +19,7 @@ jobs:
           files: './sdk/TheorySDK/Version.cs'
           replacements: 'Local=v${{ github.event.inputs.version }}'
       - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -r osx-x64 -p:PublishSingleFile=true --self-contained true -p:PublishReadyToRunShowWarnings=true -c Release -o ./bin/
-      - run: rm ./bin/*.pdb
-      - run: xattr -rc ./bin/
+      - run: xattr -cr ./bin/
       - run: chmod -R u+rw ./bin/TheorySDK.Mac.app/
       - name: Codesign executable
         env: 
@@ -35,7 +34,7 @@ jobs:
           security unlock-keychain -p $MACOS_KEYCHAIN_PWD build.keychain
           security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PWD build.keychain
-          /usr/bin/codesign --deep --force --no-strict --entitlements "./sdk/TheorySDK.Mac/Entitlements.plist" --options=runtime --timestamp -s "$MACOS_IDENTITY_ID" ./bin/TheorySDK.Mac -v
+          /usr/bin/codesign --deep --force --verify --entitlements "./sdk/TheorySDK.Mac/Entitlements.plist" --options=runtime --no-strict --timestamp -s "$MACOS_IDENTITY_ID" ./bin/TheorySDK.Mac.app/ -v
           rm certificate.p12
       - name: "Notarize Release Build"
         uses: devbotsxyz/xcode-notarize@v1
