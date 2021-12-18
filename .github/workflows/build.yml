@@ -90,9 +90,8 @@ jobs:
           files: './sdk/TheorySDK/Version.cs'
           replacements: 'Local=v${{ github.event.inputs.version }}'
       - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -r osx-x64 -p:PublishSingleFile=true --self-contained true -p:PublishReadyToRunShowWarnings=true -c Release -o ./bin/
-      - run: rm ./bin/*.pdb
-      - run: chmod +x ./bin/TheorySDK.Mac
-      - run: printf "#!/usr/bin/env bash\n./bin/TheorySDK.Mac.app/Contents/MacOS/TheorySDK.Mac" >> launchSDK.sh; chmod +x launchSDK.sh
+      - run: mv ./bin/TheorySDK.Mac.app/ ./TheorySDK.Mac.app/
+      - run: rm -r ./bin
       - name: Codesign executable
         env: 
           MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
@@ -106,19 +105,19 @@ jobs:
           security unlock-keychain -p $MACOS_KEYCHAIN_PWD build.keychain
           security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $MACOS_KEYCHAIN_PWD build.keychain
-          /usr/bin/codesign --force --options runtime --timestamp -s $MACOS_IDENTITY_ID ./bin/TheorySDK.Mac -v
+          /usr/bin/codesign --deep --force --verify --entitlements "./sdk/TheorySDK.Mac/Entitlements.plist" --options=runtime --no-strict --timestamp -s "$MACOS_IDENTITY_ID" ./TheorySDK.Mac.app/ -v
           rm certificate.p12
       - name: "Notarize Release Build"
         uses: devbotsxyz/xcode-notarize@v1
         with:
-          product-path: "./bin/TheorySDK.Mac.app"
+          product-path: "./TheorySDK.Mac.app"
           appstore-connect-username: ${{ secrets.MACOS_NOTARIZATION_USERNAME }}
           appstore-connect-password: ${{ secrets.MACOS_NOTARIZATION_PWD }}
       - name: "Staple Release Build"
         uses: devbotsxyz/xcode-staple@v1
         with:
-          product-path: "./bin/TheorySDK.Mac.app"
-      - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Mac.${{ github.event.inputs.version }}.tgz .
+          product-path: "./TheorySDK.Mac.app"
+      - run: zip -r TheorySDK.Mac.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
       - name: Gets latest created release info
         id: latest_release_info
         uses: jossef/action-latest-release-info@v1.1.0
