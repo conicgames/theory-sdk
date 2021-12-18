@@ -90,6 +90,7 @@ jobs:
           files: './sdk/TheorySDK/Version.cs'
           replacements: 'Local=v${{ github.event.inputs.version }}'
       - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -r osx-x64 -p:PublishSingleFile=true --self-contained true -p:PublishReadyToRunShowWarnings=true -c Release -o ./bin/
+      - run: cp ./sdk/TheorySDK.Mac/Icon.icns ./bin/TheorySDK.Mac.app/Contents/Resources/
       - run: mv ./bin/TheorySDK.Mac.app/ ./TheorySDK.Mac.app/
       - run: rm -r ./bin
       - run: chmod -R 777 .
