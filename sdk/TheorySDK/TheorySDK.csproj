@@ -6,14 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\question.png" />
+    <None Remove="Resources\question.ico" />
   </ItemGroup>
   
   <ItemGroup>
     <EmbeddedResource Include="Resources\icon48x48.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\question.png">
+    <EmbeddedResource Include="Resources\question.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

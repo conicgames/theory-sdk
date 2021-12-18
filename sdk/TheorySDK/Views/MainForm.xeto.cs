@@ -39,7 +39,7 @@ namespace TheorySDK.Views
 
             Title += " - " + Version.VersionString;
             Icon = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.icon48x48.ico"));
-            QuestionImage.Image = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.png"));
+            QuestionImage.Image = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.ico"));
             
             if (Eto.Platform.Instance.IsWpf)
                 Log.Font = new Font("consolas", Log.Font.Size);
