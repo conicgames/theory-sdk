@@ -15,38 +15,38 @@
           <TableLayout Spacing="5,5" Padding="0,0,0,5">
             <TableRow>
               <TableCell>
-                <Label Text="IP Address: " Height="24" TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
+                <Label Text="IP Address: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
               </TableCell>
               <TableCell ScaleWidth="True">
-                <ComboBox x:Name="IpComboBox" Height="24" ReadOnly="True" SelectedIndexChanged="OnIpChanged" />
+                <ComboBox x:Name="IpComboBox" ReadOnly="True" SelectedIndexChanged="OnIpChanged" />
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>
-                <Label Text="Port: " Height="24" TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
+                <Label Text="Port: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
               </TableCell>
               <TableCell>
-                <TextBox x:Name="Port" Height="24" TextChanging="OnPortTextChanging" BackgroundColor="#333" TextColor="White" ShowBorder="False" />
+                <TextBox x:Name="Port" TextChanging="OnPortTextChanging" BackgroundColor="#333" TextColor="White" ShowBorder="False" />
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>
-                <Label Text="Theory Path: " Height="24" TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
+                <Label Text="Theory Path: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center" />
               </TableCell>
               <TableCell>
                 <StackLayout Orientation="Horizontal">
                   <StackLayoutItem Expand="True">
-                    <TextBox x:Name="TheoryPath" Height="24" ReadOnly="True" BackgroundColor="#333" TextColor="White" ShowBorder="False" MouseUp="OnTheoryPathClicked" PlaceholderText="Click to select a file..." />
+                    <TextBox x:Name="TheoryPath" ReadOnly="True" BackgroundColor="#333" TextColor="White" ShowBorder="False" MouseUp="OnTheoryPathClicked" PlaceholderText="Click to select a file..." />
                   </StackLayoutItem>
                 </StackLayout>
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>
-                <Label Text="Server Status: " Height="24" TextColor="White" TextAlignment="Right" VerticalAlignment="Center"/>
+                <Label Text="Server Status: " TextColor="White" TextAlignment="Right" VerticalAlignment="Center"/>
               </TableCell>
               <TableCell>
-                <Label x:Name="ServerStatus" Height="24" TextColor="White" VerticalAlignment="Center" />
+                <Label x:Name="ServerStatus" TextColor="White" VerticalAlignment="Center" />
               </TableCell>
             </TableRow>
           </TableLayout>
@@ -57,7 +57,7 @@
           <StackLayoutItem>
             <StackLayout x:Name="CommandLineLayout" Visible="False" Orientation="Horizontal">
               <StackLayoutItem Expand="True">
-                <TextBox x:Name="CommandLine" Height="24" BackgroundColor="#333" TextColor="White" ShowBorder="False" PlaceholderText="Enter a command..." TextChanging="OnCommandLineTextChanging" KeyDown="OnCommandLineKeyDown" />
+                <TextBox x:Name="CommandLine" BackgroundColor="#333" TextColor="White" ShowBorder="False" PlaceholderText="Enter a command..." TextChanging="OnCommandLineTextChanging" KeyDown="OnCommandLineKeyDown" />
               </StackLayoutItem>
               <Label Width="5" />
               <StackLayoutItem VerticalAlignment="Center">

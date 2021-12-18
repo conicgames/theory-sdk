@@ -15,6 +15,7 @@ namespace TheorySDK.Views
 		private bool _internalSelectionChanged = false;
 
 		private readonly ImageView QuestionImage = null;
+		private readonly StackLayout LocalScriptLabel = null;
 		private readonly ListBox ScriptList = null;
 		private readonly TextBox ScriptName = null;
 		private readonly Button ExecuteScriptButton = null;
@@ -24,6 +25,9 @@ namespace TheorySDK.Views
 		public ScriptPanel()
 		{
 			XamlReader.Load(this);
+			var textBoxHeight = (int)Math.Round(ScriptName.GetPreferredSize().Height);
+			LocalScriptLabel.Height = textBoxHeight;
+			ExecuteScriptButton.Height = textBoxHeight;
 
 			if (Eto.Platform.Instance.IsWpf)
 				ScriptCode.Font = new Font("consolas", ScriptCode.Font.Size);

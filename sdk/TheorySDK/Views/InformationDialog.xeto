@@ -8,7 +8,7 @@
 	<StackLayout Spacing="10">
 		<Label x:Name="MessageLabel" TextColor="White" />
     <StackLayoutItem HorizontalAlignment="Stretch">
-      <Button Text="Ok" Height="24" BackgroundColor="#333" TextColor="White" Click="OnOkClicked" />
+      <Button Text="Ok" BackgroundColor="#333" TextColor="White" Click="OnOkClicked" />
     </StackLayoutItem>
 	</StackLayout>
 </Dialog>

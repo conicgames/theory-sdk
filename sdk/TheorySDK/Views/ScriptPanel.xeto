@@ -9,7 +9,7 @@
       <TableCell>
         <StackLayout x:Name="LeftLayout" HorizontalContentAlignment="Stretch" Spacing="5">
           <StackLayoutItem HorizontalAlignment="Center">
-            <StackLayout Orientation="Horizontal" Height="24" Spacing="5">
+            <StackLayout x:Name="LocalScriptLabel" Orientation="Horizontal" Spacing="5">
               <StackLayoutItem VerticalAlignment="Center">
                 <Label Text="Local Scripts" TextColor="White"/>
               </StackLayoutItem>
@@ -22,10 +22,10 @@
           <TableLayout Spacing="5,0">
             <TableRow>
               <TableCell ScaleWidth="True">
-                <Button Text="Add" Height="24" BackgroundColor="#333" TextColor="White" Click="OnAddClicked" />
+                <Button Text="Add" BackgroundColor="#333" TextColor="White" Click="OnAddClicked" />
               </TableCell>
               <TableCell ScaleWidth="True">
-                <Button Text="Remove" Height="24" BackgroundColor="#333" TextColor="White" Click="OnRemoveClicked" />
+                <Button Text="Remove" BackgroundColor="#333" TextColor="White" Click="OnRemoveClicked" />
               </TableCell>
             </TableRow>
           </TableLayout>
@@ -35,8 +35,8 @@
           </StackLayoutItem>
           <!-- Execute/Cancel Buttons -->
           <StackLayout HorizontalContentAlignment="Stretch" Spacing="0">
-            <Button x:Name="ExecuteScriptButton" Text="Execute Script" Height="24" BackgroundColor="#333" TextColor="White" Click="OnExecuteScriptClicked" />
-            <Button x:Name="CancelScriptButton" Text="Cancel" Height="24" BackgroundColor="#333" TextColor="White" Click="OnCancelScriptClicked" Visible="False" />
+            <Button x:Name="ExecuteScriptButton" Text="Execute Script" BackgroundColor="#333" TextColor="White" Click="OnExecuteScriptClicked" />
+            <Button x:Name="CancelScriptButton" Text="Cancel" BackgroundColor="#333" TextColor="White" Click="OnCancelScriptClicked" Visible="False" />
           </StackLayout>
         </StackLayout>
       </TableCell>
@@ -44,7 +44,7 @@
       <TableCell ScaleWidth="True">
         <StackLayout Spacing="5" HorizontalContentAlignment="Stretch" Padding="0,0,5,0">
           <!-- Script Name -->
-          <TextBox x:Name="ScriptName" Height="24" BackgroundColor="#333" TextColor="White" ShowBorder="False" TextChanging="OnScriptNameChanging" ReadOnly="True"/>
+          <TextBox x:Name="ScriptName" BackgroundColor="#333" TextColor="White" ShowBorder="False" TextChanging="OnScriptNameChanging" ReadOnly="True"/>
           <!-- Script Code -->
           <StackLayoutItem Expand="True">
             <TextArea x:Name="ScriptCode" Text="" BackgroundColor="#333" TextColor="White" TextChanged="OnScriptCodeChanged" KeyDown="OnScriptCodeKeyDown" ReadOnly="True"/>
