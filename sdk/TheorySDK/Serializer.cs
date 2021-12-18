@@ -21,7 +21,15 @@ namespace TheorySDK
             var path = "config.json";
 
             if (Eto.Platform.Instance.IsMac)
-                path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/TheorySDK/" + path;
+            {
+                var specialFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var appFolder = specialFolder + "/TheorySDK/";
+                
+                if (!System.IO.Directory.Exists(appFolder))
+                    System.IO.Directory.CreateDirectory(appFolder);
+                
+                path = appFolder + path;
+            }
 
             return path;
         }
