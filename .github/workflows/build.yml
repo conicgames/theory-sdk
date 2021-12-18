@@ -92,6 +92,7 @@ jobs:
       - run: dotnet publish ./sdk/TheorySDK.Mac/TheorySDK.Mac.csproj -r osx-x64 -p:PublishSingleFile=true --self-contained true -p:PublishReadyToRunShowWarnings=true -c Release -o ./bin/
       - run: mv ./bin/TheorySDK.Mac.app/ ./TheorySDK.Mac.app/
       - run: rm -r ./bin
+      - run: chmod -R 777 .
       - name: Codesign executable
         env: 
           MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
