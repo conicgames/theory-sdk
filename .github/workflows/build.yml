@@ -117,7 +117,7 @@ jobs:
         uses: devbotsxyz/xcode-staple@v1
         with:
           product-path: "./TheorySDK.Mac.app"
-      - run: zip -r TheorySDK.Mac.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
+      - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Mac.${{ github.event.inputs.version }}.tgz .
       - name: Gets latest created release info
         id: latest_release_info
         uses: jossef/action-latest-release-info@v1.1.0
@@ -127,4 +127,4 @@ jobs:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }} 
           asset_path: ./TheorySDK.Mac.${{ github.event.inputs.version }}.tgz
           asset_name: TheorySDK.Mac.${{ github.event.inputs.version }}.tgz
-          asset_content_type: application/zip
+          asset_content_type: application/tar+gzip
