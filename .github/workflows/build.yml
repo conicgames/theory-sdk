@@ -125,6 +125,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }} 
-          asset_path: ./TheorySDK.Mac.${{ github.event.inputs.version }}.tgz
-          asset_name: TheorySDK.Mac.${{ github.event.inputs.version }}.tgz
+          asset_path: ./TheorySDK.Mac.${{ github.event.inputs.version }}.zip
+          asset_name: TheorySDK.Mac.${{ github.event.inputs.version }}.zip
           asset_content_type: application/zip
