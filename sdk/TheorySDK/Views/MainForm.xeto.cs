@@ -26,21 +26,26 @@ namespace TheorySDK.Views
         private List<string> _history;
         private readonly int _maxHistoryCount = 10;
         private int _historyIndex = 0;
-        private bool _isSettingHistory = false;
+        private bool _inhibitHistory = false;
         private bool _isUpdatingFields = false;
         private UITimer _autosaveTimer = new UITimer();
         private StringBuilder _pendingLogs = new StringBuilder();
+        private string _commandLinePlaceholder = "Enter a command...";
+        private string _theoryPathPlaceholder = "Click to select a file...";
 
         public MainForm()
         {
             XamlReader.Load(this);
+
             Title += " - " + Version.VersionString;
             Icon = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.icon48x48.ico"));
             QuestionImage.Image = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.png"));
+            
             if (Eto.Platform.Instance.IsWpf)
                 Log.Font = new Font("consolas", Log.Font.Size);
             else
                 Log.Font = new Font("monospace", Log.Font.Size);
+            
             _app = new App();
 
             _app.ClientConnected += UpdateServerStatus;
@@ -56,6 +61,7 @@ namespace TheorySDK.Views
 
             ScriptPanel.Init(_app);
 
+            OnCommandLineLostFocus(CommandLine, new EventArgs());
             InitializeHistory();
             UpdateFields();
             UpdateServerStatus();
@@ -82,8 +88,24 @@ namespace TheorySDK.Views
 
             IpComboBox.SelectedKey = _app.Data.IpAddress ?? "";
             Port.Text = _app.Data.Port.ToString();
-            TheoryPath.Text = _app.Data.TheoryPath;
+            UpdateTheoryPath();
             _isUpdatingFields = false;
+        }
+
+        private void UpdateTheoryPath()
+        {
+            TheoryPath.Text = _app.Data.TheoryPath;
+
+            // Workaround for now having control over the color of the property "placeholder"
+            if (string.IsNullOrEmpty(TheoryPath.Text))
+            {
+                TheoryPath.Text = _theoryPathPlaceholder;
+                TheoryPath.TextColor = Colors.Gray;
+            }
+            else
+            {
+                TheoryPath.TextColor = Colors.White;
+            }
         }
 
         private void UpdateServerStatus()
@@ -125,7 +147,7 @@ namespace TheorySDK.Views
             if (openFileDialog.ShowDialog(null) == DialogResult.Ok)
             {
                 _app.Data.TheoryPath = openFileDialog.FileName;
-                TheoryPath.Text = openFileDialog.FileName;
+                UpdateTheoryPath();
             }
 
             // Deselect the text
@@ -177,6 +199,31 @@ namespace TheorySDK.Views
                 MoveHistory(1);
         }
 
+        // Workaround for now having control over the color of the property "placeholder"
+        private void OnCommandLineGotFocus(object sender, EventArgs e)
+        {
+            if (CommandLine.Text == _commandLinePlaceholder)
+            {
+                _inhibitHistory = true;
+                CommandLine.Text = "";
+                _inhibitHistory = false;
+            }
+
+            CommandLine.TextColor = Colors.White;
+        }
+
+        private void OnCommandLineLostFocus(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(CommandLine.Text))
+            {
+                _inhibitHistory = true;
+                CommandLine.Text = _commandLinePlaceholder;
+                _inhibitHistory = false;
+
+                CommandLine.TextColor = Colors.Gray;
+            }
+        }
+
         private void MoveHistory(int inc)
         {
             var previousIndex = _historyIndex;
@@ -185,9 +232,9 @@ namespace TheorySDK.Views
 
             if (_historyIndex != previousIndex)
             {
-                _isSettingHistory = true;
+                _inhibitHistory = true;
                 CommandLine.Text = _history[_historyIndex];
-                _isSettingHistory = false;
+                _inhibitHistory = false;
                 CommandLine.CaretIndex = CommandLine.Text.Length;
             }
         }
@@ -228,7 +275,7 @@ namespace TheorySDK.Views
                     _app.Logger.Log("Error: Cannot send command without client.");
                 }
             }
-            else if (!_isSettingHistory)
+            else if (!_inhibitHistory)
             {
                 _historyIndex = _history.Count - 1;
                 _history[_historyIndex] = e.NewText;
