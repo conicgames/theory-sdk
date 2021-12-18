@@ -38,12 +38,8 @@ namespace TheorySDK.Views
             XamlReader.Load(this);
 
             Title += " - " + Version.VersionString;
-            try
-            {
-                Icon = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.icon48x48.ico"));
-                QuestionImage.Image = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.ico"));
-            }
-            catch (Exception) { }
+            Icon = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.icon48x48.ico"));
+            QuestionImage.Image = new Bitmap(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.ico"));
             
             if (Eto.Platform.Instance.IsWpf)
                 Log.Font = new Font("consolas", Log.Font.Size);

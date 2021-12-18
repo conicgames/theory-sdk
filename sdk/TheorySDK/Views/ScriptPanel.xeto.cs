@@ -38,11 +38,7 @@ namespace TheorySDK.Views
 		public void Init(App app)
         {
 			_app = app;
-            try
-            {
-				QuestionImage.Image = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.ico"));
-			}
-			catch (Exception) { }
+			QuestionImage.Image = new Bitmap(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.ico"));
 			UpdateScriptList();
         }
 
