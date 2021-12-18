@@ -29,15 +29,15 @@
               </TableCell>
             </TableRow>
           </TableLayout>
-          <!-- Script List -->
-          <StackLayoutItem Expand="True">
-            <ListBox x:Name="ScriptList" KeyDown="OnScriptListKeyDown" MouseDoubleClick="OnScriptListDoubleClick" BackgroundColor="#333" TextColor="White" SelectedIndexChanged="OnScriptSelectionChanged"/>
-          </StackLayoutItem>
           <!-- Execute/Cancel Buttons -->
           <StackLayout HorizontalContentAlignment="Stretch" Spacing="0">
             <Button x:Name="ExecuteScriptButton" Text="Execute Script" BackgroundColor="#333" TextColor="White" Click="OnExecuteScriptClicked" />
             <Button x:Name="CancelScriptButton" Text="Cancel" BackgroundColor="#333" TextColor="White" Click="OnCancelScriptClicked" Visible="False" />
           </StackLayout>
+          <!-- Script List -->
+          <StackLayoutItem Expand="True">
+            <ListBox x:Name="ScriptList" KeyDown="OnScriptListKeyDown" MouseDoubleClick="OnScriptListDoubleClick" BackgroundColor="#333" TextColor="White" SelectedIndexChanged="OnScriptSelectionChanged"/>
+          </StackLayoutItem>
         </StackLayout>
       </TableCell>
       <!-- Right panel -->

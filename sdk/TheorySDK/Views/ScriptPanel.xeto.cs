@@ -25,9 +25,9 @@ namespace TheorySDK.Views
 		public ScriptPanel()
 		{
 			XamlReader.Load(this);
+
 			var textBoxHeight = (int)Math.Round(ScriptName.GetPreferredSize().Height);
 			LocalScriptLabel.Height = textBoxHeight;
-			ExecuteScriptButton.Height = textBoxHeight;
 
 			if (Eto.Platform.Instance.IsWpf)
 				ScriptCode.Font = new Font("consolas", ScriptCode.Font.Size);
