@@ -64,7 +64,7 @@ jobs:
           replacements: 'Local=v${{ github.event.inputs.version }}'
       - run: dotnet publish ./sdk/TheorySDK.Gtk/TheorySDK.Gtk.csproj -c Release -o bin
       - run: echo "./bin/TheorySDK.Gtk" >> launchSDK.sh; chmod +x launchSDK.sh
-      - run: zip -r TheorySDK.Linux.${{ github.event.inputs.version }}.zip . -x ".git*" -x ".github*" -x ".gitignore" -x "sdk*"
+      - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Linux.${{ github.event.inputs.version }}.tgz .
       - name: Gets latest created release info
         id: latest_release_info
         uses: jossef/action-latest-release-info@v1.1.0
@@ -72,8 +72,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }} 
-          asset_path: ./TheorySDK.Linux.${{ github.event.inputs.version }}.zip
-          asset_name: TheorySDK.Linux.${{ github.event.inputs.version }}.zip
+          asset_path: ./TheorySDK.Linux.${{ github.event.inputs.version }}.tgz
+          asset_name: TheorySDK.Linux.${{ github.event.inputs.version }}.tgz
           asset_content_type: application/zip
           
   build_mac:
