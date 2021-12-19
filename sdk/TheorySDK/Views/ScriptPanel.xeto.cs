@@ -18,6 +18,8 @@ namespace TheorySDK.Views
 		private readonly StackLayout LocalScriptLabel = null;
 		private readonly ListBox ScriptList = null;
 		private readonly TextBox ScriptName = null;
+		private readonly Button AddScriptButton = null;
+		private readonly Button RemoveScriptButton = null;
 		private readonly Button ExecuteScriptButton = null;
 		private readonly Button CancelScriptButton = null;
 		private readonly TextArea ScriptCode = null;
@@ -28,17 +30,37 @@ namespace TheorySDK.Views
 
 			var textBoxHeight = (int)Math.Round(ScriptName.GetPreferredSize().Height);
 			LocalScriptLabel.Height = textBoxHeight;
+			QuestionImage.Image = new Bitmap(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.png"));
 
 			if (Eto.Platform.Instance.IsWpf)
 				ScriptCode.Font = new Font("consolas", ScriptCode.Font.Size);
 			else
 				ScriptCode.Font = new Font("monospace", ScriptCode.Font.Size);
+
+			if (!Eto.Platform.Instance.IsGtk)
+            {
+				var _333 = new Color(3.0f / 15, 3.0f / 15, 3.0f / 15);
+				ExecuteScriptButton.BackgroundColor = _333;
+				ExecuteScriptButton.TextColor = Colors.White;
+				CancelScriptButton.BackgroundColor = _333;
+				CancelScriptButton.TextColor = Colors.White;
+				AddScriptButton.BackgroundColor = _333;
+				AddScriptButton.TextColor = Colors.White;
+				RemoveScriptButton.BackgroundColor = _333;
+				RemoveScriptButton.TextColor = Colors.White;
+				ScriptList.BackgroundColor = _333;
+				ScriptList.TextColor = Colors.White;
+				ScriptName.BackgroundColor = _333;
+				ScriptName.TextColor = Colors.White;
+				ScriptName.ShowBorder = false;
+				ScriptCode.BackgroundColor = _333;
+				ScriptCode.TextColor = Colors.White;
+			}
 		}
 
 		public void Init(App app)
         {
 			_app = app;
-			QuestionImage.Image = new Bitmap(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.ico"));
 			UpdateScriptList();
         }
 

@@ -30,6 +30,7 @@ namespace TheorySDK.Views
         private bool _isUpdatingFields = false;
         private UITimer _autosaveTimer = new UITimer();
         private StringBuilder _pendingLogs = new StringBuilder();
+        private Color _commandLineOriginalColor;
         private string _commandLinePlaceholder = "Enter a command...";
         private string _theoryPathPlaceholder = "Click to select a file...";
 
@@ -39,13 +40,21 @@ namespace TheorySDK.Views
 
             Title += " - " + Version.VersionString;
             Icon = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.icon48x48.ico"));
-            QuestionImage.Image = new Bitmap(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.ico"));
+            QuestionImage.Image = new Bitmap(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.png"));
             
             if (Eto.Platform.Instance.IsWpf)
                 Log.Font = new Font("consolas", Log.Font.Size);
             else
                 Log.Font = new Font("monospace", Log.Font.Size);
-            
+
+            if (!Eto.Platform.Instance.IsGtk)
+            {
+                var _333 = new Color(3.0f / 15, 3.0f / 15, 3.0f / 15);
+                CommandLine.BackgroundColor = _333;
+                CommandLine.TextColor = Colors.White;
+                CommandLine.ShowBorder = false;
+            }
+
             _app = new App();
 
             _app.ClientConnected += UpdateServerStatus;
@@ -61,6 +70,7 @@ namespace TheorySDK.Views
 
             ScriptPanel.Init(_app);
 
+            _commandLineOriginalColor = CommandLine.TextColor;
             OnCommandLineLostFocus(CommandLine, new EventArgs());
             InitializeHistory();
             UpdateFields();
@@ -209,7 +219,7 @@ namespace TheorySDK.Views
                 _inhibitHistory = false;
             }
 
-            CommandLine.TextColor = Colors.White;
+            CommandLine.TextColor = _commandLineOriginalColor;
         }
 
         private void OnCommandLineLostFocus(object sender, EventArgs e)

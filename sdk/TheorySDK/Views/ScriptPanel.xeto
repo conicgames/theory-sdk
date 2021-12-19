@@ -9,12 +9,12 @@
       <TableCell>
         <StackLayout x:Name="LeftLayout" HorizontalContentAlignment="Stretch" Spacing="5">
           <StackLayoutItem HorizontalAlignment="Center">
-            <StackLayout x:Name="LocalScriptLabel" Orientation="Horizontal" Spacing="5">
+            <StackLayout x:Name="LocalScriptLabel" Orientation="Horizontal" Spacing="5" MouseUp="ShowInstructions">
               <StackLayoutItem VerticalAlignment="Center">
                 <Label Text="Local Scripts" TextColor="White"/>
               </StackLayoutItem>
               <StackLayoutItem VerticalAlignment="Center">
-                <ImageView x:Name="QuestionImage" Width="16" Height="16" MouseUp="ShowInstructions" />
+                <ImageView x:Name="QuestionImage" Width="16" Height="16" />
               </StackLayoutItem>
             </StackLayout>
           </StackLayoutItem>
@@ -22,21 +22,21 @@
           <TableLayout Spacing="5,0">
             <TableRow>
               <TableCell ScaleWidth="True">
-                <Button Text="Add" BackgroundColor="#333" TextColor="White" Click="OnAddClicked" />
+                <Button x:Name="AddScriptButton" Text="Add" BackgroundColor="#333" TextColor="White" Click="OnAddClicked" />
               </TableCell>
               <TableCell ScaleWidth="True">
-                <Button Text="Remove" BackgroundColor="#333" TextColor="White" Click="OnRemoveClicked" />
+                <Button x:Name="RemoveScriptButton" Text="Remove" BackgroundColor="#333" TextColor="White" Click="OnRemoveClicked" />
               </TableCell>
             </TableRow>
           </TableLayout>
           <!-- Execute/Cancel Buttons -->
           <StackLayout HorizontalContentAlignment="Stretch" Spacing="0">
-            <Button x:Name="ExecuteScriptButton" Text="Execute Script" BackgroundColor="#333" TextColor="White" Click="OnExecuteScriptClicked" />
-            <Button x:Name="CancelScriptButton" Text="Cancel" BackgroundColor="#333" TextColor="White" Click="OnCancelScriptClicked" Visible="False" />
+            <Button x:Name="ExecuteScriptButton" Text="Execute Script" Click="OnExecuteScriptClicked" />
+            <Button x:Name="CancelScriptButton" Text="Cancel" Click="OnCancelScriptClicked" Visible="False" />
           </StackLayout>
           <!-- Script List -->
           <StackLayoutItem Expand="True">
-            <ListBox x:Name="ScriptList" KeyDown="OnScriptListKeyDown" MouseDoubleClick="OnScriptListDoubleClick" BackgroundColor="#333" TextColor="White" SelectedIndexChanged="OnScriptSelectionChanged"/>
+            <ListBox x:Name="ScriptList" KeyDown="OnScriptListKeyDown" MouseDoubleClick="OnScriptListDoubleClick" SelectedIndexChanged="OnScriptSelectionChanged"/>
           </StackLayoutItem>
         </StackLayout>
       </TableCell>
@@ -44,10 +44,10 @@
       <TableCell ScaleWidth="True">
         <StackLayout Spacing="5" HorizontalContentAlignment="Stretch" Padding="0,0,5,0">
           <!-- Script Name -->
-          <TextBox x:Name="ScriptName" BackgroundColor="#333" TextColor="White" ShowBorder="False" TextChanging="OnScriptNameChanging" ReadOnly="True"/>
+          <TextBox x:Name="ScriptName" TextChanging="OnScriptNameChanging" ReadOnly="True"/>
           <!-- Script Code -->
           <StackLayoutItem Expand="True">
-            <TextArea x:Name="ScriptCode" Text="" BackgroundColor="#333" TextColor="White" TextChanged="OnScriptCodeChanged" KeyDown="OnScriptCodeKeyDown" ReadOnly="True"/>
+            <TextArea x:Name="ScriptCode" Text="" TextChanged="OnScriptCodeChanged" KeyDown="OnScriptCodeKeyDown" ReadOnly="True"/>
           </StackLayoutItem>
         </StackLayout>
       </TableCell>

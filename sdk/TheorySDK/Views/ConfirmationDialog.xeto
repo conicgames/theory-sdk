@@ -10,10 +10,10 @@
     <StackLayoutItem HorizontalAlignment="Stretch">
       <StackLayout Orientation="Horizontal" Spacing="5">
         <StackLayoutItem Expand="True">
-          <Button Text="Yes" BackgroundColor="#333" TextColor="White" Click="OnYesClicked" />
+          <Button x:Name="YesButton" Text="Yes" Click="OnYesClicked" />
         </StackLayoutItem>
         <StackLayoutItem Expand="True">
-          <Button Text="No" BackgroundColor="#333" TextColor="White" Click="OnNoClicked" />
+          <Button x:Name="NoButton" Text="No" Click="OnNoClicked" />
         </StackLayoutItem>
       </StackLayout>
     </StackLayoutItem>

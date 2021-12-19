@@ -10,6 +10,7 @@ namespace TheorySDK.Views
 	public class InformationDialog : Dialog
 	{
 		private Label MessageLabel = null;
+		private Button OkButton = null;
 
 		public static async Task Show(Control owner, string title, string text)
         {
@@ -22,6 +23,13 @@ namespace TheorySDK.Views
 		private InformationDialog()
 		{
 			XamlReader.Load(this);
+
+			if (!Eto.Platform.Instance.IsGtk)
+			{
+				var _333 = new Color(3.0f / 15, 3.0f / 15, 3.0f / 15);
+				OkButton.BackgroundColor = _333;
+				OkButton.TextColor = Colors.White;
+			}
 		}
 
 		private void OnOkClicked(object sender, EventArgs e)

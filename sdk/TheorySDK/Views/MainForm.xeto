@@ -57,11 +57,13 @@
           <StackLayoutItem>
             <StackLayout x:Name="CommandLineLayout" Visible="False" Orientation="Horizontal">
               <StackLayoutItem Expand="True">
-                <TextBox x:Name="CommandLine" BackgroundColor="#333" TextColor="White" ShowBorder="False" GotFocus="OnCommandLineGotFocus" LostFocus="OnCommandLineLostFocus" TextChanging="OnCommandLineTextChanging" KeyDown="OnCommandLineKeyDown" />
+                <TextBox x:Name="CommandLine" GotFocus="OnCommandLineGotFocus" LostFocus="OnCommandLineLostFocus" TextChanging="OnCommandLineTextChanging" KeyDown="OnCommandLineKeyDown" />
               </StackLayoutItem>
               <Label Width="5" />
               <StackLayoutItem VerticalAlignment="Center">
-                <ImageView x:Name="QuestionImage" Width="16" Height="16" MouseUp="ShowCommandLineInstructions" />
+                <StackLayout MouseUp="ShowCommandLineInstructions">
+                  <ImageView x:Name="QuestionImage" Width="16" Height="16" />
+                </StackLayout>
               </StackLayoutItem>
             </StackLayout>
           </StackLayoutItem>
