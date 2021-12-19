@@ -22,10 +22,10 @@
           <TableLayout Spacing="5,0">
             <TableRow>
               <TableCell ScaleWidth="True">
-                <Button x:Name="AddScriptButton" Text="Add" BackgroundColor="#333" TextColor="White" Click="OnAddClicked" />
+                <Button x:Name="AddScriptButton" Text="Add" Click="OnAddClicked" />
               </TableCell>
               <TableCell ScaleWidth="True">
-                <Button x:Name="RemoveScriptButton" Text="Remove" BackgroundColor="#333" TextColor="White" Click="OnRemoveClicked" />
+                <Button x:Name="RemoveScriptButton" Text="Remove" Click="OnRemoveClicked" />
               </TableCell>
             </TableRow>
           </TableLayout>
