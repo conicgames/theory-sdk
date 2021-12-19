@@ -63,7 +63,7 @@ jobs:
           files: './sdk/TheorySDK/Version.cs'
           replacements: 'Local=v${{ github.event.inputs.version }}'
       - run: dotnet publish ./sdk/TheorySDK.Gtk/TheorySDK.Gtk.csproj -c Release -o bin
-      - run: echo "./bin/TheorySDK.Gtk" >> launchSDK.sh; chmod +x launchSDK.sh
+      - run: printf "#!/bin/sh\n./bin/TheorySDK.Gtk" >> launchSDK.sh; chmod +x launchSDK.sh
       - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Linux.${{ github.event.inputs.version }}.tgz .
       - name: Gets latest created release info
         id: latest_release_info
@@ -93,7 +93,6 @@ jobs:
       - run: cp ./sdk/TheorySDK.Mac/Icon.icns ./bin/TheorySDK.Mac.app/Contents/Resources/
       - run: mv ./bin/TheorySDK.Mac.app/ "./Theory SDK.app/"
       - run: rm -r ./bin
-      - run: chmod -R 777 .
       - name: Codesign executable
         env: 
           MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
