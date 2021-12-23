@@ -9,40 +9,6 @@ namespace TheorySDK
 {
     public static class ScriptExecutor
     {
-        private class TypeConverterWrapper : ITypeConverter
-        {
-            private ITypeConverter _converter;
-
-            public TypeConverterWrapper(ITypeConverter converter)
-            {
-                _converter = converter;
-            }
-
-            public object Convert(object value, Type type, IFormatProvider formatProvider)
-            {
-                try
-                {
-                    return _converter.Convert(value, type, formatProvider);
-                }
-                catch (System.Reflection.TargetInvocationException e)
-                {
-                    if (e.InnerException != null)
-                        throw e.InnerException;
-                    else
-                        throw e;
-                }
-                catch (Exception e)
-                {
-                    throw new Jint.Runtime.JavaScriptException(e.Message);
-                }
-            }
-
-            public bool TryConvert(object value, Type type, IFormatProvider formatProvider, out object converted)
-            {
-                return _converter.TryConvert(value, type, formatProvider, out converted);
-            }
-        }
-
         public static void Execute(string script, CancellationToken cancellationToken, Action<object> log, Func<string, CancellationToken, string> executeRemote)
         {
             try
@@ -53,9 +19,7 @@ namespace TheorySDK
                     cfg.Culture(culture);
                     cfg.AllowClr(typeof(System.IO.File).Assembly);
                     cfg.CatchClrExceptions();
-                    cfg.SetTypeConverter((e) => new TypeConverterWrapper(new DefaultTypeConverter(e)));
                     cfg.CancellationToken(cancellationToken);
-                    cfg.CatchClrExceptions();
                 });
                 engine.SetValue("log", log);
                 engine.SetValue("remote", new Func<string, string>((s) =>

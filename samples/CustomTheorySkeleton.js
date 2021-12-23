@@ -6,15 +6,31 @@ var id;
 
 /**
  * Name of the theory. Displayed on the top of the equation.
+ * Use it if you choose to not localize the theory or as a fallback if
+ * getName doesn't provide the localized description.
  * @global {string}
  */
 var name;
 
 /**
+ * @param {String} language - The language code
+ * @returns {String} Name of the theory for the provided language, if available.
+ */
+function getName(language);
+
+/**
  * Description of the theory. Displayed when the user downloads the theory.
+ * Use it if you choose to not localize the theory or as a fallback if
+ * getDescription doesn't provide the localized description.
  * @global {string}
  */
 var description;
+
+/**
+ * @param {String} language - The language code
+ * @returns {String} Description of the theory for the provided language, if available.
+ */
+function getDescription(language);
 
 /**
  * Author(s) of the theory. Displayed when the user downloads the theory.

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace TheorySDK
@@ -91,6 +92,7 @@ namespace TheorySDK
                         var client = _server.Accept();
                         lock (_clientMutex)
                             _client = client;
+                        SetKeepAlive(_client, 5000, 5000);
                         _logger.Log("Client connected.");
                         lock (_messageQueueMutex)
                             _messageQueue = new BlockingCollection<string>();
@@ -167,6 +169,32 @@ namespace TheorySDK
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
             return host.AddressList.Select(ip => ip.ToString()).ToList();
+        }
+
+        // Keep Alive Utils
+        [StructLayout(LayoutKind.Sequential)]
+        private struct TcpKeepAlive
+        {
+            internal uint onoff;
+            internal uint keepalivetime;
+            internal uint keepaliveinterval;
+        };
+
+        private static void SetKeepAlive(Socket socket, uint keepAliveInterval, uint keepAliveTime)
+        {
+            var keepAlive = new TcpKeepAlive
+            {
+                onoff = 1,
+                keepaliveinterval = keepAliveInterval,
+                keepalivetime = keepAliveTime
+            };
+            int size = Marshal.SizeOf(keepAlive);
+            IntPtr keepAlivePtr = Marshal.AllocHGlobal(size);
+            Marshal.StructureToPtr(keepAlive, keepAlivePtr, true);
+            var buffer = new byte[size];
+            Marshal.Copy(keepAlivePtr, buffer, 0, size);
+            Marshal.FreeHGlobal(keepAlivePtr);
+            socket.IOControl(IOControlCode.KeepAliveValues, buffer, null);
         }
     }
 }

@@ -9,6 +9,20 @@ export class Cost{
      * @returns {BigNumber} Cost of a single level, i.e., not cumulative
      */
     getCost(level);
+
+    /**
+     * @param {number} fromLevel - The current level of the upgrade
+     * @param {number} toLevel - The target level of the upgrade
+     * @returns {BigNumber} Cumulative cost of all levels to reach toLevel from fromLevel
+     */
+    getSum(fromLevel, toLevel);
+
+    /**
+     * @param {number} fromLevel - The current level of the upgrade
+     * @param {number|BigNumber} currency - How much currency you can spend
+     * @returns {number} How many additional levels you can afford
+     */
+    getMax(fromLevel, currency);
 }
 
 /**
