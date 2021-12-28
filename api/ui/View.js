@@ -203,4 +203,75 @@ import { TouchEvent } from "./properties/TouchEvent";
      * @returns {number}
      */
     get y();
+
+    /**
+     * @param {number} value - Target value of 'opacity'
+     * @param {number} length - Time milliseconds to reach the target value
+     * @param {Easing} [easing] - Type of smoothing to apply to the transition. Default: Easing.LINEAR
+     */
+    fadeTo(value, length, easing);
+
+    /**
+     * @param {number} value - Relative target value of 'scale' (target = scale * value)
+     * @param {number} length - Time milliseconds to reach the target value
+     * @param {Easing} [easing] - Type of smoothing to apply to the transition. Default: Easing.LINEAR
+     */
+    relScaleTo(value, length, easing);
+
+    /**
+     * @param {number} value - Target value of 'scale'
+     * @param {number} length - Time milliseconds to reach the target value
+     * @param {Easing} [easing] - Type of smoothing to apply to the transition. Default: Easing.LINEAR
+     */
+    scaleTo(value, length, easing);
+
+    /**
+     * @param {number} value - Target value of 'scaleX'
+     * @param {number} length - Time milliseconds to reach the target value
+     * @param {Easing} [easing] - Type of smoothing to apply to the transition. Default: Easing.LINEAR
+     */
+    scaleXTo(value, length, easing);
+
+    /**
+     * @param {number} value - Target value of 'scaleY'
+     * @param {number} length - Time milliseconds to reach the target value
+     * @param {Easing} [easing] - Type of smoothing to apply to the transition. Default: Easing.LINEAR
+     */
+    scaleYTo(value, length, easing);
+
+    /**
+     * @param {number} value - Target value of 'rotation' (target = rotation + value)
+     * @param {number} length - Time milliseconds to reach the target value
+     * @param {Easing} [easing] - Type of smoothing to apply to the transition. Default: Easing.LINEAR
+     */
+    relRotateTo(value, length, easing);
+
+    /**
+     * @param {number} value - Target value of 'rotation'
+     * @param {number} length - Time milliseconds to reach the target value
+     * @param {Easing} [easing] - Type of smoothing to apply to the transition. Default: Easing.LINEAR
+     */
+    rotateTo(value, length, easing);
+
+    /**
+     * @param {number} value - Target value of 'rotationX'
+     * @param {number} length - Time milliseconds to reach the target value
+     * @param {Easing} [easing] - Type of smoothing to apply to the transition. Default: Easing.LINEAR
+     */
+    rotateXTo(value, length, easing);
+
+    /**
+     * @param {number} value - Target value of 'rotationY'
+     * @param {number} length - Time milliseconds to reach the target value
+     * @param {Easing} [easing] - Type of smoothing to apply to the transition. Default: Easing.LINEAR
+     */
+    rotateYTo(value, length, easing);
+
+    /**
+     * @param {number} valueX - Target value of 'translationX'
+     * @param {number} valueY - Target value of 'translationY'
+     * @param {number} length - Time milliseconds to reach the target value
+     * @param {Easing} [easing] - Type of smoothing to apply to the transition. Default: Easing.LINEAR
+     */
+    translateTo(valueX, valueY, length, easing);
 }
