@@ -1,4 +1,5 @@
 import { Achievement } from "./Achievement";
+import { AchievementCategory } from "./AchievementCategory";
 import { BigNumber } from "./BigNumber";
 import { Cost } from "./Costs";
 import { Currency } from "./Currency";
@@ -333,15 +334,24 @@ export class Theory {
     publish();
     
     /**
+     * Creates your own achievement category.
+     * @param {number} id - Unique ID within the current custom theory achievements
+     * @param {string} name - Name of the achievement
+     * @returns {AchievementCategory}
+     */
+    createAchievementCategory(id, name);
+    
+    /**
      * Creates your own achievement.
      * @param {number} id - Unique ID within the current custom theory achievements
+     * @param {AchievementCategory} [category] - Category of the achievement
      * @param {string} name - Name of the achievement
      * @param {string} description - Description of the achievement.
      * @param {function():boolean} unlockCondition - Function returning if the achievement can be unlocked. Checks every second. Stops being called once it is unlocked.
      * @param {function():number} [progress] - Function returning if the progress towards the achievement. In [0, 1].
      * @returns {Achievement}
      */
-    createAchievement(id, name, description, unlockCondition, progress);
+    createAchievement(id, category, name, description, unlockCondition, progress);
     
     /**
      * Creates your own secret achievement.
