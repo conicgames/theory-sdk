@@ -171,29 +171,12 @@ namespace TheorySDK
             return host.AddressList.Select(ip => ip.ToString()).ToList();
         }
 
-        // Keep Alive Utils
-        [StructLayout(LayoutKind.Sequential)]
-        private struct TcpKeepAlive
+        private static void SetKeepAlive(Socket socket, int interval, int time, int retryCount)
         {
-            internal uint onoff;
-            internal uint keepalivetime;
-            internal uint keepaliveinterval;
-        };
-
-        private static void SetKeepAlive(Socket socket, uint interval, uint time, uint retryCount)
-        {
-            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
-
-            try
-            {
-                socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveInterval, interval);
-                socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveTime, time);
-                socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveRetryCount, retryCount);
-            }
-            catch(Exception)
-            { 
-                // Some platforms do not suppot these options. To investigate.
-            }
+            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, 1);
+            socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveInterval, interval);
+            socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveTime, time);
+            socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveRetryCount, retryCount);
         }
     }
 }
