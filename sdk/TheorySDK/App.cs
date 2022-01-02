@@ -1,5 +1,4 @@
-﻿using Eto.Forms;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Text.Json;

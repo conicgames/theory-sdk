@@ -1,10 +1,10 @@
-using Eto.Forms;
 using Eto.Drawing;
+using Eto.Forms;
 using Eto.Serialization.Xaml;
 using System;
-using static System.Reflection.Assembly;
 using System.Collections.Generic;
 using System.Text;
+using static System.Reflection.Assembly;
 
 namespace TheorySDK.Views
 {

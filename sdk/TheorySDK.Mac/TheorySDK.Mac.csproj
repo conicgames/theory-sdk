@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	
+    
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
@@ -14,14 +14,14 @@
 
     <Product>Theory SDK</Product>
   </PropertyGroup>
-	
+    
   <ItemGroup>
     <ProjectReference Include="..\TheorySDK\TheorySDK.csproj" />
   </ItemGroup>
-	
+    
   <ItemGroup>
     <PackageReference Include="Eto.Platform.Mac64" Version="2.6.0" />
     <PackageReference Include="Jint" Version="3.0.0-beta-2037" />
   </ItemGroup>
-	
+    
 </Project>

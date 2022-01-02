@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Dialog xmlns="http://schema.picoe.ca/eto.forms" 
-	      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	      xmlns:local="clr-namespace:TheorySDK.Views;assembly=TheorySDK"
-	      Title="Information"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:TheorySDK.Views;assembly=TheorySDK"
+        Title="Information"
         BackgroundColor="#222"
-	      Padding="10,10,10,0">
-	<StackLayout Spacing="10">
-		<Label x:Name="MessageLabel" TextColor="White" />
+        Padding="10,10,10,0">
+    <StackLayout Spacing="10">
+      <Label x:Name="MessageLabel" TextColor="White" />
     <StackLayoutItem HorizontalAlignment="Stretch">
       <Button x:Name="OkButton" Text="Ok" Click="OnOkClicked" />
     </StackLayoutItem>
-	</StackLayout>
+    </StackLayout>
 </Dialog>

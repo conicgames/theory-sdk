@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Jint;
+using System;
 using System.Globalization;
-using Jint.Runtime.Interop;
-using Jint;
-using System.Threading;
 using System.Text.Json;
+using System.Threading;
 
 namespace TheorySDK
 {
