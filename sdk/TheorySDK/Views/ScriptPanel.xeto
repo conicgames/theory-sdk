@@ -44,7 +44,7 @@
       <TableCell ScaleWidth="True">
         <StackLayout Spacing="5" HorizontalContentAlignment="Stretch" Padding="0,0,5,0">
           <!-- Script Name -->
-          <TextBox x:Name="ScriptName" TextChanging="OnScriptNameChanging" ReadOnly="True"/>
+          <TextBox x:Name="ScriptName" KeyDown="OnScriptNameKeyDown" TextChanging="OnScriptNameChanging" ReadOnly="True"/>
           <!-- Script Code -->
           <StackLayoutItem Expand="True">
             <TextArea x:Name="ScriptCode" Text="" TextChanged="OnScriptCodeChanged" KeyDown="OnScriptCodeKeyDown" ReadOnly="True"/>

@@ -117,7 +117,7 @@ namespace TheorySDK.Views
 				"As opposed to commands, local scripts are executed by the SDK application itself. To send a command\n" +
 				"to the game, use the 'remote' function. Some examples:\n\n" +
 				"remote(\"tick(10,1)\") // Does a tick of 10 seconds without ad bonus\n" +
-				"let currency = remote(\"currency.value\") // Queries game data. All results are returned strings\n\n" +
+				"let currency = remote(\"currency.value\") // Queries game data. All results are returned as strings\n\n" +
 				"Press Ctrl-Enter to execute the script and Esc to cancel the execution.");
         }
 
@@ -134,16 +134,9 @@ namespace TheorySDK.Views
 		}
 
 		private void OnScriptListKeyDown(object sender, KeyEventArgs e)
-        {
-			int direction = 0;
-			
-			if (e.Key == Keys.Up && e.Modifiers == Keys.Alt)
-				direction = -1;
-			else if (e.Key == Keys.Down && e.Modifiers == Keys.Alt)
-				direction = 1;
-
-			if (direction != 0)
-            {
+		{
+			void moveScript(int direction)
+			{
 				var scripts = _app.Data.Scripts;
 				int index0 = ScriptList.SelectedIndex;
 				int index1 = index0 + direction;
@@ -151,7 +144,7 @@ namespace TheorySDK.Views
 				if (index0 >= 0 && index1 >= 0 &&
 					index0 < scripts.Count &&
 					index1 < scripts.Count)
-                {
+				{
 					var tmp = scripts[index0];
 					scripts[index0] = scripts[index1];
 					scripts[index1] = tmp;
@@ -162,7 +155,18 @@ namespace TheorySDK.Views
 					ScriptList.SelectedIndex = index1;
 					_internalSelectionChanged = false;
 				}
-            }
+			}
+
+			if (e.Key == Keys.Up && e.Modifiers == Keys.Alt)
+			{
+				moveScript(-1);
+				e.Handled = true;
+			}
+			else if (e.Key == Keys.Down && e.Modifiers == Keys.Alt)
+			{
+				moveScript(1);
+				e.Handled = true;
+			}
 		}
 
 		private async void OnScriptListDoubleClick(object sender, EventArgs e)
@@ -170,11 +174,14 @@ namespace TheorySDK.Views
 			await ExecuteSelectedScript();
 		}
 
+		private void OnScriptNameKeyDown(object sender, KeyEventArgs e)
+        {
+			if (e.KeyData == Keys.Enter)
+				e.Handled = true; // Avoids adding linefeeds to the text
+        }
+
 		private void OnScriptNameChanging(object sender, TextChangingEventArgs e)
         {
-			if (e.Text == "\r" || e.Text == "\n" || e.Text == "\r\n")
-				return;
-
 			var script = GetSelectedScript();
 
 			if (script != null)
@@ -195,11 +202,17 @@ namespace TheorySDK.Views
 		private async void OnScriptCodeKeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyData == Keys.Escape)
+			{
 				_app.CancelScriptExecution();
+				e.Handled = true;
+			}
 			if (e.Key == Keys.Enter && e.Modifiers == Keys.Control)
+			{
 				await ExecuteSelectedScript();
+				e.Handled = true;
+			}
 			else if (e.Key == Keys.Enter)
-            {
+			{
 				// Basic auto-indentation
 				if (ScriptCode.Selection.Length() <= 0 && ScriptCode.CaretIndex > 0)
 				{

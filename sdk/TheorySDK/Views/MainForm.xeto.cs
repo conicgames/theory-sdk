@@ -105,7 +105,7 @@ namespace TheorySDK.Views
         {
             TheoryPath.Text = _app.Data.TheoryPath;
 
-            // Workaround for now having control over the color of the property "placeholder"
+            // Workaround for not having control over the color of the property "placeholder"
             if (string.IsNullOrEmpty(TheoryPath.Text))
             {
                 TheoryPath.Text = _theoryPathPlaceholder;
@@ -210,16 +210,19 @@ namespace TheorySDK.Views
             {
                 if (_app.HasClient())
                 {
-                    _app.Logger.Log("Executing remote script...");
-                    _app.ExecuteRemoteScript(CommandLine.Text);
-                    _history[_history.Count - 1] = CommandLine.Text;
-                    _history.Add("");
+                    if (!string.IsNullOrWhiteSpace(CommandLine.Text))
+                    {
+                        _app.Logger.Log("Executing remote script...");
+                        _app.ExecuteRemoteScript(CommandLine.Text);
+                        _history[_history.Count - 1] = CommandLine.Text;
+                        _history.Add("");
 
-                    if (_history.Count > _maxHistoryCount)
-                        _history.RemoveRange(0, _history.Count - _maxHistoryCount);
+                        if (_history.Count > _maxHistoryCount)
+                            _history.RemoveRange(0, _history.Count - _maxHistoryCount);
 
-                    _historyIndex = _history.Count - 1;
-                    CommandLine.Text = "";
+                        _historyIndex = _history.Count - 1;
+                        CommandLine.Text = "";
+                    }
                 }
                 else
                 {
@@ -228,7 +231,7 @@ namespace TheorySDK.Views
             }
         }
 
-        // Workaround for now having control over the color of the property "placeholder"
+        // Workaround for not having control over the color of the property "placeholder"
         private void OnCommandLineGotFocus(object sender, EventArgs e)
         {
             if (CommandLine.Text == _commandLinePlaceholder)
