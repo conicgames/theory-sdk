@@ -92,7 +92,7 @@ namespace TheorySDK
                         var client = _server.Accept();
                         lock (_clientMutex)
                             _client = client;
-                        SetKeepAlive(_client, 5000, 5000);
+                        SetKeepAlive(_client, 5000, 5000, 16);
                         _logger.Log("Client connected.");
                         lock (_messageQueueMutex)
                             _messageQueue = new BlockingCollection<string>();
@@ -180,21 +180,12 @@ namespace TheorySDK
             internal uint keepaliveinterval;
         };
 
-        private static void SetKeepAlive(Socket socket, uint keepAliveInterval, uint keepAliveTime)
+        private static void SetKeepAlive(Socket socket, uint interval, uint time, uint retryCount)
         {
-            var keepAlive = new TcpKeepAlive
-            {
-                onoff = 1,
-                keepaliveinterval = keepAliveInterval,
-                keepalivetime = keepAliveTime
-            };
-            int size = Marshal.SizeOf(keepAlive);
-            IntPtr keepAlivePtr = Marshal.AllocHGlobal(size);
-            Marshal.StructureToPtr(keepAlive, keepAlivePtr, true);
-            var buffer = new byte[size];
-            Marshal.Copy(keepAlivePtr, buffer, 0, size);
-            Marshal.FreeHGlobal(keepAlivePtr);
-            socket.IOControl(IOControlCode.KeepAliveValues, buffer, null);
+            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+            socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveInterval, interval);
+            socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveTime, time);
+            socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveRetryCount, retryCount);
         }
     }
 }
