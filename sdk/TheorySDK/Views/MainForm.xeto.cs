@@ -203,9 +203,15 @@ namespace TheorySDK.Views
         private void OnCommandLineKeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Up)
+            {
                 MoveHistory(-1);
+                e.Handled = true;
+            }
             else if (e.KeyData == Keys.Down)
+            {
                 MoveHistory(1);
+                e.Handled = true;
+            }
             else if (e.KeyData == Keys.Enter)
             {
                 if (_app.HasClient())
@@ -228,6 +234,7 @@ namespace TheorySDK.Views
                 {
                     _app.Logger.Log("Error: Cannot send command without client.");
                 }
+                e.Handled = true;
             }
         }
 
