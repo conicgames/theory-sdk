@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Form xmlns="http://schema.picoe.ca/eto.forms" 
+<Form xmlns="http://schema.picoe.ca/eto.forms"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="clr-namespace:TheorySDK;assembly=TheorySDK"
       xmlns:views="clr-namespace:TheorySDK.Views;assembly=TheorySDK"
@@ -57,7 +57,7 @@
           <StackLayoutItem>
             <StackLayout x:Name="CommandLineLayout" Visible="False" Orientation="Horizontal">
               <StackLayoutItem Expand="True">
-                <TextBox x:Name="CommandLine" GotFocus="OnCommandLineGotFocus" LostFocus="OnCommandLineLostFocus" TextChanging="OnCommandLineTextChanging" KeyDown="OnCommandLineKeyDown" />
+                <TextBox x:Name="CommandLine" GotFocus="OnCommandLineGotFocus" LostFocus="OnCommandLineLostFocus" KeyDown="OnCommandLineKeyDown" />
               </StackLayoutItem>
               <Label Width="5" />
               <StackLayoutItem VerticalAlignment="Center">
