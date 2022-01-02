@@ -26,7 +26,6 @@ namespace TheorySDK.Views
         private List<string> _history;
         private readonly int _maxHistoryCount = 10;
         private int _historyIndex = 0;
-        private bool _inhibitHistory = false;
         private bool _isUpdatingFields = false;
         private UITimer _autosaveTimer = new UITimer();
         private StringBuilder _pendingLogs = new StringBuilder();
@@ -41,7 +40,7 @@ namespace TheorySDK.Views
             Title += " - " + Version.VersionString;
             Icon = new Icon(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.icon48x48.ico"));
             QuestionImage.Image = new Bitmap(GetExecutingAssembly().GetManifestResourceStream("TheorySDK.Resources.question.png"));
-            
+
             if (Eto.Platform.Instance.IsWpf)
                 Log.Font = new Font("consolas", Log.Font.Size);
             else
@@ -63,7 +62,7 @@ namespace TheorySDK.Views
             _app.Logger.MessageLogged += OnMessageLogged;
 
             _app.OnStart();
-            
+
             _autosaveTimer.Interval = 30;
             _autosaveTimer.Elapsed += (s,e) => _app.Save();
             _autosaveTimer.Start();
@@ -132,7 +131,7 @@ namespace TheorySDK.Views
         private void OnPortTextChanging(object sender, TextChangingEventArgs e)
         {
             string data = e.NewText.Trim();
-            
+
             if (!string.IsNullOrEmpty(data))
             {
                 if (int.TryParse(data, out int p) && p >= 0 && p <= 0xFFFF)
@@ -192,7 +191,7 @@ namespace TheorySDK.Views
                     // We remove half of the text whenever we pass a threshold instead of
                     // simply removing the excess. This avoid having to modify the text
                     // at each iteration when the limit is reached.
-                    // 
+                    //
                     var maxLength = 8000;
 
                     if (Log.Text.Length > maxLength)
@@ -207,17 +206,33 @@ namespace TheorySDK.Views
                 MoveHistory(-1);
             else if (e.KeyData == Keys.Down)
                 MoveHistory(1);
+            else if (e.KeyData == Keys.Enter)
+            {
+                if (_app.HasClient())
+                {
+                    _app.Logger.Log("Executing remote script...");
+                    _app.ExecuteRemoteScript(CommandLine.Text);
+                    _history[_history.Count - 1] = CommandLine.Text;
+                    _history.Add("");
+
+                    if (_history.Count > _maxHistoryCount)
+                        _history.RemoveRange(0, _history.Count - _maxHistoryCount);
+
+                    _historyIndex = _history.Count - 1;
+                    CommandLine.Text = "";
+                }
+                else
+                {
+                    _app.Logger.Log("Error: Cannot send command without client.");
+                }
+            }
         }
 
         // Workaround for now having control over the color of the property "placeholder"
         private void OnCommandLineGotFocus(object sender, EventArgs e)
         {
             if (CommandLine.Text == _commandLinePlaceholder)
-            {
-                _inhibitHistory = true;
                 CommandLine.Text = "";
-                _inhibitHistory = false;
-            }
 
             CommandLine.TextColor = _commandLineOriginalColor;
         }
@@ -226,10 +241,7 @@ namespace TheorySDK.Views
         {
             if (string.IsNullOrEmpty(CommandLine.Text))
             {
-                _inhibitHistory = true;
                 CommandLine.Text = _commandLinePlaceholder;
-                _inhibitHistory = false;
-
                 CommandLine.TextColor = Colors.Gray;
             }
         }
@@ -242,9 +254,7 @@ namespace TheorySDK.Views
 
             if (_historyIndex != previousIndex)
             {
-                _inhibitHistory = true;
                 CommandLine.Text = _history[_historyIndex];
-                _inhibitHistory = false;
                 CommandLine.CaretIndex = CommandLine.Text.Length;
             }
         }
@@ -261,35 +271,6 @@ namespace TheorySDK.Views
                 "currency.value = 1e100; // Sets the currency to test a specific part of the theory\n" +
                 "log(aVariable) // Displays the value in the logs of the SDK.\n\n" +
                 "Use the up and down arrows to navigate through your command history.");
-        }
-
-        private void OnCommandLineTextChanging(object sender, TextChangingEventArgs e)
-        {
-            if (e.Text == "\r" || e.Text == "\n" || e.Text == "\r\n")
-            {
-                if (_app.HasClient())
-                {
-                    _app.Logger.Log("Executing remote script...");
-                    _app.ExecuteRemoteScript(e.OldText);
-                    _history[_history.Count - 1] = e.OldText;
-                    _history.Add("");
-
-                    if (_history.Count > _maxHistoryCount)
-                        _history.RemoveRange(0, _history.Count - _maxHistoryCount);
-
-                    _historyIndex = _history.Count - 1;
-                    CommandLine.Text = "";
-                }
-                else
-                {
-                    _app.Logger.Log("Error: Cannot send command without client.");
-                }
-            }
-            else if (!_inhibitHistory)
-            {
-                _historyIndex = _history.Count - 1;
-                _history[_historyIndex] = e.NewText;
-            }
         }
 
         protected override void OnClosed(EventArgs e)
