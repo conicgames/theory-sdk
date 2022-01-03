@@ -1,8 +1,8 @@
-import { ExponentialCost, FirstFreeCost } from "../api/Costs";
-import { Localization } from "../api/Localization";
-import { BigNumber } from "../api/BigNumber";
-import { theory } from "../api/Theory";
-import { Utils } from "../api/Utils";
+import { ExponentialCost, FirstFreeCost } from "./api/Costs";
+import { Localization } from "./api/Localization";
+import { BigNumber } from "./api/BigNumber";
+import { theory } from "./api/Theory";
+import { Utils } from "./api/Utils";
 
 var id = "chaos_theory"
 var name = "Chaos Theory";

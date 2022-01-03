@@ -1,8 +1,8 @@
-import { Popup } from "../api/ui/Popup";
-import { Color } from "../api/ui/properties/Color";
-import { ImageSource } from "../api/ui/properties/ImageSource";
-import { Thickness } from "../api/ui/properties/Thickness";
-import { ui } from "../api/ui/UI"
+import { Popup } from "./api/ui/Popup";
+import { Color } from "./api/ui/properties/Color";
+import { ImageSource } from "./api/ui/properties/ImageSource";
+import { Thickness } from "./api/ui/properties/Thickness";
+import { ui } from "./api/ui/UI"
 
 var id = "custom_ui_id";
 var name = "Custom UI";

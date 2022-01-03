@@ -1,8 +1,8 @@
-import { ExponentialCost, FirstFreeCost, LinearCost } from "../api/Costs";
-import { Localization } from "../api/Localization";
-import { BigNumber, parseBigNumber } from "../api/BigNumber";
-import { theory } from "../api/Theory";
-import { Utils } from "../api/Utils";
+import { ExponentialCost, FirstFreeCost, LinearCost } from "./api/Costs";
+import { Localization } from "./api/Localization";
+import { BigNumber, parseBigNumber } from "./api/BigNumber";
+import { theory } from "./api/Theory";
+import { Utils } from "./api/Utils";
 
 var id = "convergence_test"
 var name = "Convergence Test";
