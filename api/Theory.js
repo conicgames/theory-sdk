@@ -159,6 +159,17 @@ export class Theory {
     get publicationMultiplier();
 
     /**
+     * @returns {BigNumber} The income multiplier if the theory was published using the current tau value.
+     */
+    get nextPublicationMultiplier();
+
+    /**
+     * @param {BigNumber|number} tau - The tau value for which you want to evaluate the multiplier. 
+     * @returns {BigNumber} The income multiplier if the theory was last published using the given tau value.
+     */
+    getPublicationMultiplier(tau);
+
+    /**
      * @returns {boolean} Equivalent to "tau > tauPublished"
      */
     get canPublish();

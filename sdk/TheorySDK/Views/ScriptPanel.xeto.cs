@@ -109,6 +109,7 @@ namespace TheorySDK.Views
 
         private async void ShowInstructions(object sender, EventArgs e)
         {
+            var executeKey = Eto.Platform.Instance.IsGtk ? "F5" : "Ctrl-Enter";
             await InformationDialog.Show(this, "Local Scripts Instructions",
                 "Use local scripts to automate some parts of theory development. For example, you can write a script that\n" +
                 "simulates a theory by requesting the game to do a tick, buy upgrades, publish, and buy milestones.\n\n" +
@@ -116,7 +117,7 @@ namespace TheorySDK.Views
                 "to the game, use the 'remote' function. Some examples:\n\n" +
                 "remote(\"tick(10,1)\") // Does a tick of 10 seconds without ad bonus\n" +
                 "let currency = remote(\"currency.value\") // Queries game data. All results are returned as strings\n\n" +
-                "Press Ctrl-Enter to execute the script and Esc to cancel the execution.");
+                "Press " + executeKey + " to execute the script and Esc to cancel the execution.");
         }
 
         private void OnScriptSelectionChanged(object sender, EventArgs e)
@@ -204,7 +205,8 @@ namespace TheorySDK.Views
                 _app.CancelScriptExecution();
                 e.Handled = true;
             }
-            if (e.Key == Keys.Enter && e.Modifiers == Keys.Control)
+            if (e.Key == Keys.Enter && e.Modifiers == Keys.Control ||
+                e.KeyData == Keys.F5)
             {
                 await ExecuteSelectedScript();
                 e.Handled = true;

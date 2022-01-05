@@ -2,6 +2,7 @@ import { Achievement } from "./Achievement";
 import { Automation } from "./Automation";
 import { BuyAmounts } from "./BuyAmounts";
 import { BigNumber } from "./BigNumber";
+import { Settings } from "./Settings";
 import { Statistics } from "./Statistics";
 import { StoryChapter } from "./StoryChapter";
 import { Theory } from "./Theory";
@@ -30,9 +31,15 @@ export class Game {
     get t();
     
     /**
+     * The value of dt shown in the summary bar, i.e., including rewards and acceleration.
      * @returns {BigNumber}
      */
     get dt();
+    
+    /**
+     * @returns {BigNumber}
+     */
+    get acceleration();
     
     /**
      * @returns {BigNumber}
@@ -169,6 +176,11 @@ export class Game {
      * @returns {Statistics} Statistics of the game (Statistics popup)
      */
     get statistics();
+    
+    /**
+     * @returns {Settings} Settings of the game (Settings popup)
+     */
+    get settings();
     
     /**
      * @returns {boolean} Is there a reward (via ad or purchase) currently active?
