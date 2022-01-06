@@ -7,6 +7,7 @@
     /** @returns {ImageSource} */ static get ACHIEVEMENTS();
     /** @returns {ImageSource} */ static get ARROW_120();
     /** @returns {ImageSource} */ static get ARROW_90();
+    /** @returns {ImageSource} */ static get BOOK();
     /** @returns {ImageSource} */ static get CHANGE();
     /** @returns {ImageSource} */ static get CHECKLIST();
     /** @returns {ImageSource} */ static get CLOSE();

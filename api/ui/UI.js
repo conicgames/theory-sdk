@@ -108,6 +108,20 @@ import { Switch } from "./Switch";
      * @returns {Switch}
      */
     createSwitch(parameters);
+    
+    /**
+     * Display a popup with the custom theory achievement.
+     * Cannot be display while calculating offline progress or
+     * if there are no achievements.
+     */
+    showCustomTheoryAchievements();
+    
+     /**
+      * Display a popup with the custom theory story chapters.
+      * Cannot be display while calculating offline progress or
+      * if there are no story chapters.
+      */
+    showCustomTheoryStory();
 }
 
 /**
