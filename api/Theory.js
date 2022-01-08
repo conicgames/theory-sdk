@@ -58,6 +58,20 @@ export class Theory {
           * @public
           */
           this.buyAmountPermanentUpgrades;
+
+          /**
+           * Callback to know right before publishing the theory
+           * @type {function(void):void}
+           * @public
+           */
+          this.activeTheoryPublishing;
+  
+          /**
+           * Callback to know right after publishing the theory
+           * @type {function(void):void}
+           * @public
+           */
+          this.activeTheoryPublished;
     }
 
     /**

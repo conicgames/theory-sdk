@@ -18,6 +18,62 @@ export class Game {
          * @public
          */
         this.activeTheory;
+
+        /**
+         * Callback to know right before doing a Prestige
+         * @type {function(void):void}
+         * @public
+         */
+        this.prePrestige;
+
+        /**
+         * Callback to know right after doing a Prestige
+         * @type {function(void):void}
+         * @public
+         */
+        this.postPrestige;
+
+        /**
+         * Callback to know right before doing a Supremacy
+         * @type {function(void):void}
+         * @public
+         */
+        this.preSupremacy;
+
+        /**
+         * Callback to know right after doing a Supremacy
+         * @type {function(void):void}
+         * @public
+         */
+        this.postSupremacy;
+
+        /**
+         * Callback to know right before doing a Graduation
+         * @type {function(void):void}
+         * @public
+         */
+        this.preGraduation;
+
+        /**
+         * Callback to know right after doing a Graduation
+         * @type {function(void):void}
+         * @public
+         */
+        this.postGraduation;
+
+        /**
+         * Callback to know right before changing the active theory
+         * @type {function(void):void}
+         * @public
+         */
+        this.activeTheoryChanging;
+
+        /**
+         * Callback to know right after changing the active theory
+         * @type {function(void):void}
+         * @public
+         */
+        this.activeTheoryChanged;
     }
 
     /**
