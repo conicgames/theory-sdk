@@ -108,6 +108,16 @@ import { Switch } from "./Switch";
      * @returns {Switch}
      */
     createSwitch(parameters);
+
+    /**
+     * @returns {number}
+     */
+    get screenWidth();
+
+    /**
+     * @returns {number}
+     */
+    get screenHeight();
     
     /**
      * Display a popup with the custom theory achievement.

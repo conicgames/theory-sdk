@@ -49,8 +49,7 @@
      *   ImageSource.fromUri(urls[0]); // Error
      *   var getUri = ImageSource.fromUri; getUri("http://some.url.com/image.png") // Error
      * @param {string} uri - The URI of the image
-     * @param {boolean} [useCache] - Specifies is the image can be cached. Default: true.
      * @returns {ImageSource}
      */
-    fromUri(uri, useCache);
+    fromUri(uri);
 }
