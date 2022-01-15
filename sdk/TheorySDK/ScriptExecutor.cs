@@ -13,6 +13,7 @@ namespace TheorySDK
             try
             {
                 var culture = CultureInfo.GetCultureInfo("en-US");
+                var parsingOptions = new Esprima.ParserOptions() { Tolerant = false };
                 var engine = new Jint.Engine(cfg =>
                 {
                     cfg.Culture(culture);
@@ -30,7 +31,7 @@ namespace TheorySDK
 
                     return JsonSerializer.Deserialize<string>(result);
                 }));
-                engine.Execute(script);
+                engine.Execute(script, parsingOptions);
             }
             catch (Exception e)
             {

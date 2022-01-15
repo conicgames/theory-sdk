@@ -64,14 +64,14 @@ export class Theory {
            * @type {function(void):void}
            * @public
            */
-          this.activeTheoryPublishing;
+          this.publishing;
   
           /**
            * Callback to know right after publishing the theory
            * @type {function(void):void}
            * @public
            */
-          this.activeTheoryPublished;
+          this.published;
     }
 
     /**
