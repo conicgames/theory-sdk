@@ -1,7 +1,5 @@
 # Exponential Idle - Theory SDK
 
-Note: This is a work in progress. It will be available in the next update in a couple of weeks.
-
 Develop your own theories with the Theory SDK for the mobile game [Exponential Idle](https://conicgames.github.io/exponentialidle/). 
 After completing the last chapter of the game, you will be offered to play custom theories. Custom theories are developed and shared by the community. You can also develop your own theories using this SDK and some basic Javascript knowledge.
 
