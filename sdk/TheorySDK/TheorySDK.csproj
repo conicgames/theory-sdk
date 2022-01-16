@@ -23,7 +23,6 @@
     <PackageReference Include="Eto.Forms" Version="2.6.0" />
     <PackageReference Include="Eto.Serialization.Xaml" Version="2.6.0" />
     <PackageReference Include="Jint" Version="3.0.0-beta-2037" />
-    <PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
     <PackageReference Include="System.Text.Json" Version="6.0.1" />
   </ItemGroup>
 
