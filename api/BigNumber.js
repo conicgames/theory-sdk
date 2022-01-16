@@ -184,15 +184,44 @@ export class BigNumber {
     static fromBase64String(value);
 
     /**
-     * Serialize a BigNumber to a Json string (approximate representation)
-     * @returns {String}
+     * Access to the underlying representation of a BigNumber.
+     * A BigNumber is of the form represented as the triplet (sign, depth, exponent):
+     * sign*10^10^10^...10^(exponent + 6)
+     *      |_____________|
+     *           depth
+     * If 'depth' is 0, then the number is sign*exponent.
+     * 'sign' can be 1, 0, or -1.
+     * 'depth' is greater or equal to 0
+     * 'exponent' is in the range [0, 1e6[
+     * @returns {number} The 'depth' component of the underlying representation.
      */
-    toJsonString();
+    get depth();
 
     /**
-     * Deserialize a Json string to a BigNumber (approximate representation)
-     * @param {String} value
+     * Access to the underlying representation of a BigNumber.
+     * A BigNumber is of the form represented as the triplet (sign, depth, exponent):
+     * sign*10^10^10^...10^(exponent + 6)
+     *      |_____________|
+     *           depth
+     * If 'depth' is 0, then the number is sign*exponent.
+     * 'sign' can be 1, 0, or -1.
+     * 'depth' is greater or equal to 0
+     * 'exponent' is in the range [0, 1e6[
+     * @returns {number} The 'exponent' component of the underlying representation.
+     */
+    get depth();
+
+    /**
+     * Createa BigNumber based on the underlying representation.
+     * A BigNumber is of the form represented as the triplet (sign, depth, exponent):
+     * sign*10^10^10^...10^(exponent + 6)
+     *      |_____________|
+     *           depth
+     * If 'depth' is 0, then the number is sign*exponent.
+     * @param {number} sign - Either 1, 0, or -1
+     * @param {number} depth - Must be greater or equal to 0
+     * @param {number} exponent - Must be in [0, 1e6[
      * @returns {BigNumber}
      */
-    static fromJsonString(value);
+    static fromComponents(sign, depth, exponent);
 }
