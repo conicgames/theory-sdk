@@ -113,7 +113,7 @@ export class Game {
     get x();
     
     /**
-     * @param {number} index - Index of the x_i value. Starts at 0.
+     * @param {number} index - Index of the x_i value. Starts at 0. For example, x is xi(0), x_1 is xi(1), etc.
      * @returns {BigNumber}
      */
     xi(index);

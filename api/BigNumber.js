@@ -169,4 +169,30 @@ export class BigNumber {
      * @returns {String}
      */
     toString(decimals, maxDepth, rounding);
+
+    /**
+     * Serialize a BigNumber to a Base64 string (exact representation)
+     * @returns {String}
+     */
+    toBase64String();
+
+    /**
+     * Deserialize a Base64 string to a BigNumber (exact representation)
+     * @param {String} value
+     * @returns {BigNumber}
+     */
+    static fromBase64String(value);
+
+    /**
+     * Serialize a BigNumber to a Json string (approximate representation)
+     * @returns {String}
+     */
+    toJsonString();
+
+    /**
+     * Deserialize a Json string to a BigNumber (approximate representation)
+     * @param {String} value
+     * @returns {BigNumber}
+     */
+    static fromJsonString(value);
 }
