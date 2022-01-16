@@ -185,42 +185,42 @@ export class BigNumber {
 
     /**
      * Access to the underlying representation of a BigNumber.
-     * A BigNumber is of the form represented as the triplet (sign, depth, exponent):
+     * A BigNumber is represented as the triplet (sign, depth, exponent):
      * sign*10^10^10^...10^(exponent + 6)
      *      |_____________|
      *           depth
      * If 'depth' is 0, then the number is sign*exponent.
      * 'sign' can be 1, 0, or -1.
      * 'depth' is greater or equal to 0
-     * 'exponent' is in the range [0, 1e6[
+     * 'exponent' is in the range [0, 1e6)
      * @returns {number} The 'depth' component of the underlying representation.
      */
     get depth();
 
     /**
      * Access to the underlying representation of a BigNumber.
-     * A BigNumber is of the form represented as the triplet (sign, depth, exponent):
+     * A BigNumber is represented as the triplet (sign, depth, exponent):
      * sign*10^10^10^...10^(exponent + 6)
      *      |_____________|
      *           depth
      * If 'depth' is 0, then the number is sign*exponent.
      * 'sign' can be 1, 0, or -1.
      * 'depth' is greater or equal to 0
-     * 'exponent' is in the range [0, 1e6[
+     * 'exponent' is in the range [0, 1e6)
      * @returns {number} The 'exponent' component of the underlying representation.
      */
-    get depth();
+    get exponent();
 
     /**
-     * Createa BigNumber based on the underlying representation.
-     * A BigNumber is of the form represented as the triplet (sign, depth, exponent):
+     * Creates a BigNumber based on the underlying representation.
+     * A BigNumber is represented as the triplet (sign, depth, exponent):
      * sign*10^10^10^...10^(exponent + 6)
      *      |_____________|
      *           depth
      * If 'depth' is 0, then the number is sign*exponent.
      * @param {number} sign - Either 1, 0, or -1
      * @param {number} depth - Must be greater or equal to 0
-     * @param {number} exponent - Must be in [0, 1e6[
+     * @param {number} exponent - Must be in [0, 1e6)
      * @returns {BigNumber}
      */
     static fromComponents(sign, depth, exponent);
