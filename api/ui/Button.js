@@ -68,5 +68,17 @@ import { Thickness } from "./properties/Thickness";
          * @public
          */
         this.onClicked;
+        
+        /**
+         * @type {function(void):void}
+         * @public
+         */
+        this.onPressed;
+        
+        /**
+         * @type {function(void):void}
+         * @public
+         */
+        this.onReleased;
     }
 }
