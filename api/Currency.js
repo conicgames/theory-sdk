@@ -13,4 +13,10 @@ export class Currency {
          */
         this.value;
     }
+
+    /**
+     * The symbol of currency
+     * @returns {string}
+     */
+    get symbol();
 }

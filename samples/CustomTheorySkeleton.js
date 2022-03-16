@@ -1,3 +1,5 @@
+import { BigNumber } from "../api/BigNumber";
+
 /**
  * A unique ID for the theory.
  * @global {string}
@@ -127,6 +129,18 @@ function getPublicationMultiplier(tau);
  * @returns {BigNumber} Note: The result will be clamped to [0,∞)
  */
 function getTau();
+
+/**
+ * Given a value of tau, returns the corresponding value in currency.
+ * This function is for display purpose only. All other calculations
+ * regarding publication multipliers and milestone costs are done
+ * in terms of tau.
+ * Example:
+ * var getCurrencyFromTau = (tau) => [tau.max(BigNumber.ONE).pow(10), currency.symbol];
+ * @param {BigNumber} tau - The tau value to convert. Use the provided parameter since it may be different from the current tau value.
+ * @returns {Array.<BigNumber,string>} A pair [currency, symbol] where 'currency' is the currency value corresponding to the tau parameter, and 'symbol' is the symbol of the returned currency. 
+ */
+function getCurrencyFromTau(tau);
 
 /**
  * Returns an number between 0 and 100 for the current completion of the theory.

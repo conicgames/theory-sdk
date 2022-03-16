@@ -124,7 +124,8 @@ export class StepwiseCost extends Cost {
 
 /**
  * Cost model for an upgrade that increases following a custom cost function.
- * Note: Upgrades using this cost model will enforce a maxLevel of 2000.
+ * Note: Upgrades using this cost model will enforce a maxLevel of 2000 if no
+ * cumulative and max functions are provided.
  */
 export class CustomCost extends Cost {
     /**
@@ -132,4 +133,25 @@ export class CustomCost extends Cost {
      * @param {function(number):BigNumber} costFunction - Function returning the cost of a given level (not cumulative).
      */
     constructor(costFunction);
+    
+    /**
+     * @constructor
+     * @param {function(number):BigNumber} costFunction - Function returning the cost of a given level (not cumulative).
+     * @param {function(number, number):BigNumber} cumulativeFunction - cumulativeFunction(10, 5) should return the cumulative cost if the current level is 10 and you want to buy 5 more levels.
+     * @param {function(number, Bignumber):number} maxFunction - maxFunction(5, BigNumber.from(100)) should return the number of levels that can be bought if you're currently at level 5 and have 100 units of currency to spend.
+     */
+     constructor(costFunction, cumulativeFunction, maxFunction);
+
+     /**
+      * A sanity check to ensure that the provided cumulative and max functions are
+      * correct. The check assumes that the cost function is correct, and calculate
+      * all combinations of levels and amount up to a given max level to make sure
+      * that the brute force calculation matches the results from the provided functions.
+      * The function stops at the first error. If maxLevel is above 50, the check will skip
+      * some combinations to ensure a reasonable calculation time, while still performing
+      * checks across the whole range.
+      * @param {function(string):void} log - A function for logging messages (info or error) sent during the check.
+      * @param {number} maxLevel - The maximum level to test.
+      */
+     performsChecks(log, maxLevel);
 }
