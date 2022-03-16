@@ -39,6 +39,41 @@ Once connected to the game, the SDK will display a command line. A command is Ja
  - Performance
  - Javascript subset
 
+## Localization
+
+You can localize your theories according to the current language selected by the player. Here's the list of language codes returned by `Localization.language`:
+
+|Language Name        | Language Code |
+|---------------------|---------------|
+|English              |en             |
+|Arabic               |ar             |
+|Chinese (Simplified) |zh-Hans        |
+|Chinese (Traditional)|zh-Hant        |
+|Czech                |cs             |
+|German               |de             |
+|Spanish              |es             |
+|Farsi                |fa             |
+|French               |fr             |
+|Hebrew               |he             |
+|Indonesian           |id             |
+|Italian              |it             |
+|Japanese             |ja             |
+|Korean               |ko             |
+|Latvian              |lv             |
+|Hungarian            |hu             |
+|Dutch                |nl             |
+|Norwegian            |no             |
+|Polish               |pl             |
+|Portuguese (Brazil)  |pt-br          |
+|Portuguese (Portugal)|pt             |
+|Russian              |ru             |
+|Ukrainian            |uk             |
+|Slovak               |sk             |
+|Finnish              |fi             |
+|Vietnamese           |vi             |
+
+For a list of all sentences from the game along with their IDs to provide to the function `Localization.get`, follow this [link](https://docs.google.com/spreadsheets/d/13HBfyemjUbjmugRSRO2KfbpQCyTV8Fs17wO3k4OkaCs/).
+
 ## Sharing
 
 Before thinking about sharing your theory to a large audience, please make sure that it is balanced, fun to play, and in an almost final state. By experience, it is very hard to change some fundamental parts of a theory after its release so make sure to test it thouroughly yourself and/or with a small group of people who don't mind resetting their progress for testing purpose.
