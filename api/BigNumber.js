@@ -107,6 +107,11 @@ export class BigNumber {
     sqrt();
 
     /**
+     * @returns {BigNumber} Squared value of 'this'
+     */
+    square();
+
+    /**
      * @param {BigNumber} value
      * @returns {BigNumber} Minimum between 'this' and value
      */

@@ -2,8 +2,6 @@
  * Holds a representation of a 3D vector.
  */
 export class Vector3 {
-    /** @returns {Vector3} */ static get ZERO();
-
     /** @constructor
      * @param {number} x - X coordinate
      * @param {number} y - Y coordinate

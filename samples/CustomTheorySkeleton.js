@@ -111,6 +111,13 @@ function get2DGraphValue();
 function get3DGraphPoint();
 
 /**
+ * Use to set a global translation of all displayed points simultaneously.
+ * This function is called right after get3DGraphPoint.
+ * @returns {Vector3} Current point to display
+ */
+function get3DGraphTranslation();
+
+/**
  * @param {String} symbol - LaTeX symbol to use in this formula instead of theory.latexSymbol
  * @returns {String} LaTeX representation of the publication multiplier formula
  */

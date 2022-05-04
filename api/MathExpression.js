@@ -33,9 +33,18 @@
      * result. For example, the operator d() needs at least two evaluation steps
      * to be calculated. This function should be called every tick to ensure that
      * the result is ready when needed.
+     * 'getVariable' example:
+     *   evaluate(s => {
+     *       switch(s) {
+     *           case 'a': return BigNumber.ONE;
+     *           case 'b': return BigNumber.TWO;
+     *       }
+     *       return null;
+     *   })
+     * @param {function(string):BigNumber} [getVariable] - Function to provide custom varibles.
      * @returns {BigNumber} Evaluated result of the expression. Can be null.
      */
-    evaluate();
+    evaluate(getVariable);
 
     /**
      * Resets the state of the expression, i.e., the smoothed values, d() operator, etc.

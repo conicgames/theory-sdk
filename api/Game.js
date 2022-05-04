@@ -273,7 +273,7 @@ export class Game {
      * For more control, use the 'buy' method of each independent upgrade.
      * @param {Upgrade[]} upgrades - List of upgrades to buy
      * @param {number} [bulkAmount] - Will buy a multiple of this amount of each upgrade. Default: -1 (max)
-     * @param {boolean} [ignoreToggle] - If true, buy all upgrade regardless of the checkbox. Default: false
+     * @param {boolean} [ignoreToggle] - If true, buy all upgrades regardless of the checkbox. Default: false
      */
     buy(upgrades, bulkAmount, ignoreToggle);
 
