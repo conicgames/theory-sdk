@@ -381,13 +381,14 @@ export class Theory {
     /**
      * Creates your own secret achievement.
      * @param {number} id - Unique ID within the current custom theory achievements
+     * @param {AchievementCategory} [category] - Category of the achievement
      * @param {string} name - Name of the secret achievement
      * @param {string} description - Description of the secret achievement.
      * @param {string} hint - Hint of the secret achievement.
      * @param {function():boolean} unlockCondition - Function returning if the achievement can be unlocked. Checks every second. Stops being called once it is unlocked.
      * @returns {Achievement}
      */
-    createSecretAchievement(id, name, description, hint, unlockCondition);
+    createSecretAchievement(id, category, name, description, hint, unlockCondition);
     
     /**
      * Creates your own story chapter.
