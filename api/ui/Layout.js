@@ -29,5 +29,11 @@ import { Thickness } from "./properties/Thickness";
          * @public
          */
         this.children;
+        
+        /**
+         * @type {function(void):void}
+         * @public
+         */
+        this.onLayoutChanged;
     }
 }

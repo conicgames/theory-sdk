@@ -42,9 +42,15 @@ var authors;
 
 /**
  * Version of the theory for the public repository.
- * @global {numeric}
+ * @global {string}
  */
 var version;
+
+/**
+ * Release order of the theory for the public repository.
+ * @global {string}
+ */
+var releaseOrder;
 
 /**
  * Permissions required to be accepted by the user for the theory to be

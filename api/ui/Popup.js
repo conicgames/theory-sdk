@@ -32,6 +32,18 @@
          * @public
          */
         this.content;
+        
+        /**
+         * @type {function(void):void}
+         * @public
+         */
+        this.onAppearing;
+        
+        /**
+         * @type {function(void):void}
+         * @public
+         */
+        this.onDisappearing;
     }
 
     /**

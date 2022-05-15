@@ -10,6 +10,7 @@ import { Label } from "./Label";
 import { LatexLabel } from "./LatexLabel";
 import { Popup } from "./Popup";
 import { ProgressBar } from "./ProgressBar";
+import { Slider } from "./Slider";
 import { ScrollView } from "./ScrollView";
 import { StackLayout } from "./StackLayout";
 import { Switch } from "./Switch";
@@ -93,6 +94,12 @@ import { Switch } from "./Switch";
     
     /**
      * @param {Object.<string,Object>} parameters
+     * @returns {Slider}
+     */
+    createSlider(parameters);
+    
+    /**
+     * @param {Object.<string,Object>} parameters
      * @returns {ScrollView}
      */
     createScrollView(parameters);
@@ -110,14 +117,38 @@ import { Switch } from "./Switch";
     createSwitch(parameters);
 
     /**
+     * Screen width adjusted to density (realScreenWidth / screenDensity)
+     * Use this value to decide on the size of controls
+     * to make it visually uniform across device.
      * @returns {number}
      */
     get screenWidth();
 
     /**
+     * Screen height adjusted to density (realScreenHeight / screenDensity)
+     * Use this value to decide on the size of controls
+     * to make it visually uniform across device.
      * @returns {number}
      */
     get screenHeight();
+
+    /**
+     * Scale factor dependent on the physical pixel size of the device.
+     * @returns {number}
+     */
+    get screenDensity();
+
+    /**
+     * Number of horizontal pixels on the screen
+     * @returns {number}
+     */
+    get realScreenWidth();
+
+    /**
+     * Number of vertical pixels on the screen
+     * @returns {number}
+     */
+    get realScreenHeight();
     
     /**
      * Display a popup with the custom theory achievement.

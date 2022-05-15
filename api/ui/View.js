@@ -151,31 +151,7 @@ import { TouchEvent } from "./properties/TouchEvent";
          * @type {function(void):void}
          * @public
          */
-        this.onAppearing;
-        
-        /**
-         * @type {function(void):void}
-         * @public
-         */
-        this.onDisappearing;
-        
-        /**
-         * @type {function(void):void}
-         * @public
-         */
-        this.onSizeAllocated;
-        
-        /**
-         * @type {function(void):void}
-         * @public
-         */
         this.onSizeChanged;
-        
-        /**
-         * @type {function(void):void}
-         * @public
-         */
-        this.onLayoutChanged;
         
         /**
          * @type {function(TouchEvent):void}

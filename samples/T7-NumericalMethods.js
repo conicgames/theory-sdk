@@ -160,12 +160,12 @@ var tick = (elapsedTime, multiplier) => {
     let drho12 = r12Term.level > 0 ? BigNumber.from(1.5) * vc3 * rho1Sqrt : BigNumber.ZERO;
     let drho21 = dimension.level > 0 ? vc4 : BigNumber.ZERO;
     let drho22 = r22Term.level > 0 ? BigNumber.from(1.5) * vc5 * rho2Sqrt : BigNumber.ZERO;
-    let drho13 = r1r2Term.level > 0 ? (BigNumber.HALF * vc6 * rho2Sqrt / rho1Sqrt).min(rho1 * BigNumber.HUNDRED) : BigNumber.ZERO;
-    let drho23 = r1r2Term.level > 0 ? (BigNumber.HALF * vc6 * rho1Sqrt / rho2Sqrt).min(rho2 * BigNumber.HUNDRED) : BigNumber.ZERO;
-    let dtq1bonus = dt * vq1 * bonus;
+    let drho13 = r1r2Term.level > 0 && !rho1Sqrt.isZero ? (BigNumber.HALF * vc6 * rho2Sqrt / rho1Sqrt) : BigNumber.ZERO;
+    let drho23 = r1r2Term.level > 0 && !rho2Sqrt.isZero ? (BigNumber.HALF * vc6 * rho1Sqrt / rho2Sqrt) : BigNumber.ZERO;
+    let q1bonus = vq1 * bonus;
 
-    currency1.value += dtq1bonus * (drho11 + drho12 + drho13);
-    currency2.value += dtq1bonus * (drho21 + drho22 + drho23);
+    currency1.value += dt * (q1bonus * (drho11 + drho12) + (q1bonus * drho13).min(rho1 * BigNumber.HUNDRED));
+    currency2.value += dt * (q1bonus * (drho21 + drho22) + (q1bonus * drho23).min(rho2 * BigNumber.HUNDRED));
 }
 
 var getPrimaryEquation = () => {
