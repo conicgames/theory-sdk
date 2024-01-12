@@ -109,13 +109,13 @@ jobs:
           /usr/bin/codesign --deep --force --verify --entitlements "./sdk/TheorySDK.Mac/Entitlements.plist" --options=runtime --no-strict --timestamp -s "$MACOS_IDENTITY_ID" "./Theory SDK.app/" -v
           rm certificate.p12
       - name: "Notarize Release Build"
-        uses: devbotsxyz/xcode-notarize@v1
+        uses: GuillaumeFalourd/xcode-notarize@v1
         with:
           product-path: "./Theory SDK.app"
           appstore-connect-username: ${{ secrets.MACOS_NOTARIZATION_USERNAME }}
           appstore-connect-password: ${{ secrets.MACOS_NOTARIZATION_PWD }}
       - name: "Staple Release Build"
-        uses: devbotsxyz/xcode-staple@v1
+        uses: BoundfoxStudios/action-xcode-staple@v1
         with:
           product-path: "./Theory SDK.app"
       - run: tar --exclude ".git*" --exclude ".github*" --exclude ".gitignore" --exclude "sdk*" -czf TheorySDK.Mac.${{ github.event.inputs.version }}.tgz *
