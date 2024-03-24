@@ -228,6 +228,14 @@ function goToPreviousStage();
 function goToNextStage();
 
 /**
+ * Returns a UI element (View class) to put behind
+ * the equation area. This function is ignored
+ * if getEquationDelegate is defined.
+ * @returns{View} An instance of a UI element.
+ */
+ function getEquationUnderlay();
+
+/**
  * Returns a UI element (View class) to put on top
  * of the equation area. This function is ignored
  * if getEquationDelegate is defined.

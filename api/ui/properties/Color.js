@@ -27,6 +27,15 @@
      * @returns {Color}
      * */
     static fromRgb(r, g, b);
+
+    /**
+     * @param {number} r - Red value in [0,1]
+     * @param {number} g - Green value in [0,1]
+     * @param {number} b - Blue value in [0,1]
+     * @param {number} a - Alpha value in [0,1]
+     * @returns {Color}
+     * */
+    static fromRgba(r, g, b, a);
     
     /**
      * Reference: https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.color.fromhex?view=xamarin-forms#Xamarin_Forms_Color_FromHex_System_String_
