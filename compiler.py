@@ -22,6 +22,15 @@ for starmass in m:
         Lum = [10**float(x[3]) for x in splited]
         Mass = [float(x[5]) for x in splited]
         Radius = [float(x[6]) for x in splited]
+    while(Lum[0]>=Lum[1]):
+        Year.pop(0)
+        Tempcen.pop(0)
+        Tempeff.pop(0)
+        Lum.pop(0)
+        Mass.pop(0)
+        Radius.pop(0)
+    for x in range(len(Year)):
+        Year[x]-=Year[0]
     NormalizedYear = [x/Year[-1] for x in Year]
     Data[starmass] = {'year':Year,'nyear':NormalizedYear,'tempeff':Tempeff,'tempcen':Tempcen, 'lum':Lum, 'mass': Mass, "radius": Radius}
 
