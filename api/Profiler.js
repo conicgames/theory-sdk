@@ -73,6 +73,11 @@
      * @return {Profiler} The new or existing profiler
      */
     get(name);
+
+    /**
+     * @returns {number} The number executed statements toward the max statement count (100K)
+     */
+    get statementCount();
 }
 
 /**
