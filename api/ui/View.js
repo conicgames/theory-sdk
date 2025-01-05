@@ -52,6 +52,12 @@ import { TouchEvent } from "./properties/TouchEvent";
         this.margin;
         
         /**
+         * @type {number}
+         * @public
+         */
+        this.opacity;
+        
+        /**
          * @type {LayoutOptions}
          * @public
          */
