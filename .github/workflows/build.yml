@@ -15,14 +15,9 @@ jobs:
   create_release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: ncipollo/release-action@v1.20.0
       with:
-        tag_name: v${{ github.event.inputs.version }}
-        release_name: v${{ github.event.inputs.version }}
-        draft: false
-        prerelease: false
+        tag: v${{ github.event.inputs.version }}
     
   build_windows:
     runs-on: windows-latest
