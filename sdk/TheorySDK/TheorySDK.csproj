@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ApplicationIcon></ApplicationIcon>
   </PropertyGroup>
 
@@ -20,10 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Eto.Forms" Version="2.6.0" />
-    <PackageReference Include="Eto.Serialization.Xaml" Version="2.6.0" />
+    <PackageReference Include="Eto.Forms" Version="2.10.2" />
+    <PackageReference Include="Eto.Serialization.Xaml" Version="2.10.2" />
     <PackageReference Include="Jint" Version="3.0.0-beta-2037" />
-    <PackageReference Include="System.Text.Json" Version="6.0.1" />
+    <PackageReference Include="System.Text.Json" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>

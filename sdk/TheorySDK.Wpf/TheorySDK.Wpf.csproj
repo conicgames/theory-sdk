@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <ApplicationIcon>icon256x256.ico</ApplicationIcon>
   </PropertyGroup>
   
@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Eto.Platform.Wpf" Version="2.6.0" />
+    <PackageReference Include="Eto.Platform.Wpf" Version="2.10.2" />
     <PackageReference Include="Jint" Version="3.0.0-beta-2037" />
   </ItemGroup>
 
