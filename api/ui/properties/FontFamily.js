@@ -15,12 +15,6 @@
     static get CMU_REGULAR();
 
     /** 
-     * Italic LaTeX font for text
-     * @returns {FontFamily}
-     */
-    static get CMU_ITALIC();
-
-    /** 
      * Specialized LaTeX font for numbers
      * @returns {FontFamily}
      */
