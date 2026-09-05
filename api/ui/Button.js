@@ -46,6 +46,12 @@ import { Thickness } from "./properties/Thickness";
         this.fontSize;
         
         /**
+         * @type {LineBreakMode}
+         * @public
+         */
+        this.lineBreakMode;
+        
+        /**
          * @type {Thickness}
          * @public
          */
